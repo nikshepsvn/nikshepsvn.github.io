@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikshep Saravanan | Builder & AI Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.5"></script>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            30% { transform: translate(3%, -15%); }
+            50% { transform: translate(-10%, 5%); }
+            70% { transform: translate(7%, -25%); }
+            90% { transform: translate(-3%, 15%); }
+        }
+        .grain {
+            position: fixed;
+            top: -150%;
+            left: -50%;
+            width: 300%;
+            height: 300%;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.075"/></svg>');
+            animation: grain 8s steps(10) infinite;
+            opacity: 0.25;
+        }
+        :root {
+            --space: 'Space Grotesk', sans-serif;
+            --crimson: 'Crimson Pro', serif;
+        }
+        body {
+            font-family: var(--space);
+            background: #080808;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .font-display {
+            font-family: var(--crimson);
+        }
+        .font-body {
+            font-family: var(--space);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 0;
+            margin: 4rem 0;
+        }
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            z-index: -1;
+            transform: translateY(10%);
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px) translateX(5px);
+            box-shadow: -5px 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        .pill {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+        .pill:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        .story-line {
+            position: absolute;
+            left: 50%;
+            top: 4rem;
+            bottom: 4rem;
+            width: 1px;
+            height: calc(100% - 8rem);
+            background: linear-gradient(to bottom, 
+                transparent,
+                rgba(255, 255, 255, 0.1) 10%,
+                rgba(255, 255, 255, 0.1) 90%,
+                transparent
+            );
+            z-index: -1;
+        }
+        .story-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .story-dot.active {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        .highlight {
+            display: inline;
+            background: linear-gradient(to right, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0));
+            padding: 0.2em 0.1em;
+            border-radius: 3px;
+        }
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="text-white/90">
+    <div id="particles-js"></div>
+    <div class="grain"></div>
+    
+    <!-- Hero Section -->
+    <section class="section bg-black relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-500/10 via-transparent to-black"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <h1 class="text-6xl md:text-8xl font-display font-bold mb-6 gradient-text tracking-tight">
+                    Nikshep Saravanan
+                </h1>
+                <p class="text-xl md:text-2xl mb-12 leading-relaxed max-w-2xl mx-auto">
+                    I build technology that <span class="highlight">accelerates human progress</span>. 
+                    My mission is to create a world where people can <span class="highlight">earn through creativity</span>, 
+                    not labor.
+                </p>
+                <div class="flex justify-center gap-8">
+                    <a href="https://github.com/nikshepsvn" class="pill hover:text-purple-300">github</a>
+                    <a href="https://linkedin.com/in/nikshepsvn" class="pill hover:text-purple-300">linkedin</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg class="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section class="section bg-black">
+        <div class="story-line"></div>
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-display mb-16 gradient-text">The Journey</h2>
+                <div class="space-y-24 relative">
+                    <!-- Current Chapter - DreamLoom -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot active"></div>
+                        <span class="text-sm text-purple-300 mb-2 block">Present Day</span>
+                        <h3 class="text-2xl font-bold mb-4">DreamLoom</h3>
+                        <p class="text-lg text-white/70 mb-6">
+                            Currently building the future of creative expression through 
+                            <span class="highlight">world-building and real-time interactive video</span>. 
+                            DreamLoom is pushing the boundaries of what's possible in digital storytelling 
+                            and creative collaboration.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="pill">generative UI</span>
+                            <span class="pill">DiT architecture</span>
+                            <span class="pill">IP-Adapter</span>
+                            <span class="pill">real-time video</span>
+                        </div>
+                    </div>
+
+                    <!-- Atman Ventures -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot active"></div>
+                        <span class="text-sm text-purple-300 mb-2 block">Present Day</span>
+                        <h3 class="text-2xl font-bold mb-4">Atman Ventures</h3>
+                        <p class="text-lg text-white/70 mb-6">
+                            Through Atman Ventures, we're building & incubating a portfolio of cutting-edge projects 
+                            that push the boundaries of technology and creativity:
+                        </p>
+                        <ul class="list-disc list-inside text-lg text-white/70 mb-6 space-y-2">
+                            <li>LabHype - AI-powered content studio for brands</li>
+                            <li>Asarii - Next-gen suite for DJs and promoters</li>
+                            <li>Other Web3 & AI experiments</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="pill">venture building</span>
+                            <span class="pill">AI/ML</span>
+                            <span class="pill">web3</span>
+                        </div>
+                    </div>
+
+                    <!-- Recent Exits -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot"></div>
+                        <span class="text-sm text-green-300 mb-2 block">Recent Milestones</span>
+                        <div class="space-y-12">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">RealmPlay <span class="text-white/50">(Acquired)</span></h3>
+                                <p class="text-lg text-white/70 mb-6">
+                                    What started as an experiment in AI storytelling turned into a 
+                                    <span class="highlight">three-week sprint to acquisition</span>. 
+                                    I pioneered efficient LLM deployment techniques on consumer GPUs, 
+                                    scaling to thousands of users and reaching 5-figure ARR before exit.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="pill">exllama</span>
+                                    <span class="pill">RoPE scaling</span>
+                                    <span class="pill">16K context</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">SoulBazaar <span class="text-white/50">(Acquired)</span></h3>
+                                <p class="text-lg text-white/70 mb-6">
+                                    Built an autonomous AI influencer platform that evolved into a 
+                                    <span class="highlight">web3-enabled community hub</span>. Our token 
+                                    ($SOULS) reached a $5M marketcap post-acquisition, validating our 
+                                    vision for AI-driven community building in the crypto space.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="pill">LoRA</span>
+                                    <span class="pill">fine-tuning</span>
+                                    <span class="pill">tool-calling</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Early Adventures -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot"></div>
+                        <span class="text-sm text-blue-300 mb-2 block">Where It All Started</span>
+                        <h3 class="text-2xl font-bold mb-4">The Early Days</h3>
+                        <p class="text-lg text-white/70 mb-6">
+                            My journey began with a series of experiments and ventures that shaped my 
+                            builder's mindset. Each project was a stepping stone, teaching invaluable 
+                            lessons about product development, market dynamics, and user psychology:
+                        </p>
+                        <ul class="list-disc list-inside text-lg text-white/70 mb-6 space-y-2">
+                            <li>ICOs/Mining/Development - Early crypto development & trading</li>
+                            <li>AnimeLootStore - Built and scaled to 100+ orders</li>
+                            <li>FuzzPandaFilms - Automated YouTube channel grew to 10M+ views and 16K subscribers</li>
+                            <li>Instagram Automation - Scaled multiple accounts to 5000+ followers</li>
+                            <li>Way Way More - Thumbnail Design Copilot, Synthetic Data Generation, etc.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="pill">crypto mining</span>
+                            <span class="pill">content automation</span>
+                            <span class="pill">growth hacking</span>
+                            <span class="pill">e-commerce</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience -->
+    <section class="section bg-black">
+        <div class="story-line"></div>
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-display mb-16 gradient-text">Professional Impact</h2>
+                <div class="space-y-24 relative">
+                    <!-- Instacart -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot active"></div>
+                        <span class="text-sm text-purple-300 mb-2 block">2021 - 2024</span>
+                        <h3 class="text-2xl font-bold mb-4">Senior Software Engineer @ Instacart</h3>
+                        <p class="text-lg text-white/70 mb-6">
+                            Led the evolution of Instacart's advertising infrastructure, focusing on 
+                            <span class="highlight">measurement and experimentation platforms</span>. 
+                            My work directly impacted the company's multi-billion dollar ads business.
+                        </p>
+                        <ul class="list-disc list-inside text-lg text-white/70 mb-6 space-y-2">
+                            <li>Built & scaled the Ads Measurement Platform, earning the company-wide <span class="highlight">Grow the Pie Award</span></li>
+                            <li>Received multiple recognitions: Q2'23 R&D Award, Q3'23 Special Recognition, Q1'24 R&D Award</li>
+                            <li>Tech lead for Enterprise Ads, leading 10+ engineers across multiple teams</li>
+                            <li>Engineered features for multi-national retailers, driving org-wide impact</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="pill">data pipelines</span>
+                            <span class="pill">distributed systems</span>
+                            <span class="pill">experimentation</span>
+                            <span class="pill">technical leadership</span>
+                        </div>
+                    </div>
+
+                    <!-- Coinbase & Deliverr -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot"></div>
+                        <span class="text-sm text-blue-300 mb-2 block">2020</span>
+                        <h3 class="text-2xl font-bold mb-4">Data Infrastructure Growth</h3>
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Software Engineer @ Coinbase</h4>
+                                <p class="text-lg text-white/70 mb-4">
+                                    Spearheaded critical data infrastructure projects during the crypto boom. 
+                                    Engineered a <span class="highlight">MongoDB to Parquet Spark Pipeline</span> for 
+                                    business-critical financial data, achieving remarkable reliability metrics.
+                                </p>
+                                <ul class="list-disc list-inside text-lg text-white/70 mb-6 space-y-2">
+                                    <li>Processed terabytes of financial data daily with 99.999% uptime</li>
+                                    <li>Built in Scala with support for both batch and streaming execution</li>
+                                    <li>Deprecated two separate Java & Kotlin pipelines, improving efficiency</li>
+                                </ul>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="pill">Scala</span>
+                                    <span class="pill">MongoDB</span>
+                                    <span class="pill">Spark</span>
+                                    <span class="pill">financial data</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Software Engineer @ Deliverr (Shopify)</h4>
+                                <p class="text-lg text-white/70 mb-4">
+                                    Built the foundation for migrating micro-services from pull-based to 
+                                    <span class="highlight">event-driven architecture</span> using Lambda and Kinesis. 
+                                    Significantly improved data refresh times and reduced system load while 
+                                    setting up pathways for future scalability.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="pill">Lambda Architecture</span>
+                                    <span class="pill">Kinesis</span>
+                                    <span class="pill">microservices</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SeatGeek & PagerDuty -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot"></div>
+                        <span class="text-sm text-green-300 mb-2 block">2018 - 2019</span>
+                        <h3 class="text-2xl font-bold mb-4">Early Platform Engineering</h3>
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Software Engineer @ SeatGeek</h4>
+                                <p class="text-lg text-white/70 mb-4">
+                                    Designed and implemented systems to migrate from AWS Redshift clusters 
+                                    to an in-house <span class="highlight">Parquet-based S3 Data Lake</span>. 
+                                    Built tools that significantly improved Data Scientists' productivity.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="pill">Data Lakes</span>
+                                    <span class="pill">AWS</span>
+                                    <span class="pill">Python</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-3">Software Engineer @ PagerDuty</h4>
+                                <p class="text-lg text-white/70 mb-4">
+                                    Co-led project exposing critical event data through an 
+                                    <span class="highlight">Elixir microservice</span>. Built foundational 
+                                    services for the company's microservice architecture transition.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="pill">Elixir</span>
+                                    <span class="pill">Kafka</span>
+                                    <span class="pill">microservices</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Magmic -->
+                    <div class="card p-8 rounded-lg relative">
+                        <div class="story-dot"></div>
+                        <span class="text-sm text-yellow-300 mb-2 block">2017</span>
+                        <h3 class="text-2xl font-bold mb-4">Software Engineer @ Magmic</h3>
+                        <p class="text-lg text-white/70 mb-4">
+                            Re-engineered service authorization flow, improving response times by 
+                            <span class="highlight">over 300%</span>. Implemented rate filtering 
+                            and bot filtering features, reducing service load by over 7%.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="pill">backend services</span>
+                            <span class="pill">optimization</span>
+                            <span class="pill">security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Writing Section -->
+    <section class="section bg-black">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-display mb-16 gradient-text pb-2">Thoughts & Musings</h2>
+                <div class="card p-12 rounded-lg">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-2xl font-bold">Welcome Note</h3>
+                        <span class="text-sm text-white/40">February 2025</span>
+                    </div>
+                    <div class="prose prose-lg prose-invert">
+                        <p class="text-lg text-white/70 mb-6">
+                            I've been meaning to start writing more and this is my first step. 
+                            No concrete plans on what's going to be up here but my guess is it'll 
+                            be a combination of thoughts & musings on tech, space, spirituality, 
+                            neuroscience, the human experience, and anything else that grabs my attention.
+                        </p>
+                        <p class="text-lg text-white/70 mb-6">
+                            A little about myself if you don't know me: I'm a 26-year-old builder living 
+                            in Downtown Toronto. After selling my AI storytelling platform RealmPlay and wrapping up 
+                            my time as a Senior Software Engineer @ Instacart, I've been heads down building 
+                            <span class="highlight">DreamLoom</span> and other exciting projects under 
+                            <span class="highlight">Atman Ventures</span>. When I'm not obsessing over new technologies 
+                            or diving deep into AI research, you'll find me at board game nights or raves with friends.
+                        </p>
+                        <p class="text-lg text-white/70 mb-6">
+                            My journey's been a bit unconventional - from mining ETH at $35 and building viral YouTube 
+                            channels to engineering data platforms at companies like Coinbase and Instacart. Most recently, 
+                            I've been fortunate to have two successful exits with RealmPlay and SoulBazaar, both in the 
+                            AI space. Each venture has been a stepping stone, teaching me invaluable lessons about building 
+                            products that matter.
+                        </p>
+                        <p class="text-lg text-white/70">
+                            Right now, I'm all in on exploring the intersection of AI and creativity. Through DreamLoom 
+                            and our other ventures, we're building technology that helps people earn through their creativity 
+                            rather than labor. While I write to share my experiences and realizations, I hope these posts 
+                            bring you value, spark joy, or offer a new perspective. Welcome to my corner of the internet, 
+                            and I hope you feel right at home.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section bg-black min-h-[70vh]">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-display mb-8 gradient-text">Let's Connect</h2>
+                <p class="text-xl mb-12 max-w-2xl mx-auto">
+                    Whether you're interested in AI, building products, or just want to 
+                    exchange ideas, I'm always open to meaningful conversations. Reach out at 
+                    <a href="mailto:nikshepsvn@gmail.com" class="underline hover:text-purple-300">nikshepsvn@gmail.com</a> or 
+                    <a href="mailto:nikshep@dreamloom.ai" class="underline hover:text-purple-300">nikshep@dreamloom.ai</a>
+                </p>
+                <a href="https://cal.com/nikshep/30min" class="pill inline-block hover:text-purple-300">
+                    book a chat →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: {
+                    value: 0.1,
+                    random: true,
+                    animation: { enable: true, speed: 1, minimumValue: 0.1, sync: false }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    animation: { enable: true, speed: 4, minimumValue: 0.3, sync: false }
+                },
+                lineLinked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.1,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    outMode: 'out',
+                    bounce: false,
+                }
+            },
+            interactivity: {
+                detectOn: 'canvas',
+                events: {
+                    onHover: { enable: true, mode: 'grab' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, lineLinked: { opacity: 0.5 } }
+                }
+            },
+            retina_detect: true
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate sections on scroll with more sophisticated effects
+        gsap.utils.toArray('.section').forEach((section, i) => {
+            // Heading animation
+            gsap.from(section.querySelectorAll('h2'), {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+
+            // Cards animation with stagger
+            gsap.from(section.querySelectorAll('.card'), {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 60%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+
+            // Text elements fade in
+            gsap.from(section.querySelectorAll('p, .pill'), {
+                opacity: 0,
+                duration: 1,
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 70%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Story dots animation
+        document.addEventListener('scroll', () => {
+            const dots = document.querySelectorAll('.story-dot');
+            dots.forEach(dot => {
+                const rect = dot.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7 && rect.bottom > 0) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

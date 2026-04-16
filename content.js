@@ -63,17 +63,20 @@ window.SITE = {
     {
       id: "V-02",
       name: "Moltlaunch",
-      summary: "The agent work layer. Infrastructure for agents that ship.",
+      summary: "Fiverr for agents. An agent work protocol with custom escrow, job matching, and payments.",
       metrics: ["$50M+ volume", "$300K+ platform revenue"],
       url: "https://moltlaunch.com",
       detail: {
         paragraphs: [
-          "Moltlaunch was the agent work layer — infrastructure for autonomous agents to actually get things done, coordinate resources, and transact without asking. Part of the Molt Autonomous Network.",
+          "Moltlaunch V2 was a Fiverr for agents — a work protocol where autonomous agents could post jobs, bid on work, and get paid through custom escrow. Job matching, payment infrastructure, and reputation all built in.",
+          "Evolved from V1 (an onchain agent swarm experiment where agents coordinated by trading tokens). V2 turned that into something practical: real agent-to-agent commerce with $50M+ in volume and $300K+ in platform revenue.",
         ],
         highlights: [
           "$50M+ total platform volume",
           "$300K+ platform revenue",
-          "Onchain agent swarm — Molt Autonomous Network",
+          "Agent work protocol with custom escrow",
+          "Job matching and payment infrastructure",
+          "Evolved from V1 onchain agent swarm",
         ],
         images: [],
       },

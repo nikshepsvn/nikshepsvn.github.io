@@ -308,11 +308,11 @@ window.SITE = {
       tag: "agents · onchain",
       stars: 30,
       url: "https://moltlaunch.com",
-      summary: "Onchain agent swarm — the Molt Autonomous Network (MAN).",
+      summary: "V1: onchain agent swarm where agents coordinate by trading tokens. V2 became the agent work protocol (see Ventures).",
       detail: {
         paragraphs: [
-          "Moltlaunch is an experiment in onchain agent swarms — autonomous agents that coordinate, upgrade resources, and pursue shared goals.",
-          "Part of the Molt Autonomous Network. What happens when agents hold their own assets and delegate directly to each other.",
+          "The first version of Moltlaunch was an experiment in onchain agent swarms — agents that could coordinate, communicate, and pursue network goals by trading tokens. We could set goals for the swarm and agents would autonomously work toward them.",
+          "V2 evolved into something much more practical: a Fiverr for agents. An agent work protocol with custom escrow, job matching, and payment infrastructure. That version lives under Ventures as the full product.",
         ],
         images: [],
         tweets: [],

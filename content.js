@@ -80,27 +80,6 @@ window.SITE = {
     },
     {
       id: "V-03",
-      name: "SniffChain",
-      summary:
-        "Token and wallet research terminal with AI agents. Multi-agent system on X for trading, sending, and researching tokens in-feed.",
-      metrics: ["~5k users", "~1k community", "Fully organic growth"],
-      url: "",
-      detail: {
-        paragraphs: [
-          "SniffChain was a token and wallet research terminal powered by AI agents — a multi-agent system on X that let you trade, send, and research tokens directly in-feed.",
-          "Built novel risk scoring and detection infrastructure under the hood. Grew to roughly 5k users and 1k community members fully organically, with zero paid acquisition.",
-        ],
-        highlights: [
-          "Multi-agent system on X for in-feed trading, sending, and research",
-          "Novel risk scoring and detection infrastructure",
-          "~5k users / ~1k community",
-          "Fully organic growth — no paid acquisition",
-        ],
-        images: [],
-      },
-    },
-    {
-      id: "V-04",
       name: "RealmPlay",
       summary:
         "AI storytelling platform on a custom fine-tuned LLM running on consumer-grade GPUs.",
@@ -126,7 +105,7 @@ window.SITE = {
       },
     },
     {
-      id: "V-05",
+      id: "V-04",
       name: "SoulBazaar",
       summary:
         "Autonomous AI influencer platform for crypto tokens & communities. Acquired pre-launch.",
@@ -144,6 +123,27 @@ window.SITE = {
           "Agents with X posting, image generation, meme design, real-time trend retrieval",
           "Post-acquisition token reached $5M+ marketcap",
           "Later rebranded to LetsAgent",
+        ],
+        images: [],
+      },
+    },
+    {
+      id: "V-05",
+      name: "SniffChain",
+      summary:
+        "Token and wallet research terminal with AI agents. Multi-agent system on X for trading, sending, and researching tokens in-feed.",
+      metrics: ["~5k users", "~1k community", "Fully organic growth"],
+      url: "",
+      detail: {
+        paragraphs: [
+          "SniffChain was a token and wallet research terminal powered by AI agents — a multi-agent system on X that let you trade, send, and research tokens directly in-feed.",
+          "Built novel risk scoring and detection infrastructure under the hood. Grew to roughly 5k users and 1k community members fully organically, with zero paid acquisition.",
+        ],
+        highlights: [
+          "Multi-agent system on X for in-feed trading, sending, and research",
+          "Novel risk scoring and detection infrastructure",
+          "~5k users / ~1k community",
+          "Fully organic growth — no paid acquisition",
         ],
         images: [],
       },

@@ -1084,14 +1084,20 @@ a { color: inherit; text-decoration: none; }
   .reader-card { max-height: 100vh; height: 100vh; border: 0; }
   .reader-bar { grid-template-columns: auto 1fr; padding: 12px 16px; gap: 14px; }
   .reader-progress { display: none; }
-  .reader-title { font-size: 11px; max-width: 100%; }
-  .reader-inner { padding: 36px 20px 32px; }
-  .reader .essay .e-title { font-size: 28px; }
-  .reader .essay .e-subtitle { font-size: 15.5px; }
-  .reader .essay .e-body { font-size: 16px; }
-  .reader-pn { grid-template-columns: 1fr; }
+  .reader-title { font-size: 10.5px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .reader-inner { padding: 32px 18px 28px; }
+  .reader .essay .e-meta { font-size: 10px; }
+  .reader .essay .e-title { font-size: 24px; }
+  .reader .essay .e-subtitle { font-size: 14.5px; }
+  .reader .essay .e-body { font-size: 15px; line-height: 1.65; }
+  .reader .essay .e-body h2 { font-size: 18px; margin: 28px 0 10px; }
+  .reader .essay .e-body h3 { font-size: 10.5px; }
+  .reader-pn { grid-template-columns: 1fr; gap: 8px; }
+  .pn-btn { padding: 14px 16px; }
   .pn-btn.pn-next { align-items: flex-start; text-align: left; }
+  .pn-title { font-size: 14px; }
   .reader-kbd { display: none; }
+  .reader-close { padding: 5px 10px; font-size: 11px; }
 }
 
 /* ---------- Legacy essay-modal (unused but kept harmless) ---------- */
@@ -1192,29 +1198,106 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Responsive ---------- */
 
+/* ---------- Tablet (≤860px) ---------- */
 @media (max-width: 860px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+  .layout { grid-template-columns: 1fr; }
   .sidebar {
     border-right: 0;
     border-bottom: 1px solid var(--line);
+    background: var(--bg);
   }
   .sidebar-inner {
     position: static;
     max-height: none;
     overflow: visible;
-    padding-bottom: 32px;
+    padding: 24px 20px 28px;
   }
-  .content {
-    padding-top: 40px;
-  }
-  .prow { grid-template-columns: minmax(0, 1fr) 80px; gap: 12px; padding: 14px 0; }
+  .content { padding: 32px 20px 64px; }
+
+  /* sidebar elements */
+  .name { font-size: 20px; }
+  .role { font-size: 11.5px; }
+  .tagline { font-size: 12.5px; max-width: 100%; }
+  .prev { margin-top: 20px; }
+  .cta { margin-top: 18px; }
+  .cta-text { font-size: 12px; max-width: 100%; }
+  .links { margin-top: 20px; }
+  .sidebar-foot { margin-top: 22px; padding-top: 14px; }
+
+  /* sections */
+  .section { padding: 48px 0; }
+  .sec h2 { font-size: 13px; }
+
+  /* rows */
+  .prow { grid-template-columns: minmax(0, 1fr) 70px; gap: 10px; padding: 14px 0; }
   .prow-tag { display: none; }
-  .erow { grid-template-columns: minmax(0, 1fr) 100px; gap: 12px; }
+  .prow-name { font-size: 14.5px; }
+  .prow-sum { font-size: 12.5px; }
+  .prow-meta { font-size: 10.5px; }
+
+  .erow { grid-template-columns: minmax(0, 1fr) 100px; gap: 10px; padding: 12px 0; }
   .erow .edesc { display: none; }
-  .pmodal-content { padding: 28px 22px 22px; }
-  .d-images { grid-template-columns: repeat(2, 1fr); }
+  .erow .etitle { font-size: 13.5px; }
+  .erow .ekind { font-size: 10px; }
+  .ekind.emetrics span { font-size: 9px; }
+
+  /* modals */
+  .pmodal { padding: 20px 12px; }
+  .pmodal-card { max-width: 100%; border: 0; }
+  .pmodal-content { padding: 24px 20px 20px; }
   .d-head { flex-direction: column; gap: 8px; }
   .d-meta { text-align: left; }
+  .d-name { font-size: 20px; }
+  .d-images { grid-template-columns: repeat(2, 1fr); }
+
+  /* venture detail */
+  .venture-detail .vd-name { font-size: 22px; }
+  .venture-detail .vd-metrics { gap: 4px; }
+  .venture-detail .vd-metric { font-size: 9.5px; padding: 4px 8px; }
+  .venture-detail .vd-highlights li { font-size: 13px; padding: 5px 0 5px 14px; }
+}
+
+/* ---------- Phone (≤480px) ---------- */
+@media (max-width: 480px) {
+  .sidebar-inner { padding: 20px 16px 24px; }
+  .content { padding: 24px 16px 48px; }
+
+  .status { font-size: 9px; gap: 6px; }
+  .name { font-size: 18px; letter-spacing: -0.025em; }
+  .tagline { font-size: 11.5px; line-height: 1.55; }
+  .cta-text { font-size: 11.5px; }
+
+  .prev-item { width: 26px; height: 26px; padding: 4px; }
+  .prev-tip { display: none; }
+
+  .section { padding: 40px 0; }
+  .sec h2 { font-size: 12.5px; }
+  .sec-count { font-size: 9.5px; }
+
+  .prow { grid-template-columns: minmax(0, 1fr) 60px; gap: 8px; padding: 12px 0; }
+  .prow-name { font-size: 13.5px; }
+  .prow-sum { font-size: 12px; line-height: 1.45; }
+  .prow-meta { font-size: 10px; }
+  .prow-meta .stars { font-size: 10px; }
+
+  .erow { grid-template-columns: minmax(0, 1fr) 80px; gap: 8px; padding: 10px 0; }
+  .erow .etitle { font-size: 13px; }
+  .erow .ekind { font-size: 9px; }
+  .ekind.emetrics span { font-size: 8.5px; }
+
+  .pmodal { padding: 0; }
+  .pmodal-backdrop { background: rgba(10,10,10,0.5); }
+  .pmodal-card { height: 100vh; max-height: 100vh; border: 0; border-radius: 0; }
+  .pmodal-content { padding: 20px 16px 16px; }
+  .d-name { font-size: 18px; }
+  .d-paragraphs p { font-size: 13.5px; }
+  .d-links { gap: 6px; }
+  .d-link { padding: 7px 11px; font-size: 10px; }
+
+  .venture-detail .vd-name { font-size: 18px; }
+  .venture-detail .vd-summary { font-size: 13px; }
+  .venture-detail .vd-metric { font-size: 9px; padding: 3px 6px; }
+  .venture-detail .vd-highlights li { font-size: 12.5px; }
+
+  .contact a { grid-template-columns: 60px 1fr auto; gap: 10px; padding: 12px 0; }
 }

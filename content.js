@@ -736,14 +736,6 @@ This is a starting point, not a finished design. The economics need more work. T
     },
     {
       id: "PR-06",
-      title: "Show HN: Homunculus – A self-rewriting Claude Code plugin",
-      source: "Hacker News",
-      date: "Jan 2026",
-      url: "https://news.ycombinator.com/item?id=46682194",
-      blurb: "HN discussion thread on the self-evolving Claude Code plugin.",
-    },
-    {
-      id: "PR-07",
       title: "Prediction Market Interest Soars as Crypto Sector Cools",
       source: "PYMNTS",
       date: "Jan 2026",
@@ -751,7 +743,7 @@ This is a starting point, not a finished design. The economics need more work. T
       blurb: "Covers the ex-crypto builder angle and HumanPlane as a research tool.",
     },
     {
-      id: "PR-08",
+      id: "PR-07",
       title: "Crypto Traders Flee to Prediction Bets",
       source: "Financial Post",
       date: "Jan 2026",

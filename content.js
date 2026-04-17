@@ -238,10 +238,17 @@ window.SITE = {
       detail: {
         paragraphs: [
           "Viberank turns Claude Code usage into a public leaderboard — making shipping visible. Instead of 'I use Claude Code a lot,' you can show receipts.",
-          "Shipped under SCULPT. Lightweight, authenticated opt-in, fully open source.",
+          "Shipped under SCULPT. Lightweight, authenticated opt-in, fully open source. Picked up across the ecosystem — integrated upstream with the ccusage CLI and forked by academic labs (SNU Connectome Lab) for internal leaderboards.",
         ],
         images: [],
-        tweets: [],
+        tweets: [
+          {
+            text: "Ranked #1 on viberank with $458K spent across 12.9B tokens.",
+            author: "GeoffreyHuntley",
+            url: "https://x.com/GeoffreyHuntley/status/1949927020093460836",
+            date: "Jul 2025",
+          },
+        ],
         links: [
           { label: "open viberank.app", href: "https://viberank.app" },
           { label: "source", href: "https://github.com/sculptdotfun/viberank" },

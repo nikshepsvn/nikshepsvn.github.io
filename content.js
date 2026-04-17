@@ -19,6 +19,17 @@ window.SITE = {
     role: "Exploration engineer",
     tagline:
       "Building at the edges of AI, crypto, and markets. Shipping small to large, opinionated projects to test theses in emerging categories.",
+    philosophy:
+      "Infinitely curious, delusional optimist — realizing my potential while making fun, valuable things for the world.",
+    stack: [
+      "crypto",
+      "prediction markets",
+      "applied AI",
+      "LLMs",
+      "media models",
+      "data infra",
+      "full-stack",
+    ],
     title: "Nikshep Saravanan",
     description:
       "Exploration engineer in Toronto. Projects and essays across AI, crypto, markets, and general curiosity. Previously Sr. SWE at Instacart. Waterloo CS '21.",

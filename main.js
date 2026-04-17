@@ -11,6 +11,15 @@
   set("#hero-name", S.meta.name);
   set("#hero-role", S.meta.role + " · " + S.meta.location);
   set("#hero-tag", S.meta.tagline);
+  set("#hero-philosophy", S.meta.philosophy);
+
+  // Stack tags
+  const stackEl = $("#stack-items");
+  if (stackEl && Array.isArray(S.meta.stack)) {
+    stackEl.innerHTML = S.meta.stack
+      .map((s) => `<span>${esc(s)}</span>`)
+      .join("");
+  }
 
   // "Previously" logo row with rich hover tooltip
   const prevEl = $("#prev-items");

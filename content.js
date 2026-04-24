@@ -219,9 +219,27 @@ window.SITE = {
     },
     {
       id: "P-02",
+      name: "veilstream",
+      tag: "research · llm security",
+      stars: 4,
+      url: "https://github.com/nikshepsvn/veilstream",
+      summary:
+        "Streaming PII proxy for LLM chat with cryptographically-anchored reversal. Introduces PASP.",
+      detail: {
+        paragraphs: [
+          "Veilstream sits between a chat UI and an LLM. Outbound: detects PII, mints realistic pseudonyms, keeps a per-session vault. Inbound: streams the LLM's response with pseudonyms reversed live as chunks arrive — tolerating pseudonyms that straddle chunk boundaries, partial prefixes, and the edge cases every prior library silently breaks on.",
+          "Introduces PASP — Provenance-Anchored Streaming Pseudonymization — a new algorithm that closes the false-attribution attack every prior reverser suffers from. Benchmarks: legacy reversers show 2–32% false-attribution on 6 frontier LLMs (median 12%); PASP blocks it cryptographically at 0%. 85 core tests passing, including 500+ Hypothesis property cases.",
+        ],
+        images: [],
+        tweets: [],
+        links: [{ label: "github", href: "https://github.com/nikshepsvn/veilstream" }],
+      },
+    },
+    {
+      id: "P-03",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 368,
+      stars: 373,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -240,10 +258,10 @@ window.SITE = {
       },
     },
     {
-      id: "P-03",
+      id: "P-04",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 95,
+      stars: 96,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {
@@ -267,10 +285,10 @@ window.SITE = {
       },
     },
     {
-      id: "P-04",
+      id: "P-05",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 358,
+      stars: 364,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -288,7 +306,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-05",
+      id: "P-06",
       name: "tremor",
       tag: "markets · prediction",
       stars: 51,
@@ -307,7 +325,27 @@ window.SITE = {
       },
     },
     {
-      id: "P-06",
+      id: "P-07",
+      name: "terminal",
+      tag: "oss · prediction markets",
+      stars: 38,
+      url: "https://github.com/humanplane/terminal",
+      summary:
+        "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",
+      detail: {
+        paragraphs: [
+          "A Bloomberg-style dark UI for Polymarket — sub-second order book via SSE, full trader leaderboard drill-down, and self-custodial order execution with no third-party relayer. Browse 10,000+ markets, watch the order book tick, sign orders with MetaMask.",
+          "Read-only mode works without a wallet. Trading mode connects MetaMask and signs orders directly against Polymarket's CLOB — no custody, no backend secrets, no builder credentials. The OSS side of the HumanPlane stack.",
+        ],
+        images: [],
+        tweets: [],
+        links: [
+          { label: "github", href: "https://github.com/humanplane/terminal" },
+        ],
+      },
+    },
+    {
+      id: "P-08",
       name: "openvenice",
       tag: "oss · llms",
       stars: 37,
@@ -324,7 +362,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-07",
+      id: "P-09",
       name: "moltlaunch",
       tag: "agents · onchain",
       stars: 30,
@@ -344,7 +382,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-08",
+      id: "P-10",
       name: "nemo-ai",
       tag: "mcp · memory",
       stars: 3,
@@ -361,7 +399,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-09",
+      id: "P-11",
       name: "modelgrep",
       tag: "llm-ops · search",
       stars: 2,

@@ -807,14 +807,6 @@ This is a starting point, not a finished design. The economics need more work. T
       blurb: "Feature framing Moltlaunch as Upwork for AI agents — cites 21K+ ERC-8004 agents, 70% on Base.",
     },
     {
-      id: "PR-04",
-      title: "Inside the Gig Economy Built for AI: Moltlaunch",
-      source: "MEXC News",
-      date: "Feb 2026",
-      url: "https://www.mexc.co/en-IN/news/744267",
-      blurb: "Crypto-industry coverage of the Feb 2026 Base launch and agent marketplace.",
-    },
-    {
       id: "PR-05",
       title: "Bankai: Kilobyte-Scale Patches for 1-Bit LLMs via XOR Adaptation",
       source: "Shanghai NYU RITS",
@@ -829,14 +821,6 @@ This is a starting point, not a finished design. The economics need more work. T
       date: "Jan 2026",
       url: "https://www.pymnts.com/news/investment-tracker/2026/prediction-market-interest-soars-as-crypto-sector-cools/",
       blurb: "Covers the ex-crypto builder angle and HumanPlane as a research tool.",
-    },
-    {
-      id: "PR-07",
-      title: "Crypto Traders Flee to Prediction Bets",
-      source: "Financial Post",
-      date: "Jan 2026",
-      url: "https://financialpost.com/fp-finance/cryptocurrency/crypto-traders-flee-to-prediction-bets",
-      blurb: "Canadian syndication of the Bloomberg piece.",
     },
   ],
 

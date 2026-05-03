@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>OG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root { color-scheme: light; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1200px; height: 630px;
+    background: #fafaf8;
+    color: #0a0a0a;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(10,10,10,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10,10,10,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .frame {
+    position: absolute;
+    inset: 56px;
+    border: 1px solid rgba(10,10,10,0.08);
+    background: #ffffff;
+    padding: 56px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6a6a6e;
+  }
+  .live {
+    width: 8px; height: 8px;
+    background: #0a0a0a;
+    border-radius: 50%;
+  }
+  .name {
+    font-size: 88px;
+    line-height: 1.0;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: #0a0a0a;
+    margin: 0;
+  }
+  .tag {
+    margin-top: 22px;
+    font-size: 26px;
+    line-height: 1.32;
+    color: #3b3b40;
+    max-width: 920px;
+    letter-spacing: -0.012em;
+    font-weight: 400;
+  }
+  .tag b { color: #0a0a0a; font-weight: 600; }
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .ventures {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .ventures-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7a7a7e;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ventures-label::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: #d4ff00;
+    display: inline-block;
+    border: 1px solid #0a0a0a;
+  }
+  .ventures-list {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    color: #0a0a0a;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .ventures-list span { color: #c2c2c6; margin: 0 8px; }
+  .press {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .press-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7a7a7e;
+  }
+  .press-list {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #3b3b40;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .press-list span { color: #c2c2c6; margin: 0 7px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="frame">
+    <div>
+      <div class="top">
+        <span class="live"></span>
+        <span>shipping · toronto</span>
+      </div>
+      <h1 class="name" style="margin-top:42px;">Nikshep Saravanan</h1>
+      <p class="tag">Building at the edges of <b>AI</b>, <b>crypto</b>, and <b>prediction&nbsp;markets</b>. Shipping small to large, opinionated projects to test theses in emerging categories.</p>
+    </div>
+    <div class="bottom">
+      <div class="ventures">
+        <div class="ventures-label">Now building</div>
+        <div class="ventures-list"><b>PhoneGoblin</b><span>—</span>BYOD content factory</div>
+      </div>
+      <div class="press">
+        <div class="press-label">Featured in</div>
+        <div class="press-list">Bloomberg<span>·</span>Business Insider<span>·</span>WSJ<span>·</span>PYMNTS</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

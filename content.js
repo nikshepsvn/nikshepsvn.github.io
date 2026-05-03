@@ -21,18 +21,16 @@ window.SITE = {
       "Building at the edges of AI, crypto, and markets. Shipping small to large, opinionated projects to test theses in emerging categories.",
     philosophy:
       "Infinitely curious, delusional optimist — realizing my potential while making fun, valuable things for the world.",
-    stack: [
-      "crypto",
-      "prediction markets",
-      "applied AI",
-      "LLMs",
-      "media models",
-      "data infra",
-      "full-stack",
-    ],
-    title: "Nikshep Saravanan",
+    now: {
+      label: "PhoneGoblin",
+      note: "run a content factory from your desk",
+      url: "https://phonegoblin.com",
+    },
+    title: "Nikshep Saravanan — building at the edges of AI, crypto, and markets",
     description:
-      "Exploration engineer in Toronto. Projects and essays across AI, crypto, markets, and general curiosity. Previously Sr. SWE at Instacart. Waterloo CS '21.",
+      "Independent builder. Now building PhoneGoblin — BYOD Android content factory. Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, WSJ.",
+    url: "https://nikshepsvn.com/",
+    ogImage: "https://nikshepsvn.com/og.png",
   },
 
   // Notable past roles — small logo row in sidebar.
@@ -53,11 +51,40 @@ window.SITE = {
   // Click in UI opens a modal with highlights + more.
   ventures: [
     {
+      id: "V-00",
+      name: "PhoneGoblin",
+      status: "building",
+      summary:
+        "Run a content factory from your desk. Mount any Android — it becomes a node. Real device, real taps, indistinguishable from a human's. One phone or a hundred.",
+      kpi: { value: "Building", label: "waitlist open" },
+      metrics: ["BYOD Android", "No root", "Open runtime", "On-device"],
+      url: "https://phonegoblin.com",
+      detail: {
+        paragraphs: [
+          "PhoneGoblin runs a content factory from your desk. Mount any Android — it becomes a node in your fleet. Drive content, automation, and analytics across devices: every tap is a real device, every account indistinguishable from a human's.",
+          "Real phones, real taps. No emulators, no cloud phones, no modded APKs. Sideload a signed APK, enable the Accessibility Service, and the goblin is alive — one reboot, no rooting, no developer mode tricks.",
+          "Sign in to the apps you already use. Sessions live in the apps' own sandboxes — credentials never leave the device, and never reach us. Every action you'd take by hand, run across the whole fleet.",
+        ],
+        highlights: [
+          "BYOD Android — sideload signed APK, enable Accessibility Service, install in 90s",
+          "Per-account control: bio, image, pinned post, persona, what each account looks at",
+          "Personas-in-character: backstory, voice, feed — held across every interaction",
+          "Bulk publish: a week of on-brand posts in minutes",
+          "Workflows-as-code — chain models, set triggers, automate replies",
+          "Analytics loop back per account, per persona, per phone",
+          "Managed capacity available — rent Androids if you don't want hardware",
+        ],
+        images: [],
+      },
+    },
+    {
       id: "V-01",
       name: "HumanPlane",
+      status: "shipped",
       summary:
         "The chart room for prediction markets. Polymarket and Kalshi in one place — whale flows, AI research, and signals that move before the news.",
-      metrics: ["$250K+ volume", "Kalshi grant recipient", "Builder fellow"],
+      kpi: { value: "$250K+", label: "platform volume" },
+      metrics: ["Kalshi grant recipient", "Builder fellow"],
       url: "https://humanplane.com",
       detail: {
         paragraphs: [
@@ -74,8 +101,10 @@ window.SITE = {
     {
       id: "V-02",
       name: "Moltlaunch",
+      status: "shipped",
       summary: "Fiverr for agents. An agent work protocol with custom escrow, job matching, and payments.",
-      metrics: ["$50M+ volume", "$300K+ platform revenue"],
+      kpi: { value: "$50M+", label: "platform volume" },
+      metrics: ["$300K+ platform revenue"],
       url: "https://moltlaunch.com",
       detail: {
         paragraphs: [
@@ -95,9 +124,11 @@ window.SITE = {
     {
       id: "V-03",
       name: "RealmPlay",
+      status: "exited",
       summary:
         "AI storytelling platform on a custom fine-tuned LLM running on consumer-grade GPUs.",
-      metrics: ["Exited to West Mountain AI", "Mid 5-fig ARR", "Bootstrapped"],
+      kpi: { value: "Exited", label: "to West Mountain AI" },
+      metrics: ["Mid 5-fig ARR", "Bootstrapped"],
       url: "",
       detail: {
         paragraphs: [
@@ -121,9 +152,11 @@ window.SITE = {
     {
       id: "V-04",
       name: "SoulBazaar",
+      status: "acquired",
       summary:
         "Autonomous AI influencer platform for crypto tokens & communities. Acquired pre-launch.",
-      metrics: ["Acquired pre-launch", "$5M+ token marketcap post-acquisition", "Rebranded to LetsAgent"],
+      kpi: { value: "Acquired", label: "pre-launch" },
+      metrics: ["$5M+ token marketcap post-acquisition", "Rebranded to LetsAgent"],
       url: "",
       detail: {
         paragraphs: [
@@ -144,9 +177,11 @@ window.SITE = {
     {
       id: "V-05",
       name: "SniffChain",
+      status: "shipped",
       summary:
         "Token and wallet research terminal with AI agents. Multi-agent system on X for trading, sending, and researching tokens in-feed.",
-      metrics: ["~5k users", "~1k community", "Fully organic growth"],
+      kpi: { value: "~5k", label: "users · fully organic" },
+      metrics: ["~1k community"],
       url: "",
       detail: {
         paragraphs: [
@@ -165,9 +200,11 @@ window.SITE = {
     {
       id: "V-06",
       name: "Clip.fun",
+      status: "shipped",
       summary:
         "The market for imagination. Democratizing and financializing creativity for the AI age.",
-      metrics: ["2,000+ waitlist", "Novel tokenomics"],
+      kpi: { value: "2,000+", label: "waitlist" },
+      metrics: ["Novel tokenomics"],
       url: "https://clip.fun",
       detail: {
         paragraphs: [
@@ -183,8 +220,10 @@ window.SITE = {
     {
       id: "V-07",
       name: "Dreamloom",
+      status: "pre-launch",
       summary: "Near real-time interactive video. AI-native world-building.",
-      metrics: ["Near real-time interactive video", "AI-native world-building"],
+      kpi: { value: "Pre-launch", label: "AI-native world-building" },
+      metrics: ["Near real-time interactive video"],
       url: "https://dreamloom.com",
       detail: {
         paragraphs: [

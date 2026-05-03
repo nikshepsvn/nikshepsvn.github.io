@@ -3,9 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nikshep Saravanan</title>
-    <meta name="description" content="" />
+    <title>Nikshep Saravanan — building at the edges of AI, crypto, and markets</title>
+    <meta name="description" content="Independent builder shipping at the edges of AI, crypto, and prediction markets. HumanPlane, Moltlaunch, RealmPlay (exited). Featured in Bloomberg, Business Insider, WSJ." />
+    <meta name="author" content="Nikshep Saravanan" />
     <meta name="theme-color" content="#ffffff" />
+
+    <link rel="canonical" href="https://nikshepsvn.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nikshepsvn.com/" />
+    <meta property="og:title" content="Nikshep Saravanan — building at the edges of AI, crypto, and markets" />
+    <meta property="og:description" content="Independent builder. Now building PhoneGoblin (BYOD content factory). Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, WSJ." />
+    <meta property="og:image" content="https://nikshepsvn.com/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@nikshepsvn" />
+    <meta name="twitter:creator" content="@nikshepsvn" />
+    <meta name="twitter:title" content="Nikshep Saravanan — building at the edges of AI, crypto, and markets" />
+    <meta name="twitter:description" content="Independent builder. Now building PhoneGoblin (BYOD content factory). Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, WSJ." />
+    <meta name="twitter:image" content="https://nikshepsvn.com/og.png" />
+
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffffff'/%3E%3Ctext x='50%25' y='70%25' font-size='72' font-family='Menlo,monospace' text-anchor='middle' fill='%230a0a0a'%3Ens%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,52 +38,65 @@
     <div class="layout">
       <aside class="sidebar">
         <div class="sidebar-inner">
-          <div class="status">
-            <span class="live-dot"></span>
-            <span class="status-label">shipping</span>
-            <span class="sep">·</span>
-            <span id="hero-time">—</span>
+          <div class="sidebar-hero">
+            <div class="status">
+              <span class="live-dot"></span>
+              <span class="status-label">shipping</span>
+              <span class="sep">·</span>
+              <span id="hero-time">—</span>
+            </div>
+
+            <h1 id="hero-name" class="name"></h1>
+            <div class="role" id="hero-role"></div>
+
+            <p class="tagline" id="hero-tag"></p>
+            <p class="tagline-sub" id="hero-philosophy"></p>
+
+            <a class="now" id="hero-now" href="#" target="_blank" rel="noreferrer">
+              <span class="now-label">Now</span>
+              <span class="now-body">
+                <span class="now-name" id="hero-now-name"></span>
+                <span class="now-note" id="hero-now-note"></span>
+              </span>
+              <span class="now-arrow" aria-hidden="true">↗</span>
+            </a>
           </div>
 
-          <h1 id="hero-name" class="name"></h1>
-          <div class="role" id="hero-role"></div>
+          <div class="sidebar-meta">
+            <div class="prev">
+              <div class="prev-label">Background</div>
+              <div class="prev-items" id="prev-items"></div>
+            </div>
 
-          <p class="tagline" id="hero-tag"></p>
-          <p class="tagline-sub" id="hero-philosophy"></p>
+            <div class="cta">
+              <div class="cta-label">Reach me</div>
+              <p class="cta-text">
+                DMs on <a href="https://twitter.com/nikshepsvn" target="_blank" rel="noreferrer">X</a> are best, or
+                <a href="mailto:nikshepsvn@gmail.com" id="cta-email">nikshepsvn@gmail.com</a>.
+              </p>
+            </div>
 
-          <div class="prev">
-            <div class="prev-label">Background</div>
-            <div class="prev-items" id="prev-items"></div>
-          </div>
+            <ul class="links" id="links-list"></ul>
 
-          <div class="stack">
-            <div class="stack-label">Stack</div>
-            <div class="stack-items" id="stack-items"></div>
-          </div>
-
-          <div class="cta">
-            <div class="cta-label">Reach me</div>
-            <p class="cta-text">
-              DMs on <a href="https://twitter.com/nikshepsvn" target="_blank" rel="noreferrer">X</a> are best, or
-              <a href="mailto:nikshepsvn@gmail.com" id="cta-email">nikshepsvn@gmail.com</a>.
-            </p>
-          </div>
-
-          <ul class="links" id="links-list"></ul>
-
-          <div class="sidebar-foot">
-            <div class="foot-colo">© <span id="foot-year"></span> Nikshep Saravanan</div>
+            <div class="sidebar-foot">
+              <div class="foot-colo">© <span id="foot-year"></span> Nikshep Saravanan</div>
+            </div>
           </div>
         </div>
       </aside>
 
       <main class="content">
-        <section id="ventures" class="section">
+        <section id="press-strip" class="press-strip" aria-label="Featured in">
+          <span class="press-strip-label">Featured in</span>
+          <div class="press-strip-items" id="press-strip-items"></div>
+        </section>
+
+        <section id="ventures" class="section section-ventures">
           <header class="sec">
             <h2>Ventures</h2>
             <span class="sec-count" id="ventures-count"></span>
           </header>
-          <div id="ventures-rows" class="erows"></div>
+          <div id="ventures-rows" class="vrows"></div>
         </section>
 
         <section id="work" class="section">

@@ -13,12 +13,22 @@
   set("#hero-tag", S.meta.tagline);
   set("#hero-philosophy", S.meta.philosophy);
 
-  // Stack tags
-  const stackEl = $("#stack-items");
-  if (stackEl && Array.isArray(S.meta.stack)) {
-    stackEl.innerHTML = S.meta.stack
-      .map((s) => `<span>${esc(s)}</span>`)
-      .join("");
+  // "Now shipping" callout
+  const nowEl = $("#hero-now");
+  const nowName = $("#hero-now-name");
+  const nowNote = $("#hero-now-note");
+  if (nowEl && S.meta.now) {
+    const n = S.meta.now;
+    if (nowName) nowName.textContent = n.label || "";
+    if (nowNote) nowNote.textContent = n.note ? "— " + n.note : "";
+    if (n.url) {
+      nowEl.setAttribute("href", n.url);
+    } else {
+      nowEl.removeAttribute("href");
+      nowEl.removeAttribute("target");
+    }
+  } else if (nowEl) {
+    nowEl.style.display = "none";
   }
 
   // "Previously" logo row with rich hover tooltip
@@ -127,19 +137,30 @@
   if (vs && S.ventures) {
     S.ventures.forEach((v, i) => {
       const row = document.createElement("button");
-      row.className = "erow";
+      row.className = "vrow";
       row.type = "button";
-      const hasMetrics = Array.isArray(v.metrics) && v.metrics.length > 0;
+      const status = (v.status || "").toLowerCase();
+      const kpi = v.kpi || (v.metrics && v.metrics.length
+        ? { value: v.metrics[0], label: "" }
+        : null);
+      const supporting = (v.metrics || []).slice(0, 3);
       row.innerHTML = `
-        <div class="erow-body">
-          <div class="etitle">${esc(v.name)}</div>
-          <span class="edesc">${esc(v.summary)}</span>
-        </div>
-        <div class="ekind emetrics">
-          ${hasMetrics
-            ? v.metrics.map((m) => `<span>${esc(m)}</span>`).join("")
+        <div class="vrow-body">
+          <div class="vrow-head">
+            <span class="vrow-name">${esc(v.name)}</span>
+            ${status ? `<span class="vstatus vstatus-${esc(status)}">${esc(status)}</span>` : ""}
+          </div>
+          <div class="vrow-sum">${esc(v.summary)}</div>
+          ${supporting.length
+            ? `<div class="vrow-meta">${supporting.map((m) => `<span>${esc(m)}</span>`).join('<span class="vrow-sep">·</span>')}</div>`
             : ""}
         </div>
+        ${kpi
+          ? `<div class="vrow-kpi">
+              <span class="vrow-kpi-value">${esc(kpi.value)}</span>
+              ${kpi.label ? `<span class="vrow-kpi-label">${esc(kpi.label)}</span>` : ""}
+            </div>`
+          : ""}
       `;
       row.addEventListener("click", () => openVenture(i));
       vs.appendChild(row);
@@ -150,7 +171,14 @@
     const v = S.ventures[i];
     if (!modalContent || !modal || !v) return;
     const d = v.detail || {};
-    const metrics = (v.metrics || [])
+    const allMetrics = [];
+    if (v.kpi) {
+      allMetrics.push(
+        v.kpi.label ? `${v.kpi.value} ${v.kpi.label}` : v.kpi.value
+      );
+    }
+    if (Array.isArray(v.metrics)) allMetrics.push(...v.metrics);
+    const metrics = allMetrics
       .map((m) => `<span class="vd-metric">${esc(m)}</span>`)
       .join("");
     const paragraphs = (d.paragraphs || [])
@@ -462,7 +490,37 @@
     return html;
   }
 
-  // ---- press ----
+  // ---- press strip (top-of-content) ----
+  const stripEl = $("#press-strip-items");
+  const stripRoot = $("#press-strip");
+  if (stripEl && Array.isArray(S.press) && S.press.length) {
+    // De-dupe by source so we don't repeat Bloomberg/Financial Post side-by-side.
+    const seen = new Set();
+    const top = [];
+    for (const pr of S.press) {
+      const src = (pr.source || "").trim();
+      if (!src || seen.has(src)) continue;
+      seen.add(src);
+      top.push(pr);
+      if (top.length >= 5) break;
+    }
+    stripEl.innerHTML = top
+      .map(
+        (pr) => `
+          <a class="press-pill"
+             href="${esc(pr.url)}"
+             target="_blank"
+             rel="noreferrer"
+             title="${esc(pr.title)}">
+            ${esc(pr.source)}
+          </a>`
+      )
+      .join("");
+  } else if (stripRoot) {
+    stripRoot.style.display = "none";
+  }
+
+  // ---- press (full list, bottom) ----
   set("#press-count", String((S.press || []).length).padStart(2, "0"));
   const pressEl = $("#press-rows");
   if (pressEl && Array.isArray(S.press)) {

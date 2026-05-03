@@ -28,7 +28,7 @@ window.SITE = {
     },
     title: "Nikshep Saravanan — building at the edges of AI, crypto, and markets",
     description:
-      "Independent builder. Now building PhoneGoblin — BYOD Android content factory. Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, WSJ.",
+      "Independent builder. Now building PhoneGoblin — BYOD Android content factory. Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, PYMNTS.",
     url: "https://nikshepsvn.com/",
     ogImage: "https://nikshepsvn.com/og.png",
   },
@@ -807,7 +807,7 @@ This is a starting point, not a finished design. The economics need more work. T
       blurb: "Feature framing Moltlaunch as Upwork for AI agents — cites 21K+ ERC-8004 agents, 70% on Base.",
     },
     {
-      id: "PR-05",
+      id: "PR-04",
       title: "Bankai: Kilobyte-Scale Patches for 1-Bit LLMs via XOR Adaptation",
       source: "Shanghai NYU RITS",
       date: "Apr 2026",
@@ -815,7 +815,7 @@ This is a starting point, not a finished design. The economics need more work. T
       blurb: "Academic pickup — Shanghai NYU research institute summary of the bankai paper.",
     },
     {
-      id: "PR-06",
+      id: "PR-05",
       title: "Prediction Market Interest Soars as Crypto Sector Cools",
       source: "PYMNTS",
       date: "Jan 2026",

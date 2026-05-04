@@ -174,73 +174,64 @@ window.SITE = {
         images: [],
       },
     },
-    {
-      id: "V-05",
-      name: "SniffChain",
-      status: "shipped",
-      summary:
-        "Token and wallet research terminal with AI agents. Multi-agent system on X for trading, sending, and researching tokens in-feed.",
-      kpi: { value: "~5k", label: "users · fully organic" },
-      metrics: ["~1k community"],
-      url: "",
-      detail: {
-        paragraphs: [
-          "SniffChain was a token and wallet research terminal powered by AI agents — a multi-agent system on X that let you trade, send, and research tokens directly in-feed.",
-          "Built novel risk scoring and detection infrastructure under the hood. Grew to roughly 5k users and 1k community members fully organically, with zero paid acquisition.",
-        ],
-        highlights: [
-          "Multi-agent system on X for in-feed trading, sending, and research",
-          "Novel risk scoring and detection infrastructure",
-          "~5k users / ~1k community",
-          "Fully organic growth — no paid acquisition",
-        ],
-        images: [],
-      },
-    },
-    {
-      id: "V-06",
-      name: "Clip.fun",
-      status: "shipped",
-      summary:
-        "The market for imagination. Democratizing and financializing creativity for the AI age.",
-      kpi: { value: "2,000+", label: "waitlist" },
-      metrics: ["Novel tokenomics"],
-      url: "https://clip.fun",
-      detail: {
-        paragraphs: [
-          "Clip.fun was a market for imagination — an attempt to democratize and financialize creativity for the AI age. Build a community around a creative idea; let holders participate in its upside.",
-        ],
-        highlights: [
-          "2,000+ waitlist at launch",
-          "Novel tokenomics model",
-        ],
-        images: [],
-      },
-    },
-    {
-      id: "V-07",
-      name: "Dreamloom",
-      status: "pre-launch",
-      summary: "Near real-time interactive video. AI-native world-building.",
-      kpi: { value: "Pre-launch", label: "AI-native world-building" },
-      metrics: ["Near real-time interactive video"],
-      url: "https://dreamloom.com",
-      detail: {
-        paragraphs: [
-          "Dreamloom was an interactive media platform built around near real-time interactive video — an AI-native world-building system where you could shape environments on the fly.",
-        ],
-        highlights: [
-          "Near real-time interactive video",
-          "AI-native world-building system",
-        ],
-        images: [],
-      },
-    },
   ],
 
   projects: [
     {
       id: "P-01",
+      name: "sniffchain",
+      tag: "agents · research",
+      stars: null,
+      url: "",
+      summary:
+        "Token & wallet research terminal. Multi-agent system on X for in-feed trade, send, research. ~5k users, fully organic.",
+      detail: {
+        paragraphs: [
+          "SniffChain was a token and wallet research terminal powered by AI agents — a multi-agent system on X that let you trade, send, and research tokens directly in-feed.",
+          "Novel risk scoring and detection infrastructure under the hood. Grew to roughly 5k users and 1k community members fully organically, with zero paid acquisition.",
+        ],
+        images: [],
+        tweets: [],
+        links: [],
+      },
+    },
+    {
+      id: "P-02",
+      name: "clip.fun",
+      tag: "markets · creator",
+      stars: null,
+      url: "https://clip.fun",
+      summary:
+        "The market for imagination. Democratizing creativity for the AI age. 2k+ waitlist, novel tokenomics.",
+      detail: {
+        paragraphs: [
+          "Clip.fun was a market for imagination — an attempt to democratize and financialize creativity for the AI age. Build a community around a creative idea; let holders participate in its upside.",
+          "2,000+ waitlist at launch with a novel tokenomics model.",
+        ],
+        images: [],
+        tweets: [],
+        links: [{ label: "open clip.fun", href: "https://clip.fun" }],
+      },
+    },
+    {
+      id: "P-03",
+      name: "dreamloom",
+      tag: "ai · interactive video",
+      stars: null,
+      url: "https://dreamloom.com",
+      summary:
+        "Near real-time interactive video. AI-native world-building system.",
+      detail: {
+        paragraphs: [
+          "Dreamloom was an interactive media platform built around near real-time interactive video — an AI-native world-building system where you could shape environments on the fly.",
+        ],
+        images: [],
+        tweets: [],
+        links: [{ label: "open dreamloom.com", href: "https://dreamloom.com" }],
+      },
+    },
+    {
+      id: "P-04",
       name: "bankai",
       tag: "research · llms",
       stars: 68,
@@ -257,7 +248,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-02",
+      id: "P-05",
       name: "veilstream",
       tag: "research · llm security",
       stars: 4,
@@ -275,7 +266,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-03",
+      id: "P-06",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
       stars: 373,
@@ -297,7 +288,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-04",
+      id: "P-07",
       name: "viberank",
       tag: "leaderboard · claude code",
       stars: 96,
@@ -324,7 +315,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-05",
+      id: "P-08",
       name: "homunculus",
       tag: "claude code · plugin",
       stars: 364,
@@ -345,7 +336,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-06",
+      id: "P-09",
       name: "tremor",
       tag: "markets · prediction",
       stars: 51,
@@ -364,7 +355,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-07",
+      id: "P-10",
       name: "terminal",
       tag: "oss · prediction markets",
       stars: 38,
@@ -384,7 +375,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-08",
+      id: "P-11",
       name: "openvenice",
       tag: "oss · llms",
       stars: 37,
@@ -401,7 +392,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-09",
+      id: "P-12",
       name: "moltlaunch",
       tag: "agents · onchain",
       stars: 30,
@@ -421,7 +412,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-10",
+      id: "P-13",
       name: "nemo-ai",
       tag: "mcp · memory",
       stars: 3,
@@ -438,7 +429,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-11",
+      id: "P-14",
       name: "modelgrep",
       tag: "llm-ops · search",
       stars: 2,

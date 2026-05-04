@@ -13,24 +13,6 @@
   set("#hero-tag", S.meta.tagline);
   set("#hero-philosophy", S.meta.philosophy);
 
-  // "Now shipping" callout
-  const nowEl = $("#hero-now");
-  const nowName = $("#hero-now-name");
-  const nowNote = $("#hero-now-note");
-  if (nowEl && S.meta.now) {
-    const n = S.meta.now;
-    if (nowName) nowName.textContent = n.label || "";
-    if (nowNote) nowNote.textContent = n.note ? "— " + n.note : "";
-    if (n.url) {
-      nowEl.setAttribute("href", n.url);
-    } else {
-      nowEl.removeAttribute("href");
-      nowEl.removeAttribute("target");
-    }
-  } else if (nowEl) {
-    nowEl.style.display = "none";
-  }
-
   // "Previously" logo row with rich hover tooltip
   const prevEl = $("#prev-items");
   if (prevEl && Array.isArray(S.previously)) {
@@ -137,30 +119,31 @@
   if (vs && S.ventures) {
     S.ventures.forEach((v, i) => {
       const row = document.createElement("button");
-      row.className = "vrow";
-      row.type = "button";
       const status = (v.status || "").toLowerCase();
+      const isFeature = status === "building" || status === "live";
+      row.className = "vrow" + (isFeature ? " vrow-feature" : "");
+      row.type = "button";
       const kpi = v.kpi || (v.metrics && v.metrics.length
         ? { value: v.metrics[0], label: "" }
         : null);
       const supporting = (v.metrics || []).slice(0, 3);
       row.innerHTML = `
-        <div class="vrow-body">
-          <div class="vrow-head">
-            <span class="vrow-name">${esc(v.name)}</span>
-            ${status ? `<span class="vstatus vstatus-${esc(status)}">${esc(status)}</span>` : ""}
-          </div>
-          <div class="vrow-sum">${esc(v.summary)}</div>
+        <div class="vrow-head">
+          <span class="vrow-name">${esc(v.name)}</span>
+          ${status ? `<span class="vstatus vstatus-${esc(status)}">${esc(status)}</span>` : ""}
+        </div>
+        <div class="vrow-sum">${esc(v.summary)}</div>
+        <div class="vrow-foot">
+          ${kpi
+            ? `<div class="vrow-kpi">
+                <span class="vrow-kpi-value">${esc(kpi.value)}</span>
+                ${kpi.label ? `<span class="vrow-kpi-label">${esc(kpi.label)}</span>` : ""}
+              </div>`
+            : ""}
           ${supporting.length
             ? `<div class="vrow-meta">${supporting.map((m) => `<span>${esc(m)}</span>`).join('<span class="vrow-sep">·</span>')}</div>`
             : ""}
         </div>
-        ${kpi
-          ? `<div class="vrow-kpi">
-              <span class="vrow-kpi-value">${esc(kpi.value)}</span>
-              ${kpi.label ? `<span class="vrow-kpi-label">${esc(kpi.label)}</span>` : ""}
-            </div>`
-          : ""}
       `;
       row.addEventListener("click", () => openVenture(i));
       vs.appendChild(row);
@@ -232,14 +215,18 @@
       btn.className = "prow" + (i < 2 ? " is-flag" : "");
       btn.type = "button";
       const stars = p.stars != null ? p.stars : "";
+      const num = String(i + 1).padStart(2, "0");
       btn.innerHTML = `
-        <div class="prow-body">
-          <div class="prow-name">${esc(p.name)}</div>
-          <div class="prow-sum">${esc(p.summary)}</div>
+        <span class="card-num">${num}</span>
+        <div class="prow-head">
+          <span class="prow-name">${esc(p.name)}</span>
         </div>
-        <div class="prow-tag">${esc(p.tag)}</div>
-        <div class="prow-meta ${stars === "" ? "dim" : ""}">
-          ${stars !== "" ? `${esc(stars)} ★` : "—"}
+        <div class="prow-sum">${esc(p.summary)}</div>
+        <div class="prow-foot">
+          <span class="prow-tag">${esc(p.tag)}</span>
+          <span class="prow-meta ${stars === "" ? "dim" : ""}">
+            ${stars !== "" ? `${esc(stars)} ★` : "—"}
+          </span>
         </div>
       `;
       btn.addEventListener("click", () => openModal(i));
@@ -329,19 +316,31 @@
 
   const es = $("#writing-rows");
   if (es) {
+    es.classList.remove("erows");
+    es.classList.add("essay-grid");
     S.essays.forEach((e, i) => {
-      const row = document.createElement("button");
-      row.className = "erow";
-      row.type = "button";
-      row.innerHTML = `
-        <div class="erow-body">
-          <div class="etitle">${esc(e.title)}</div>
-          <span class="edesc">${esc(e.desc)}</span>
+      const card = document.createElement("button");
+      card.className = "essay-card";
+      card.type = "button";
+      const num = String(i + 1).padStart(2, "0");
+      const mins = Math.max(
+        1,
+        Math.round(String(e.body || "").trim().split(/\s+/).length / 220)
+      );
+      card.innerHTML = `
+        <span class="card-num">${num}</span>
+        <div class="essay-card-title">${esc(e.title)}</div>
+        <div class="essay-card-desc">${esc(e.desc)}</div>
+        <div class="essay-card-foot">
+          <span class="essay-card-kind">${esc(e.kind.toLowerCase())}</span>
+          <span class="essay-card-meta">
+            ${e.date ? `<span>${esc(e.date)}</span>` : ""}
+            <span class="essay-card-mins">${mins} min</span>
+          </span>
         </div>
-        <div class="ekind">${esc(e.kind.toLowerCase())}</div>
       `;
-      row.addEventListener("click", () => openEssay(i));
-      es.appendChild(row);
+      card.addEventListener("click", () => openEssay(i));
+      es.appendChild(card);
     });
   }
 
@@ -490,9 +489,9 @@
     return html;
   }
 
-  // ---- press strip (top-of-content) ----
-  const stripEl = $("#press-strip-items");
-  const stripRoot = $("#press-strip");
+  // ---- press strip (in sidebar) ----
+  const stripEl = $("#press-side-items");
+  const stripRoot = $("#press-side");
   if (stripEl && Array.isArray(S.press) && S.press.length) {
     // De-dupe by source so we don't repeat Bloomberg/Financial Post side-by-side.
     const seen = new Set();
@@ -524,20 +523,23 @@
   set("#press-count", String((S.press || []).length).padStart(2, "0"));
   const pressEl = $("#press-rows");
   if (pressEl && Array.isArray(S.press)) {
-    S.press.forEach((pr) => {
-      const row = document.createElement("a");
-      row.className = "erow";
-      row.href = pr.url;
-      row.target = "_blank";
-      row.rel = "noreferrer";
-      row.innerHTML = `
-        <div class="erow-body">
-          <div class="etitle">${esc(pr.title)}</div>
-          <span class="edesc">${esc(pr.source)}${pr.blurb ? " — " + esc(pr.blurb) : ""}</span>
-        </div>
-        <div class="ekind">${esc(pr.date)}</div>
+    pressEl.classList.remove("erows");
+    pressEl.classList.add("press-grid");
+    S.press.forEach((pr, i) => {
+      const card = document.createElement("a");
+      card.className = "press-card";
+      card.href = pr.url;
+      card.target = "_blank";
+      card.rel = "noreferrer";
+      const num = String(i + 1).padStart(2, "0");
+      card.innerHTML = `
+        <span class="card-num">${num}</span>
+        <div class="press-card-source">${esc(pr.source)}</div>
+        <div class="press-card-title">${esc(pr.title)}</div>
+        ${pr.blurb ? `<div class="press-card-blurb">${esc(pr.blurb)}</div>` : ""}
+        ${pr.date ? `<div class="press-card-foot"><span class="press-card-date">${esc(pr.date)}</span></div>` : ""}
       `;
-      pressEl.appendChild(row);
+      pressEl.appendChild(card);
     });
   }
 

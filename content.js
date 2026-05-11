@@ -179,59 +179,6 @@ window.SITE = {
   projects: [
     {
       id: "P-01",
-      name: "sniffchain",
-      tag: "agents · research",
-      stars: null,
-      url: "",
-      summary:
-        "Token & wallet research terminal. Multi-agent system on X for in-feed trade, send, research. ~5k users, fully organic.",
-      detail: {
-        paragraphs: [
-          "SniffChain was a token and wallet research terminal powered by AI agents — a multi-agent system on X that let you trade, send, and research tokens directly in-feed.",
-          "Novel risk scoring and detection infrastructure under the hood. Grew to roughly 5k users and 1k community members fully organically, with zero paid acquisition.",
-        ],
-        images: [],
-        tweets: [],
-        links: [],
-      },
-    },
-    {
-      id: "P-02",
-      name: "clip.fun",
-      tag: "markets · creator",
-      stars: null,
-      url: "https://clip.fun",
-      summary:
-        "The market for imagination. Democratizing creativity for the AI age. 2k+ waitlist, novel tokenomics.",
-      detail: {
-        paragraphs: [
-          "Clip.fun was a market for imagination — an attempt to democratize and financialize creativity for the AI age. Build a community around a creative idea; let holders participate in its upside.",
-          "2,000+ waitlist at launch with a novel tokenomics model.",
-        ],
-        images: [],
-        tweets: [],
-        links: [{ label: "open clip.fun", href: "https://clip.fun" }],
-      },
-    },
-    {
-      id: "P-03",
-      name: "dreamloom",
-      tag: "ai · interactive video",
-      stars: null,
-      url: "https://dreamloom.com",
-      summary:
-        "Near real-time interactive video. AI-native world-building system.",
-      detail: {
-        paragraphs: [
-          "Dreamloom was an interactive media platform built around near real-time interactive video — an AI-native world-building system where you could shape environments on the fly.",
-        ],
-        images: [],
-        tweets: [],
-        links: [{ label: "open dreamloom.com", href: "https://dreamloom.com" }],
-      },
-    },
-    {
-      id: "P-04",
       name: "bankai",
       tag: "research · llms",
       stars: 68,
@@ -248,25 +195,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-05",
-      name: "veilstream",
-      tag: "research · llm security",
-      stars: 4,
-      url: "https://github.com/nikshepsvn/veilstream",
-      summary:
-        "Streaming PII proxy for LLM chat with cryptographically-anchored reversal. Introduces PASP.",
-      detail: {
-        paragraphs: [
-          "Veilstream sits between a chat UI and an LLM. Outbound: detects PII, mints realistic pseudonyms, keeps a per-session vault. Inbound: streams the LLM's response with pseudonyms reversed live as chunks arrive — tolerating pseudonyms that straddle chunk boundaries, partial prefixes, and the edge cases every prior library silently breaks on.",
-          "Introduces PASP — Provenance-Anchored Streaming Pseudonymization — a new algorithm that closes the false-attribution attack every prior reverser suffers from. Benchmarks: legacy reversers show 2–32% false-attribution on 6 frontier LLMs (median 12%); PASP blocks it cryptographically at 0%. 85 core tests passing, including 500+ Hypothesis property cases.",
-        ],
-        images: [],
-        tweets: [],
-        links: [{ label: "github", href: "https://github.com/nikshepsvn/veilstream" }],
-      },
-    },
-    {
-      id: "P-06",
+      id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
       stars: 373,
@@ -288,7 +217,25 @@ window.SITE = {
       },
     },
     {
-      id: "P-07",
+      id: "P-03",
+      name: "veilstream",
+      tag: "research · llm security",
+      stars: 4,
+      url: "https://github.com/nikshepsvn/veilstream",
+      summary:
+        "Streaming PII proxy for LLM chat with cryptographically-anchored reversal. Introduces PASP.",
+      detail: {
+        paragraphs: [
+          "Veilstream sits between a chat UI and an LLM. Outbound: detects PII, mints realistic pseudonyms, keeps a per-session vault. Inbound: streams the LLM's response with pseudonyms reversed live as chunks arrive — tolerating pseudonyms that straddle chunk boundaries, partial prefixes, and the edge cases every prior library silently breaks on.",
+          "Introduces PASP — Provenance-Anchored Streaming Pseudonymization — a new algorithm that closes the false-attribution attack every prior reverser suffers from. Benchmarks: legacy reversers show 2–32% false-attribution on 6 frontier LLMs (median 12%); PASP blocks it cryptographically at 0%. 85 core tests passing, including 500+ Hypothesis property cases.",
+        ],
+        images: [],
+        tweets: [],
+        links: [{ label: "github", href: "https://github.com/nikshepsvn/veilstream" }],
+      },
+    },
+    {
+      id: "P-04",
       name: "viberank",
       tag: "leaderboard · claude code",
       stars: 96,
@@ -315,7 +262,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-08",
+      id: "P-05",
       name: "homunculus",
       tag: "claude code · plugin",
       stars: 364,
@@ -336,7 +283,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-09",
+      id: "P-06",
       name: "tremor",
       tag: "markets · prediction",
       stars: 51,
@@ -355,7 +302,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-10",
+      id: "P-07",
       name: "terminal",
       tag: "oss · prediction markets",
       stars: 38,
@@ -375,24 +322,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-11",
-      name: "openvenice",
-      tag: "oss · llms",
-      stars: 37,
-      url: "https://github.com/nikshepsvn/openvenice",
-      summary: "Customizable frontend for Venice AI. Chat, image, audio, video. No backend.",
-      detail: {
-        paragraphs: [
-          "Open-source, backend-less frontend for Venice AI — chat, image gen, audio, video, embeddings, visual workflows. Your API key, your browser, no server to host.",
-          "Forkable and self-hostable in minutes.",
-        ],
-        images: [],
-        tweets: [],
-        links: [{ label: "github", href: "https://github.com/nikshepsvn/openvenice" }],
-      },
-    },
-    {
-      id: "P-12",
+      id: "P-08",
       name: "moltlaunch",
       tag: "agents · onchain",
       stars: 30,
@@ -412,7 +342,43 @@ window.SITE = {
       },
     },
     {
-      id: "P-13",
+      id: "P-09",
+      name: "openvenice",
+      tag: "oss · llms",
+      stars: 37,
+      url: "https://github.com/nikshepsvn/openvenice",
+      summary: "Customizable frontend for Venice AI. Chat, image, audio, video. No backend.",
+      detail: {
+        paragraphs: [
+          "Open-source, backend-less frontend for Venice AI — chat, image gen, audio, video, embeddings, visual workflows. Your API key, your browser, no server to host.",
+          "Forkable and self-hostable in minutes.",
+        ],
+        images: [],
+        tweets: [],
+        links: [{ label: "github", href: "https://github.com/nikshepsvn/openvenice" }],
+      },
+    },
+    {
+      id: "P-10",
+      name: "modelgrep",
+      tag: "llm-ops · search",
+      stars: 2,
+      url: "https://modelgrep.com",
+      summary: "Browse LLM providers. Filter by throughput, cost, quant, context.",
+      detail: {
+        paragraphs: [
+          "A search engine for LLMs — filter across OpenRouter's catalog by cost, throughput, quantization, and context. Pick the right model in seconds instead of reading ten blog posts.",
+        ],
+        images: [],
+        tweets: [],
+        links: [
+          { label: "open modelgrep.com", href: "https://modelgrep.com" },
+          { label: "source", href: "https://github.com/sculptdotfun/modelgrep" },
+        ],
+      },
+    },
+    {
+      id: "P-11",
       name: "nemo-ai",
       tag: "mcp · memory",
       stars: 3,
@@ -429,22 +395,56 @@ window.SITE = {
       },
     },
     {
-      id: "P-14",
-      name: "modelgrep",
-      tag: "llm-ops · search",
-      stars: 2,
-      url: "https://modelgrep.com",
-      summary: "Browse LLM providers. Filter by throughput, cost, quant, context.",
+      id: "P-12",
+      name: "sniffchain",
+      tag: "agents · research",
+      stars: null,
+      url: "",
+      summary:
+        "Token & wallet research terminal. Multi-agent system on X for in-feed trade, send, research. ~5k users, fully organic.",
       detail: {
         paragraphs: [
-          "A search engine for LLMs — filter across OpenRouter's catalog by cost, throughput, quantization, and context. Pick the right model in seconds instead of reading ten blog posts.",
+          "SniffChain was a token and wallet research terminal powered by AI agents — a multi-agent system on X that let you trade, send, and research tokens directly in-feed.",
+          "Novel risk scoring and detection infrastructure under the hood. Grew to roughly 5k users and 1k community members fully organically, with zero paid acquisition.",
         ],
         images: [],
         tweets: [],
-        links: [
-          { label: "open modelgrep.com", href: "https://modelgrep.com" },
-          { label: "source", href: "https://github.com/sculptdotfun/modelgrep" },
+        links: [],
+      },
+    },
+    {
+      id: "P-13",
+      name: "clip.fun",
+      tag: "markets · creator",
+      stars: null,
+      url: "https://clip.fun",
+      summary:
+        "The market for imagination. Democratizing creativity for the AI age. 2k+ waitlist, novel tokenomics.",
+      detail: {
+        paragraphs: [
+          "Clip.fun was a market for imagination — an attempt to democratize and financialize creativity for the AI age. Build a community around a creative idea; let holders participate in its upside.",
+          "2,000+ waitlist at launch with a novel tokenomics model.",
         ],
+        images: [],
+        tweets: [],
+        links: [{ label: "open clip.fun", href: "https://clip.fun" }],
+      },
+    },
+    {
+      id: "P-14",
+      name: "dreamloom",
+      tag: "ai · interactive video",
+      stars: null,
+      url: "https://dreamloom.com",
+      summary:
+        "Near real-time interactive video. AI-native world-building system.",
+      detail: {
+        paragraphs: [
+          "Dreamloom was an interactive media platform built around near real-time interactive video — an AI-native world-building system where you could shape environments on the fly.",
+        ],
+        images: [],
+        tweets: [],
+        links: [{ label: "open dreamloom.com", href: "https://dreamloom.com" }],
       },
     },
   ],

@@ -115,18 +115,18 @@ a { color: inherit; text-decoration: none; }
 .role strong { color: var(--body); font-weight: 400; }
 
 .tagline {
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   color: var(--body);
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.55;
   max-width: 32ch;
 }
 .tagline-sub {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   color: var(--mute);
-  font-size: 12px;
+  font-size: 11.5px;
   font-style: italic;
-  line-height: 1.55;
+  line-height: 1.5;
   max-width: 32ch;
   letter-spacing: -0.003em;
 }
@@ -282,29 +282,29 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--mute);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .press-side-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-}
-.press-side-items .press-pill {
   font-family: var(--sans);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  color: var(--ink);
-  padding: 3px 7px;
-  border: 1px solid var(--line-2);
-  background: var(--bg);
-  transition: background .18s, color .18s, border-color .18s, transform .18s;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 32ch;
 }
-.press-side-items .press-pill:hover {
-  background: var(--ink);
-  color: var(--bg);
-  border-color: var(--ink);
-  transform: translateY(-1px);
+.press-side-link {
+  display: inline-block;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-2);
+  transition: border-color .18s, color .18s;
+  white-space: nowrap;
+}
+.press-side-link:hover {
+  border-bottom-color: var(--ink);
+}
+.press-side-sep {
+  color: var(--dim);
+  margin: 0 5px;
+  display: inline-block;
 }
 
 .prev {
@@ -508,7 +508,7 @@ a { color: inherit; text-decoration: none; }
 /* ---------- Content sections ---------- */
 
 .section {
-  margin-bottom: 56px;
+  margin-bottom: 40px;
 }
 .section:last-child { margin-bottom: 0; }
 
@@ -578,7 +578,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Ventures (card grid) ---------- */
 
-.section-ventures { margin-bottom: 64px; }
+.section-ventures { margin-bottom: 40px; }
 
 .vrows {
   display: grid;
@@ -732,29 +732,11 @@ a { color: inherit; text-decoration: none; }
   border-style: dashed;
 }
 
-/* ---------- Shared card decorations (num + open arrow) ---------- */
-
-.card-num {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  color: var(--dim);
-  transition: color .18s, transform .18s, opacity .18s;
-  pointer-events: none;
-  user-select: none;
-}
-.prow:hover .card-num,
-.essay-card:hover .card-num,
-.press-card:hover .card-num { color: var(--ink); }
-
 /* ---------- Projects (card grid) ---------- */
 
 .prows {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 8px;
   border-top: 0;
 }
@@ -802,7 +784,6 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding-right: 28px; /* room for card-num */
 }
 .prow-name {
   font-family: var(--sans);
@@ -862,11 +843,11 @@ a { color: inherit; text-decoration: none; }
 }
 .prow-meta.dim { color: var(--dim); font-weight: 400; }
 
-/* ---------- Press (card grid) ---------- */
+/* ---------- Press (card grid — source-led) ---------- */
 
 .press-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 8px;
   border-top: 0;
 }
@@ -875,14 +856,14 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px 18px 12px;
+  padding: 16px 18px 14px;
   border: 1px solid var(--line);
   background: var(--bg);
   text-decoration: none;
   color: inherit;
   transition: background .18s, border-color .18s, transform .18s, box-shadow .18s;
   overflow: hidden;
-  min-height: 138px;
+  min-height: 120px;
 }
 .press-card::before {
   content: "";
@@ -903,60 +884,51 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--ink);
   outline: none;
 }
+.press-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
 .press-card-source {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--mute);
-  padding-right: 28px; /* room for card-num */
-}
-.press-card-title {
-  font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.35;
+  letter-spacing: -0.015em;
   color: var(--ink);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-.press-card-blurb {
-  font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--body);
-  flex: 1;
-}
-.press-card-foot {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
+  line-height: 1.1;
 }
 .press-card-date {
   font-family: var(--mono);
-  font-size: 8.5px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 3px 7px;
-  border: 1px solid var(--line-2);
   color: var(--mute);
-  background: var(--bg);
   white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  transition: color .18s, border-color .18s;
+  flex-shrink: 0;
 }
-.press-card:hover .press-card-date { color: var(--ink); border-color: var(--ink); }
+.press-card-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.press-card-blurb {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--mute);
+}
 
 /* ---------- Writing (card grid) ---------- */
 
 .essay-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 8px;
   border-top: 0;
 }
@@ -1005,7 +977,6 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink);
   font-weight: 600;
   letter-spacing: -0.015em;
-  padding-right: 28px; /* room for card-num */
 }
 .essay-card-desc {
   font-family: var(--sans);
@@ -1804,9 +1775,10 @@ a { color: inherit; text-decoration: none; }
   .prow-meta { font-size: 10px; }
   .press-grid { gap: 6px; }
   .press-card { padding: 12px 14px 10px; }
-  .press-card-source { font-size: 11.5px; }
-  .press-card-title { font-size: 13px; }
-  .press-card-blurb { font-size: 11.5px; }
+  .press-card-source { font-size: 14px; }
+  .press-card-date { font-size: 9px; }
+  .press-card-title { font-size: 12.5px; }
+  .press-card-blurb { font-size: 11px; }
   .essay-grid { gap: 6px; }
   .essay-card { padding: 12px 14px 10px; min-height: 0; }
   .essay-card-title { font-size: 13.5px; }
@@ -1859,10 +1831,6 @@ a { color: inherit; text-decoration: none; }
   .sec h2 { font-size: 12.5px; }
   .sec-count { font-size: 9.5px; }
 
-  /* card-num smaller on phone */
-  .card-num { font-size: 8px; top: 9px; right: 11px; letter-spacing: 0.1em; }
-  .prow-head, .essay-card-title, .press-card-source { padding-right: 22px; }
-
   /* ventures — single column, no feature gradient */
   .vrows { gap: 6px; grid-template-columns: 1fr; }
   .vrow { padding: 12px 12px 10px; gap: 8px; min-height: 0; }
@@ -1890,11 +1858,10 @@ a { color: inherit; text-decoration: none; }
   /* press — single column */
   .press-grid { grid-template-columns: 1fr; gap: 6px; }
   .press-card { padding: 12px 14px 10px; min-height: 0; gap: 6px; }
-  .press-card-source { font-size: 10px; letter-spacing: 0.1em; }
-  .press-card-title { font-size: 13.5px; line-height: 1.35; }
-  .press-card-blurb { font-size: 11.5px; }
-  .press-card-foot { padding-top: 8px; }
-  .press-card-date { font-size: 7.5px; padding: 2px 5px; letter-spacing: 0.12em; }
+  .press-card-source { font-size: 13.5px; }
+  .press-card-date { font-size: 9px; }
+  .press-card-title { font-size: 12.5px; line-height: 1.35; }
+  .press-card-blurb { font-size: 11px; }
 
   /* writing — single column */
   .essay-grid { grid-template-columns: 1fr; gap: 6px; }

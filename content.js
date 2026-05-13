@@ -18,9 +18,9 @@ window.SITE = {
     location: "Toronto, CA",
     role: "Exploration engineer",
     tagline:
-      "Building at the edges of AI, crypto, and markets. Shipping small to large, opinionated projects to test theses in emerging categories.",
+      "Building at the edges of AI, crypto, and markets. Shipping opinionated v1s into emerging categories before they have answers.",
     philosophy:
-      "Infinitely curious, delusional optimist — realizing my potential while making fun, valuable things for the world.",
+      "Infinitely curious, delusional optimist.",
     now: {
       label: "PhoneGoblin",
       note: "run a content factory from your desk",
@@ -56,7 +56,6 @@ window.SITE = {
       status: "building",
       summary:
         "Run a content factory from your desk. Mount any Android — it becomes a node. Real device, real taps, indistinguishable from a human's. One phone or a hundred.",
-      kpi: { value: "Building", label: "waitlist open" },
       metrics: ["BYOD Android", "No root", "Open runtime", "On-device"],
       url: "https://phonegoblin.com",
       detail: {
@@ -127,8 +126,8 @@ window.SITE = {
       status: "exited",
       summary:
         "AI storytelling platform on a custom fine-tuned LLM running on consumer-grade GPUs.",
-      kpi: { value: "Exited", label: "to West Mountain AI" },
-      metrics: ["Mid 5-fig ARR", "Bootstrapped"],
+      kpi: { value: "Mid 5-fig ARR", label: "bootstrapped · west mountain ai" },
+      metrics: ["Solo build · 3 weeks", "50% cheaper than GPT-3.5 at launch"],
       url: "",
       detail: {
         paragraphs: [
@@ -155,8 +154,8 @@ window.SITE = {
       status: "acquired",
       summary:
         "Autonomous AI influencer platform for crypto tokens & communities. Acquired pre-launch.",
-      kpi: { value: "Acquired", label: "pre-launch" },
-      metrics: ["$5M+ token marketcap post-acquisition", "Rebranded to LetsAgent"],
+      kpi: { value: "$5M+", label: "post-acq token marketcap" },
+      metrics: ["Team of 3", "Rebranded to LetsAgent"],
       url: "",
       detail: {
         paragraphs: [

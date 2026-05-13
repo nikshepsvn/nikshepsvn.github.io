@@ -123,9 +123,7 @@
       const isFeature = status === "building" || status === "live";
       row.className = "vrow" + (isFeature ? " vrow-feature" : "");
       row.type = "button";
-      const kpi = v.kpi || (v.metrics && v.metrics.length
-        ? { value: v.metrics[0], label: "" }
-        : null);
+      const kpi = v.kpi || null;
       const supporting = (v.metrics || []).slice(0, 3);
       row.innerHTML = `
         <div class="vrow-head">
@@ -215,9 +213,7 @@
       btn.className = "prow" + (i < 2 ? " is-flag" : "");
       btn.type = "button";
       const stars = p.stars != null ? p.stars : "";
-      const num = String(i + 1).padStart(2, "0");
       btn.innerHTML = `
-        <span class="card-num">${num}</span>
         <div class="prow-head">
           <span class="prow-name">${esc(p.name)}</span>
         </div>
@@ -225,7 +221,7 @@
         <div class="prow-foot">
           <span class="prow-tag">${esc(p.tag)}</span>
           <span class="prow-meta ${stars === "" ? "dim" : ""}">
-            ${stars !== "" ? `${esc(stars)} ★` : "—"}
+            ${stars !== "" ? `${esc(stars)} ★` : ""}
           </span>
         </div>
       `;
@@ -322,13 +318,11 @@
       const card = document.createElement("button");
       card.className = "essay-card";
       card.type = "button";
-      const num = String(i + 1).padStart(2, "0");
       const mins = Math.max(
         1,
         Math.round(String(e.body || "").trim().split(/\s+/).length / 220)
       );
       card.innerHTML = `
-        <span class="card-num">${num}</span>
         <div class="essay-card-title">${esc(e.title)}</div>
         <div class="essay-card-desc">${esc(e.desc)}</div>
         <div class="essay-card-foot">
@@ -505,16 +499,13 @@
     }
     stripEl.innerHTML = top
       .map(
-        (pr) => `
-          <a class="press-pill"
-             href="${esc(pr.url)}"
-             target="_blank"
-             rel="noreferrer"
-             title="${esc(pr.title)}">
-            ${esc(pr.source)}
-          </a>`
+        (pr) => `<a class="press-side-link"
+           href="${esc(pr.url)}"
+           target="_blank"
+           rel="noreferrer"
+           title="${esc(pr.title)}">${esc(pr.source)}</a>`
       )
-      .join("");
+      .join('<span class="press-side-sep">·</span>');
   } else if (stripRoot) {
     stripRoot.style.display = "none";
   }
@@ -525,19 +516,19 @@
   if (pressEl && Array.isArray(S.press)) {
     pressEl.classList.remove("erows");
     pressEl.classList.add("press-grid");
-    S.press.forEach((pr, i) => {
+    S.press.forEach((pr) => {
       const card = document.createElement("a");
       card.className = "press-card";
       card.href = pr.url;
       card.target = "_blank";
       card.rel = "noreferrer";
-      const num = String(i + 1).padStart(2, "0");
       card.innerHTML = `
-        <span class="card-num">${num}</span>
-        <div class="press-card-source">${esc(pr.source)}</div>
+        <div class="press-card-head">
+          <span class="press-card-source">${esc(pr.source)}</span>
+          ${pr.date ? `<span class="press-card-date">${esc(pr.date)}</span>` : ""}
+        </div>
         <div class="press-card-title">${esc(pr.title)}</div>
         ${pr.blurb ? `<div class="press-card-blurb">${esc(pr.blurb)}</div>` : ""}
-        ${pr.date ? `<div class="press-card-foot"><span class="press-card-date">${esc(pr.date)}</span></div>` : ""}
       `;
       pressEl.appendChild(card);
     });

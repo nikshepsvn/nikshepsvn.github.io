@@ -818,7 +818,6 @@ This is a starting point, not a finished design. The economics need more work. T
     { label: "github",      href: "https://github.com/nikshepsvn",  handle: "@nikshepsvn" },
     { label: "x / twitter", href: "https://twitter.com/nikshepsvn", handle: "@nikshepsvn" },
     { label: "linkedin",    href: "https://linkedin.com/in/nikshepsvn", handle: "nikshepsvn" },
-    { label: "sculpt",      href: "https://sculpt.fun",             handle: "sculpt.fun" },
     { label: "email",       href: "mailto:nikshepsvn@gmail.com",    handle: "nikshepsvn@gmail.com" },
   ],
 

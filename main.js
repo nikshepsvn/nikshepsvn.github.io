@@ -307,6 +307,33 @@
     `;
   }
 
+  // ---- experience ----
+  set("#experience-count", String((S.experience || []).length).padStart(2, "0"));
+  const xs = $("#experience-rows");
+  if (xs && Array.isArray(S.experience)) {
+    S.experience.forEach((x) => {
+      const row = document.createElement(x.url ? "a" : "div");
+      row.className = "xrow";
+      if (x.url) {
+        row.href = x.url;
+        row.target = "_blank";
+        row.rel = "noreferrer";
+      }
+      row.innerHTML = `
+        <div class="xrow-period">${esc(x.period || "")}</div>
+        <div class="xrow-body">
+          <div class="xrow-head">
+            <span class="xrow-company">${esc(x.company)}</span>
+            ${x.role ? `<span class="xrow-dot">·</span><span class="xrow-role">${esc(x.role)}</span>` : ""}
+            ${x.team ? `<span class="xrow-team">${esc(x.team)}</span>` : ""}
+          </div>
+          ${x.description ? `<div class="xrow-desc">${esc(x.description)}</div>` : ""}
+        </div>
+      `;
+      xs.appendChild(row);
+    });
+  }
+
   // ---- writing ----
   set("#writing-count", String(S.essays.length).padStart(2, "0"));
 

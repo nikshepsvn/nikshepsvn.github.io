@@ -43,8 +43,59 @@ window.SITE = {
   ],
 
   about: [
-    "I'm an independent builder, shipping small, opinionated projects and writing essays — most of them live at sculpt.fun, which is just my home for whatever I'm making.",
+    "I'm an independent builder, shipping small, opinionated projects and writing essays.",
     "My interests are broad: AI, crypto, markets, intelligence — really any corner of technology that's pulling at me. I work fast, in public, and iterate until it feels right.",
+  ],
+
+  // Professional experience — CV-style rows in main content.
+  experience: [
+    {
+      id: "X-01",
+      company: "Kalshi",
+      role: "Builder Fellow",
+      period: "Jan — Feb 2026",
+      description: "Built HumanPlane during the Builder Fellow program. Kalshi grant recipient.",
+      domain: "kalshi.com",
+      url: "https://kalshi.com",
+    },
+    {
+      id: "X-02",
+      company: "Instacart",
+      role: "Senior SWE / Tech Lead",
+      team: "Enterprise Ads",
+      period: "2021 — 2024",
+      description: "Scaled ad measurement, experimentation, and attribution infrastructure. Led 10+ engineers across pricing and measurement.",
+      domain: "instacart.com",
+      url: "https://instacart.com",
+    },
+    {
+      id: "X-03",
+      company: "Coinbase",
+      role: "SWE Intern",
+      team: "Data Platform",
+      period: "2020",
+      description: "Rewrote legacy MapReduce ETL (Mongo → Snowflake) into Spark. Streaming deprecation work.",
+      domain: "coinbase.com",
+      url: "https://coinbase.com",
+    },
+    {
+      id: "X-04",
+      company: "SeatGeek",
+      role: "Data Infrastructure Intern",
+      period: "2019",
+      description: "Real-time data pipelines for ticket marketplace events.",
+      domain: "seatgeek.com",
+      url: "https://seatgeek.com",
+    },
+    {
+      id: "X-05",
+      company: "University of Waterloo",
+      role: "BCS, Computer Science",
+      period: "2017 — 2021",
+      description: "Dean's Honour List. President's Scholarship of Distinction. 6 internships during the program.",
+      domain: "uwaterloo.ca",
+      url: "https://uwaterloo.ca",
+    },
   ],
 
   // Experiments — startups & closed-source products I've built.

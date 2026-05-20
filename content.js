@@ -40,7 +40,6 @@ window.SITE = {
     { name: "Coinbase",  role: "SWE Intern",            period: "Summer 2020",    domain: "coinbase.com",  url: "https://coinbase.com" },
     { name: "SeatGeek",  role: "Data Infra Intern",     period: "2019",           domain: "seatgeek.com",  url: "https://seatgeek.com" },
     { name: "PagerDuty", role: "SWE Intern",            period: "2018",           domain: "pagerduty.com", url: "https://pagerduty.com" },
-    { name: "Deliverr",  role: "SWE Intern",            period: "2018",           domain: "deliverr.com",  url: "https://deliverr.com" },
     { name: "uWaterloo", role: "BCS, Computer Science", period: "2016 – 2021",    domain: "uwaterloo.ca",  url: "https://uwaterloo.ca" },
   ],
 
@@ -100,15 +99,6 @@ window.SITE = {
     },
     {
       id: "X-06",
-      company: "Deliverr",
-      role: "Software Engineer Intern",
-      period: "2018",
-      description: "Early-stage startup work — fulfillment infrastructure for e-commerce sellers.",
-      domain: "deliverr.com",
-      url: "https://deliverr.com",
-    },
-    {
-      id: "X-07",
       company: "University of Waterloo",
       role: "BCS, Computer Science",
       period: "2016 — 2021",

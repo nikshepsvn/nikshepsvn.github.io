@@ -1794,20 +1794,22 @@ a { color: inherit; text-decoration: none; }
 
   .sidebar-hero {
     order: 1;
-    padding: 24px 20px 22px;
+    padding: 24px 20px 18px;
+    background: var(--bg);
+  }
+  .sidebar-meta {
+    order: 2;
+    padding: 6px 20px 22px;
     background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
   .content {
-    order: 2;
+    order: 3;
     padding: 28px 20px 56px;
   }
-  .sidebar-meta {
-    order: 3;
-    padding: 28px 20px 32px;
-    background: #fafaf8;
-    border-top: 1px solid var(--line);
-  }
+  /* on mobile, copyright footer is redundant where sidebar-meta is now
+     up top — push the © line to a quieter style. */
+  .sidebar-foot { margin-top: 16px; padding-top: 12px; }
 
   /* sidebar elements */
   .name { font-size: 20px; }

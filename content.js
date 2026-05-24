@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 77,
+      stars: 76,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {
@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 373,
+      stars: 377,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -319,7 +319,7 @@ window.SITE = {
       id: "P-05",
       name: "blindcache",
       tag: "mcp · agent memory",
-      stars: 1,
+      stars: 2,
       url: "https://github.com/nikshepsvn/blindcache",
       summary:
         "Encrypted memory layer for AI agents on Nillion's Blind Computer. MCP server + vault SDK. Shamir-sharded across 3 nodes — operator can't read.",
@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 96,
+      stars: 100,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {
@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 364,
+      stars: 369,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -387,7 +387,7 @@ window.SITE = {
       id: "P-08",
       name: "tremor",
       tag: "markets · prediction",
-      stars: 51,
+      stars: 52,
       url: "https://tremor.live",
       summary: "Real-time seismic monitor for prediction markets.",
       detail: {
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 38,
+      stars: 43,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

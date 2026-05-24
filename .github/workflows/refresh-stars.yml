@@ -1,0 +1,32 @@
+name: refresh-stars
+
+on:
+  schedule:
+    - cron: "0 7 * * *" # daily 07:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: refresh stars
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/scripts/refresh-stars.mjs
+      - name: commit if changed
+        run: |
+          if [[ -n $(git status --porcelain content.js) ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add content.js
+            git commit -m "chore: refresh github stars [skip ci]"
+            git push
+          else
+            echo "no star changes to commit"
+          fi

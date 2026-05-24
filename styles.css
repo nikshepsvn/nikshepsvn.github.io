@@ -46,6 +46,29 @@ a { color: inherit; text-decoration: none; }
   position: relative;
 }
 
+/* ---------- Scroll progress (top edge of viewport) ---------- */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent-ink);
+  z-index: 200;
+  transition: width .08s linear;
+  pointer-events: none;
+}
+.scroll-progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 12px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+
 /* ---------- Floating section nav (desktop only — collapses to dot-rail) ---------- */
 
 .section-nav {
@@ -414,14 +437,14 @@ a { color: inherit; text-decoration: none; }
   gap: 6px;
 }
 .prev-item {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--line);
   background: var(--bg);
-  padding: 5px;
+  padding: 6px;
   transition: background .18s, border-color .18s, transform .18s;
   position: relative;
   z-index: 1;
@@ -552,7 +575,13 @@ a { color: inherit; text-decoration: none; }
 .sidebar-foot .foot-colo {
   color: var(--mute);
   margin-bottom: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
 }
+.foot-sep { color: var(--dim); }
+.foot-loc { color: var(--mute); }
 .sidebar-foot .foot-kbd {
   color: var(--mute);
 }

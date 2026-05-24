@@ -614,6 +614,29 @@
     }
   }
 
+  // ---- scroll progress bar ----
+  const progressBar = $("#scroll-progress");
+  if (progressBar) {
+    let ticking = false;
+    const updateProgress = () => {
+      ticking = false;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      progressBar.style.width = Math.min(100, Math.max(0, pct)) + "%";
+    };
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(updateProgress);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    updateProgress();
+  }
+
   // ---- footer year ----
   set("#foot-year", new Date().getFullYear());
 

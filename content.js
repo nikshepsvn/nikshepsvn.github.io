@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 68,
+      stars: 77,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {
@@ -280,7 +280,7 @@ window.SITE = {
       id: "P-03",
       name: "veilstream",
       tag: "research · llm security",
-      stars: 4,
+      stars: 5,
       url: "https://github.com/nikshepsvn/veilstream",
       summary:
         "Streaming PII proxy for LLM chat with cryptographically-anchored reversal. Introduces PASP.",
@@ -296,6 +296,47 @@ window.SITE = {
     },
     {
       id: "P-04",
+      name: "near-hydra",
+      tag: "agents · cross-chain",
+      stars: 6,
+      url: "https://github.com/nikshepsvn/near-hydra",
+      summary:
+        "Unofficial all-in-one CLI + MCP server for NEAR. One NEAR account signs across 10 chains via Chain Signatures + Intents. Built for AI agents.",
+      detail: {
+        paragraphs: [
+          "near-hydra turns a single NEAR account into a signing identity across 10 chains — Bitcoin, Ethereum, Polygon, Arbitrum, Base, Optimism, BNB, Avalanche, Aurora, Solana — using NEAR's Chain Signatures + Intents.",
+          "Ships as both a CLI and an MCP server, so agents can derive addresses, sign transactions, message-sign, and route gas across chains from one account. Published as `near-hydra` and `near-hydra-mcp` on npm. Zero-setup: `npx near-hydra account balance-all near`.",
+        ],
+        images: [],
+        tweets: [],
+        links: [
+          { label: "github", href: "https://github.com/nikshepsvn/near-hydra" },
+          { label: "npm", href: "https://www.npmjs.com/package/near-hydra" },
+        ],
+      },
+    },
+    {
+      id: "P-05",
+      name: "blindcache",
+      tag: "mcp · agent memory",
+      stars: 1,
+      url: "https://github.com/nikshepsvn/blindcache",
+      summary:
+        "Encrypted memory layer for AI agents on Nillion's Blind Computer. MCP server + vault SDK. Shamir-sharded across 3 nodes — operator can't read.",
+      detail: {
+        paragraphs: [
+          "BlindCache is the same shape as Mem0 / Letta / Zep / ChatGPT memory — an MCP server exposing `memory_*` tools — but the substrate is Nillion's Blind Computer. Content is split into Shamir-style shares across three nilDB nodes, and the SDK only recombines them on your machine.",
+          "To the agent it feels like a normal memory layer. To the operator it's noise. Bridges the gap nemo-ai opened: durable, private agent memory, but cryptographically guaranteed instead of trust-based.",
+        ],
+        images: [],
+        tweets: [],
+        links: [
+          { label: "github", href: "https://github.com/nikshepsvn/blindcache" },
+        ],
+      },
+    },
+    {
+      id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
       stars: 96,
@@ -322,7 +363,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-05",
+      id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
       stars: 364,
@@ -343,7 +384,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-06",
+      id: "P-08",
       name: "tremor",
       tag: "markets · prediction",
       stars: 51,
@@ -362,7 +403,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-07",
+      id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
       stars: 38,
@@ -382,7 +423,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-08",
+      id: "P-10",
       name: "moltlaunch",
       tag: "agents · onchain",
       stars: 30,
@@ -402,10 +443,10 @@ window.SITE = {
       },
     },
     {
-      id: "P-09",
+      id: "P-11",
       name: "openvenice",
       tag: "oss · llms",
-      stars: 37,
+      stars: 45,
       url: "https://github.com/nikshepsvn/openvenice",
       summary: "Customizable frontend for Venice AI. Chat, image, audio, video. No backend.",
       detail: {
@@ -419,7 +460,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-10",
+      id: "P-12",
       name: "modelgrep",
       tag: "llm-ops · search",
       stars: 2,
@@ -438,7 +479,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-11",
+      id: "P-13",
       name: "nemo-ai",
       tag: "mcp · memory",
       stars: 3,
@@ -455,7 +496,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-12",
+      id: "P-14",
       name: "sniffchain",
       tag: "agents · research",
       stars: null,
@@ -473,7 +514,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-13",
+      id: "P-15",
       name: "clip.fun",
       tag: "markets · creator",
       stars: null,
@@ -491,7 +532,7 @@ window.SITE = {
       },
     },
     {
-      id: "P-14",
+      id: "P-16",
       name: "dreamloom",
       tag: "ai · interactive video",
       stars: null,

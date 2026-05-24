@@ -16,6 +16,12 @@
   --sidebar: 320px;
   --pad-x: clamp(24px, 4vw, 48px);
   --pad-y: clamp(32px, 4vw, 56px);
+
+  /* Card spacing tokens — keeps every card type aligned */
+  --card-px: 18px;
+  --card-py: 16px;
+  --card-gap: 8px;
+  --card-foot-gap: 10px;
 }
 
 * { box-sizing: border-box; }
@@ -627,7 +633,8 @@ a { color: inherit; text-decoration: none; }
 /* ---------- Content sections ---------- */
 
 .section {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
+  scroll-margin-top: 24px;
 }
 .section:last-child { margin-bottom: 0; }
 
@@ -715,19 +722,20 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Ventures (card grid) ---------- */
 
-.section-ventures { margin-bottom: 40px; }
+.section-ventures { margin-bottom: 36px; }
 
 .vrows {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: var(--card-gap);
   border-top: 0;
 }
 .vrow {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 18px 18px 16px;
+  padding: 18px 20px 16px;
   border: 1px solid var(--line);
   align-items: stretch;
   cursor: pointer;
@@ -739,7 +747,22 @@ a { color: inherit; text-decoration: none; }
   outline: none;
   transition: background .18s, border-color .18s, transform .18s, box-shadow .18s;
   min-height: 168px;
+  overflow: hidden;
 }
+.vrow::after {
+  content: "↗";
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .18s, transform .18s;
+  pointer-events: none;
+}
+.vrow:hover::after { opacity: 1; transform: translateY(0); }
 .vrow:hover {
   background: var(--surface);
   border-color: var(--ink);
@@ -896,7 +919,7 @@ a { color: inherit; text-decoration: none; }
 .prows {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 8px;
+  gap: var(--card-gap);
   border-top: 0;
 }
 .prow {
@@ -904,7 +927,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 16px 18px 12px;
+  padding: 14px 18px 12px;
   border: 1px solid var(--line);
   background: var(--bg);
   cursor: pointer;
@@ -914,7 +937,7 @@ a { color: inherit; text-decoration: none; }
   color: inherit;
   width: 100%;
   outline: none;
-  min-height: 138px;
+  min-height: 120px;
   overflow: hidden;
 }
 .prow::before {
@@ -1007,15 +1030,15 @@ a { color: inherit; text-decoration: none; }
 .press-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 8px;
+  gap: var(--card-gap);
   border-top: 0;
 }
 .press-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px 18px 14px;
+  gap: 10px;
+  padding: 14px 18px 14px;
   border: 1px solid var(--line);
   background: var(--bg);
   text-decoration: none;
@@ -1039,6 +1062,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 10px 28px -12px rgba(0,0,0,0.18);
 }
 .press-card:hover::before { background: var(--ink); width: 3px; }
+.press-card:hover .press-card-source { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
 .press-card:focus-visible {
   border-color: var(--ink);
   outline: none;
@@ -1092,7 +1116,7 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   grid-template-columns: 130px minmax(0, 1fr);
   gap: 24px;
-  padding: 16px 0;
+  padding: 18px 0;
   border-bottom: 1px solid var(--line);
   align-items: baseline;
   text-decoration: none;
@@ -1114,7 +1138,7 @@ a { color: inherit; text-decoration: none; }
 .xrow-body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   min-width: 0;
 }
 .xrow-head {
@@ -1150,7 +1174,7 @@ a { color: inherit; text-decoration: none; }
 .xrow-desc {
   font-family: var(--sans);
   font-size: 12.5px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--mute);
   max-width: 70ch;
 }
@@ -1209,15 +1233,16 @@ a { color: inherit; text-decoration: none; }
 }
 .wrow-sub {
   font-family: var(--sans);
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--body);
+  font-style: italic;
   line-height: 1.45;
   max-width: 70ch;
 }
 .wrow-desc {
   font-family: var(--sans);
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 12.5px;
+  line-height: 1.55;
   color: var(--mute);
   max-width: 70ch;
 }

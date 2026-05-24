@@ -340,28 +340,29 @@
   const es = $("#writing-rows");
   if (es) {
     es.classList.remove("erows");
-    es.classList.add("essay-grid");
+    es.classList.add("wrows");
     S.essays.forEach((e, i) => {
-      const card = document.createElement("button");
-      card.className = "essay-card";
-      card.type = "button";
+      const row = document.createElement("button");
+      row.className = "wrow";
+      row.type = "button";
       const mins = Math.max(
         1,
         Math.round(String(e.body || "").trim().split(/\s+/).length / 220)
       );
-      card.innerHTML = `
-        <div class="essay-card-title">${esc(e.title)}</div>
-        <div class="essay-card-desc">${esc(e.desc)}</div>
-        <div class="essay-card-foot">
-          <span class="essay-card-kind">${esc(e.kind.toLowerCase())}</span>
-          <span class="essay-card-meta">
-            ${e.date ? `<span>${esc(e.date)}</span>` : ""}
-            <span class="essay-card-mins">${mins} min</span>
-          </span>
+      row.innerHTML = `
+        <div class="wrow-date">${esc(e.date || "")}</div>
+        <div class="wrow-body">
+          <div class="wrow-title">${esc(e.title)}</div>
+          ${e.subtitle ? `<div class="wrow-sub">${esc(e.subtitle)}</div>` : ""}
+          ${e.desc ? `<div class="wrow-desc">${esc(e.desc)}</div>` : ""}
+        </div>
+        <div class="wrow-meta">
+          <span class="wrow-kind">${esc(e.kind.toLowerCase())}</span>
+          <span class="wrow-mins">${mins} min</span>
         </div>
       `;
-      card.addEventListener("click", () => openEssay(i));
-      es.appendChild(card);
+      row.addEventListener("click", () => openEssay(i));
+      es.appendChild(row);
     });
   }
 

@@ -126,6 +126,7 @@
       const kpi = v.kpi || null;
       const supporting = (v.metrics || []).slice(0, 3);
       row.innerHTML = `
+        ${isFeature ? `<div class="vrow-eyebrow"><span class="vrow-eyebrow-dot"></span>currently shipping</div>` : ""}
         <div class="vrow-head">
           <span class="vrow-name">${esc(v.name)}</span>
           ${status ? `<span class="vstatus vstatus-${esc(status)}">${esc(status)}</span>` : ""}
@@ -560,6 +561,57 @@
       `;
       pressEl.appendChild(card);
     });
+  }
+
+  // ---- section nav (right floating, desktop) ----
+  const sectionNav = $("#section-nav");
+  if (sectionNav) {
+    // Smooth scroll on click
+    sectionNav.querySelectorAll("a[data-target]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const id = a.dataset.target;
+        const el = document.getElementById(id);
+        if (!el) return;
+        e.preventDefault();
+        const offset = el.getBoundingClientRect().top + window.scrollY - 24;
+        window.scrollTo({ top: offset, behavior: "smooth" });
+        history.replaceState(null, "", "#" + id);
+      });
+    });
+
+    // Active state via scroll spy — pick the last section whose top is above the trigger line
+    const targets = ["ventures", "experience", "work", "writing", "press"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+    const setActive = (id) => {
+      sectionNav.querySelectorAll("a").forEach((a) => {
+        a.classList.toggle("is-active", a.dataset.target === id);
+      });
+    };
+    if (targets.length) {
+      const TRIGGER = 120; // px from top of viewport
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        let active = targets[0].id;
+        for (const t of targets) {
+          if (t.getBoundingClientRect().top - TRIGGER <= 0) active = t.id;
+          else break;
+        }
+        setActive(active);
+      };
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+      update();
+    }
   }
 
   // ---- footer year ----

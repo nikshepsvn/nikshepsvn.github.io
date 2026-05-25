@@ -319,7 +319,7 @@ window.SITE = {
       id: "P-05",
       name: "blindcache",
       tag: "mcp · agent memory",
-      stars: 2,
+      stars: 4,
       url: "https://github.com/nikshepsvn/blindcache",
       summary:
         "Encrypted memory layer for AI agents on Nillion's Blind Computer. MCP server + vault SDK. Shamir-sharded across 3 nodes — operator can't read.",

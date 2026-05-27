@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 379,
+      stars: 378,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -280,7 +280,7 @@ window.SITE = {
       id: "P-03",
       name: "veilstream",
       tag: "research · llm security",
-      stars: 5,
+      stars: 6,
       url: "https://github.com/nikshepsvn/veilstream",
       summary:
         "Streaming PII proxy for LLM chat with cryptographically-anchored reversal. Introduces PASP.",
@@ -319,7 +319,7 @@ window.SITE = {
       id: "P-05",
       name: "blindcache",
       tag: "mcp · agent memory",
-      stars: 4,
+      stars: 5,
       url: "https://github.com/nikshepsvn/blindcache",
       summary:
         "Encrypted memory layer for AI agents on Nillion's Blind Computer. MCP server + vault SDK. Shamir-sharded across 3 nodes — operator can't read.",

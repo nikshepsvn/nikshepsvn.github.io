@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 379,
+      stars: 380,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 84,
+      stars: 90,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",
@@ -446,7 +446,7 @@ window.SITE = {
       id: "P-11",
       name: "openvenice",
       tag: "oss · llms",
-      stars: 48,
+      stars: 49,
       url: "https://github.com/nikshepsvn/openvenice",
       summary: "Customizable frontend for Venice AI. Chat, image, audio, video. No backend.",
       detail: {

@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 100,
+      stars: 101,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {
@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 371,
+      stars: 372,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 98,
+      stars: 99,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

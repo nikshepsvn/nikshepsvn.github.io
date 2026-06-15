@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 76,
+      stars: 77,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {
@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 381,
+      stars: 382,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 372,
+      stars: 373,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 101,
+      stars: 103,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

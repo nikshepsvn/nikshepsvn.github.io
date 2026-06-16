@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 373,
+      stars: 374,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 103,
+      stars: 102,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",
@@ -463,7 +463,7 @@ window.SITE = {
       id: "P-12",
       name: "modelgrep",
       tag: "llm-ops · search",
-      stars: 2,
+      stars: 4,
       url: "https://modelgrep.com",
       summary: "Browse LLM providers. Filter by throughput, cost, quant, context.",
       detail: {

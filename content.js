@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 374,
+      stars: 375,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 103,
+      stars: 104,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

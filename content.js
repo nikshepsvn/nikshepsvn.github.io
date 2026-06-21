@@ -22,13 +22,13 @@ window.SITE = {
     philosophy:
       "Infinitely curious, delusional optimist.",
     now: {
-      label: "PhoneGoblin",
-      note: "run a content factory from your desk",
-      url: "https://phonegoblin.com",
+      label: "Meterline",
+      note: "meter and govern your AI spend",
+      url: "https://meterline.ai",
     },
     title: "Nikshep Saravanan — building at the edges of AI, crypto, and markets",
     description:
-      "Independent builder. Now building PhoneGoblin — BYOD Android content factory. Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, PYMNTS.",
+      "Independent builder. Now building Meterline — the AI spend platform. Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, PYMNTS.",
     url: "https://nikshepsvn.com/",
     ogImage: "https://nikshepsvn.com/og.png",
   },
@@ -113,26 +113,26 @@ window.SITE = {
   ventures: [
     {
       id: "V-00",
-      name: "PhoneGoblin",
+      name: "Meterline",
       status: "building",
       summary:
-        "Run a content factory from your desk. Mount any Android — it becomes a node. Real device, real taps, indistinguishable from a human's. One phone or a hundred.",
-      metrics: ["BYOD Android", "No root", "Open runtime", "On-device"],
-      url: "https://phonegoblin.com",
+        "AI is your fastest-growing bill. Meter it. A gateway sits in the request path, attributes every token, and enforces budgets like balances — then proves a cheaper model is safe on your real traffic before you switch.",
+      metrics: ["OpenAI + Anthropic", "BYOK", "Metadata only", "Hard budgets"],
+      url: "https://meterline.ai",
       detail: {
         paragraphs: [
-          "PhoneGoblin runs a content factory from your desk. Mount any Android — it becomes a node in your fleet. Drive content, automation, and analytics across devices: every tap is a real device, every account indistinguishable from a human's.",
-          "Real phones, real taps. No emulators, no cloud phones, no modded APKs. Sideload a signed APK, enable the Accessibility Service, and the goblin is alive — one reboot, no rooting, no developer mode tricks.",
-          "Sign in to the apps you already use. Sessions live in the apps' own sandboxes — credentials never leave the device, and never reach us. Every action you'd take by hand, run across the whole fleet.",
+          "Meterline is the AI spend platform. Point any OpenAI or Anthropic SDK at the gateway — your code doesn't change — and every request passes through byte-faithfully while emitting one metadata-only event: model, tokens, latency, and cost at the stamped price-book version.",
+          "Budgets behave like balances. Per-key monthly limits enforce a hard stop, so a runaway agent can't quietly 10x the bill. The data plane has zero synchronous dependencies — auth, budget, resolve, passthrough, emit — and everything slower hangs off the event chain, off-path.",
+          "Stretch is the part that separates Meterline from a router: a cheaper model is never silently swapped in. It shadow-tests the candidate against your live traffic, proves non-inferiority on every slice with an anytime-valid test, and only then hands the gateway a verified routing plan — with auto-rollback armed.",
         ],
         highlights: [
-          "BYOD Android — sideload signed APK, enable Accessibility Service, install in 90s",
-          "Per-account control: bio, image, pinned post, persona, what each account looks at",
-          "Personas-in-character: backstory, voice, feed — held across every interaction",
-          "Bulk publish: a week of on-brand posts in minutes",
-          "Workflows-as-code — chain models, set triggers, automate replies",
-          "Analytics loop back per account, per persona, per phone",
-          "Managed capacity available — rent Androids if you don't want hardware",
+          "Drop-in gateway — point any OpenAI/Anthropic SDK at it, code unchanged",
+          "Per-token attribution: model, tokens, latency, cost at a stamped price-book version",
+          "Budgets like balances — per-key monthly limits with a hard stop",
+          "BYOK vault — your provider keys, your traffic",
+          "Metadata only — prompts and completions are never stored",
+          "Stretch: verify a cheaper model is non-inferior on real traffic before you swap",
+          "Auto-rollback armed on every approved routing move",
         ],
         images: [],
       },

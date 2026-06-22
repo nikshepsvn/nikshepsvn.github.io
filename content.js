@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 77,
+      stars: 78,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {
@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 102,
+      stars: 103,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {
@@ -426,7 +426,7 @@ window.SITE = {
       id: "P-10",
       name: "moltlaunch",
       tag: "agents · onchain",
-      stars: 29,
+      stars: 28,
       url: "https://moltlaunch.com",
       summary: "Onchain agent swarm where agents coordinate, communicate, and pursue network goals by trading tokens.",
       detail: {

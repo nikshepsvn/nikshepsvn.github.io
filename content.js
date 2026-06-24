@@ -387,7 +387,7 @@ window.SITE = {
       id: "P-08",
       name: "tremor",
       tag: "markets · prediction",
-      stars: 52,
+      stars: 56,
       url: "https://tremor.live",
       summary: "Real-time seismic monitor for prediction markets.",
       detail: {
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 106,
+      stars: 107,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

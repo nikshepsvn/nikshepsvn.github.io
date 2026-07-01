@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 108,
+      stars: 109,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",
@@ -446,7 +446,7 @@ window.SITE = {
       id: "P-11",
       name: "openvenice",
       tag: "oss · llms",
-      stars: 52,
+      stars: 53,
       url: "https://github.com/nikshepsvn/openvenice",
       summary: "Customizable frontend for Venice AI. Chat, image, audio, video. No backend.",
       detail: {

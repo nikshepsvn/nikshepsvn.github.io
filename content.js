@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 383,
+      stars: 382,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",

@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 382,
+      stars: 383,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 105,
+      stars: 106,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {

@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 78,
+      stars: 79,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {

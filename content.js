@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 106,
+      stars: 107,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {
@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 379,
+      stars: 380,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",

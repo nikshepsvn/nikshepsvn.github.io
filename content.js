@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 107,
+      stars: 108,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {
@@ -463,7 +463,7 @@ window.SITE = {
       id: "P-12",
       name: "modelgrep",
       tag: "llm-ops · search",
-      stars: 4,
+      stars: 5,
       url: "https://modelgrep.com",
       summary: "Browse LLM providers. Filter by throughput, cost, quant, context.",
       detail: {

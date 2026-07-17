@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 81,
+      stars: 82,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {
@@ -387,7 +387,7 @@ window.SITE = {
       id: "P-08",
       name: "tremor",
       tag: "markets · prediction",
-      stars: 58,
+      stars: 59,
       url: "https://tremor.live",
       summary: "Real-time seismic monitor for prediction markets.",
       detail: {
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 109,
+      stars: 110,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

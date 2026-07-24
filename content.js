@@ -241,7 +241,7 @@ window.SITE = {
       id: "P-01",
       name: "bankai",
       tag: "research · llms",
-      stars: 84,
+      stars: 85,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Ultra-sparse adaptation of 1-bit LLMs via XOR patches. Paper + code.",
       detail: {
@@ -339,7 +339,7 @@ window.SITE = {
       id: "P-06",
       name: "viberank",
       tag: "leaderboard · claude code",
-      stars: 110,
+      stars: 111,
       url: "https://viberank.app",
       summary: "Public leaderboard for Claude Code usage. Who's actually shipping.",
       detail: {

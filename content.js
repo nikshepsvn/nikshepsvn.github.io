@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 116,
+      stars: 117,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",
@@ -426,7 +426,7 @@ window.SITE = {
       id: "P-10",
       name: "moltlaunch",
       tag: "agents · onchain",
-      stars: 28,
+      stars: 29,
       url: "https://moltlaunch.com",
       summary: "Onchain agent swarm where agents coordinate, communicate, and pursue network goals by trading tokens.",
       detail: {

@@ -366,7 +366,7 @@ window.SITE = {
       id: "P-07",
       name: "homunculus",
       tag: "claude code · plugin",
-      stars: 390,
+      stars: 391,
       url: "https://humanplane.com/homunculus",
       summary:
         "A Claude Code plugin that watches how you work, learns your patterns, evolves itself.",
@@ -446,7 +446,7 @@ window.SITE = {
       id: "P-11",
       name: "openvenice",
       tag: "oss · llms",
-      stars: 62,
+      stars: 61,
       url: "https://github.com/nikshepsvn/openvenice",
       summary: "Customizable frontend for Venice AI. Chat, image, audio, video. No backend.",
       detail: {

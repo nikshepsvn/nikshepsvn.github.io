@@ -258,7 +258,7 @@ window.SITE = {
       id: "P-02",
       name: "cross-market-state-fusion",
       tag: "rl · markets",
-      stars: 381,
+      stars: 382,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary:
         "RL agent exploiting information lag between Binance futures and Polymarket.",
@@ -387,7 +387,7 @@ window.SITE = {
       id: "P-08",
       name: "tremor",
       tag: "markets · prediction",
-      stars: 61,
+      stars: 62,
       url: "https://tremor.live",
       summary: "Real-time seismic monitor for prediction markets.",
       detail: {
@@ -406,7 +406,7 @@ window.SITE = {
       id: "P-09",
       name: "terminal",
       tag: "oss · prediction markets",
-      stars: 121,
+      stars: 122,
       url: "https://github.com/humanplane/terminal",
       summary:
         "Open-source self-hosted Polymarket terminal. Live book, leaderboard, self-custodial trading.",

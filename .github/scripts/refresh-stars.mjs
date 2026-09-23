@@ -1,4 +1,4 @@
-// Refresh `stars: N` fields in content.js by hitting the GitHub API.
+// Refresh `stars: N` (and `forks: N`) fields in content.js by hitting the GitHub API.
 // Auto-scans each project entry for its first github.com URL — no manual map.
 
 import fs from "node:fs/promises";
@@ -55,15 +55,20 @@ for (const entry of entries) {
     }
     const data = await res.json();
     const fresh = data.stargazers_count;
+    let updated = entry;
     if (fresh !== currentStars) {
       console.log(`${name}: ${currentStars} → ${fresh}`);
-      const updated = entry.replace(
-        /stars:\s*(\d+|null)/,
-        `stars: ${fresh}`
-      );
-      projectsBlock = projectsBlock.replace(entry, updated);
+      updated = updated.replace(/stars:\s*(\d+|null)/, `stars: ${fresh}`);
       changes.push({ name, from: currentStars, to: fresh });
     }
+    // The site shows forks next to stars, so keep them fresh too when the entry has them.
+    const forksMatch = updated.match(/forks:\s*(\d+)/);
+    if (forksMatch && parseInt(forksMatch[1], 10) !== data.forks_count) {
+      console.log(`${name} forks: ${forksMatch[1]} → ${data.forks_count}`);
+      updated = updated.replace(/forks:\s*\d+/, `forks: ${data.forks_count}`);
+      changes.push({ name, forks: data.forks_count });
+    }
+    if (updated !== entry) projectsBlock = projectsBlock.replace(entry, updated);
   } catch (e) {
     console.error(`fail ${name}: ${e.message}`);
   }

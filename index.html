@@ -2,18 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nikshep Saravanan — building at the edges of AI, crypto, and markets</title>
-    <meta name="description" content="Independent builder shipping at the edges of AI, crypto, and prediction markets. HumanPlane, Moltlaunch, RealmPlay (exited). Featured in Bloomberg, Business Insider, PYMNTS." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Nikshep Saravanan</title>
+    <meta name="description" content="Engineer in Toronto building first versions at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch ($50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider." />
     <meta name="author" content="Nikshep Saravanan" />
-    <meta name="theme-color" content="#ffffff" />
-
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1114" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="https://nikshepsvn.com/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://nikshepsvn.com/" />
-    <meta property="og:title" content="Nikshep Saravanan — building at the edges of AI, crypto, and markets" />
-    <meta property="og:description" content="Independent builder. Now building Meterline (the AI spend platform). Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, PYMNTS." />
+    <meta property="og:title" content="Nikshep Saravanan" />
+    <meta property="og:description" content="Engineer in Toronto building first versions at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch ($50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider." />
     <meta property="og:image" content="https://nikshepsvn.com/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -21,167 +21,29 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@nikshepsvn" />
     <meta name="twitter:creator" content="@nikshepsvn" />
-    <meta name="twitter:title" content="Nikshep Saravanan — building at the edges of AI, crypto, and markets" />
-    <meta name="twitter:description" content="Independent builder. Now building Meterline (the AI spend platform). Past: HumanPlane, Moltlaunch, RealmPlay (exited), SoulBazaar (acquired). Featured in Bloomberg, Business Insider, PYMNTS." />
+    <meta name="twitter:title" content="Nikshep Saravanan" />
+    <meta name="twitter:description" content="Engineer in Toronto building first versions at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch ($50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider." />
     <meta name="twitter:image" content="https://nikshepsvn.com/og.png" />
 
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffffff'/%3E%3Ctext x='50%25' y='70%25' font-size='72' font-family='Menlo,monospace' text-anchor='middle' fill='%230a0a0a'%3Ens%3C/text%3E%3C/svg%3E" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Hanken+Grotesk:wght@400;500;600&display=swap" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
-    <div class="layout">
-      <aside class="sidebar">
-        <div class="sidebar-inner">
-          <div class="sidebar-hero">
-            <div class="status">
-              <span class="live-dot"></span>
-              <span class="status-label">shipping</span>
-              <span class="sep">·</span>
-              <span id="hero-time">—</span>
-            </div>
+    <header class="bar"><div class="bar-in">
+      <a class="who" href="#about" id="who"></a>
+      <nav class="nav" id="nav" aria-label="Sections"></nav>
+    </div></header>
 
-            <h1 id="hero-name" class="name"></h1>
-            <div class="role" id="hero-role"></div>
+    <main class="page" id="main"></main>
+    <footer><span id="foot"></span><a href="#about">Back to top ↑</a></footer>
 
-            <p class="tagline" id="hero-tag"></p>
-            <p class="tagline-sub" id="hero-philosophy"></p>
-          </div>
-
-          <div class="sidebar-meta">
-            <div class="prev">
-              <div class="prev-label">Background</div>
-              <div class="prev-items" id="prev-items"></div>
-            </div>
-
-            <div class="press-side" id="press-side">
-              <div class="press-side-label">Featured in</div>
-              <div class="press-side-items" id="press-side-items"></div>
-            </div>
-
-            <div class="cta">
-              <div class="cta-label">Reach me</div>
-              <p class="cta-text">
-                DMs on <a href="https://twitter.com/nikshepsvn" target="_blank" rel="noreferrer">X</a> are best, or
-                <a href="mailto:nikshepsvn@gmail.com" id="cta-email">nikshepsvn@gmail.com</a>.
-              </p>
-            </div>
-
-            <ul class="links" id="links-list"></ul>
-
-            <div class="sidebar-foot">
-              <div class="foot-colo">
-                © <span id="foot-year"></span> Nikshep Saravanan
-                <span class="foot-sep">·</span>
-                <span class="foot-loc">ships from toronto</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <main class="content">
-        <section id="ventures" class="section section-ventures">
-          <header class="sec">
-            <h2>Ventures</h2>
-            <span class="sec-count" id="ventures-count"></span>
-          </header>
-          <div id="ventures-rows" class="vrows"></div>
-        </section>
-
-        <section id="experience" class="section">
-          <header class="sec">
-            <h2>Experience</h2>
-            <span class="sec-count" id="experience-count"></span>
-          </header>
-          <div id="experience-rows" class="xrows"></div>
-        </section>
-
-        <section id="work" class="section">
-          <header class="sec">
-            <h2>Projects</h2>
-            <span class="sec-count" id="work-count"></span>
-          </header>
-          <div id="work-list" class="prows" aria-label="Projects"></div>
-        </section>
-
-        <section id="writing" class="section">
-          <header class="sec">
-            <h2>Writing</h2>
-            <span class="sec-count" id="writing-count"></span>
-          </header>
-          <div id="writing-rows" class="erows"></div>
-        </section>
-
-        <section id="press" class="section">
-          <header class="sec">
-            <h2>Press</h2>
-            <span class="sec-count" id="press-count"></span>
-          </header>
-          <div id="press-rows" class="erows"></div>
-        </section>
-      </main>
-
-      <nav class="section-nav" id="section-nav" aria-label="Section navigation">
-        <a href="#ventures" data-target="ventures">
-          <span class="snav-dot" aria-hidden="true"></span>
-          <span class="snav-num">01</span>
-          <span class="snav-label">Ventures</span>
-        </a>
-        <a href="#experience" data-target="experience">
-          <span class="snav-dot" aria-hidden="true"></span>
-          <span class="snav-num">02</span>
-          <span class="snav-label">Experience</span>
-        </a>
-        <a href="#work" data-target="work">
-          <span class="snav-dot" aria-hidden="true"></span>
-          <span class="snav-num">03</span>
-          <span class="snav-label">Projects</span>
-        </a>
-        <a href="#writing" data-target="writing">
-          <span class="snav-dot" aria-hidden="true"></span>
-          <span class="snav-num">04</span>
-          <span class="snav-label">Writing</span>
-        </a>
-        <a href="#press" data-target="press">
-          <span class="snav-dot" aria-hidden="true"></span>
-          <span class="snav-num">05</span>
-          <span class="snav-label">Press</span>
-        </a>
-      </nav>
-    </div>
-
-    <div id="pmodal" class="pmodal" hidden aria-modal="true" role="dialog">
-      <div class="pmodal-backdrop" data-close></div>
-      <div class="pmodal-card">
-        <button class="pmodal-close" data-close aria-label="Close">✕</button>
-        <div class="pmodal-content" id="pmodal-content"></div>
-      </div>
-    </div>
-
-    <!-- Essay reader (modal) -->
-    <div id="reader" class="reader" hidden aria-modal="true" role="dialog" aria-label="Essay reader">
-      <div class="reader-backdrop" data-reader-close></div>
-      <div class="reader-card">
-        <header class="reader-bar">
-          <button class="reader-close" data-reader-close aria-label="Close reader">
-            <span>← back</span>
-          </button>
-          <div class="reader-progress" aria-hidden="true">
-            <div class="reader-progress-bar" id="reader-progress-bar"></div>
-          </div>
-          <div class="reader-title" id="reader-title"></div>
-        </header>
-        <div class="reader-scroll" id="reader-scroll">
-          <div class="reader-inner" id="reader-inner"></div>
-        </div>
-      </div>
+    <div class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-labelledby="reader-h">
+      <div class="reader-bar"><button type="button" id="reader-close">← Back</button><span id="reader-crumb"></span><i class="progress" id="progress" aria-hidden="true"></i></div>
+      <article id="reader-body"></article>
     </div>
 
     <script src="./content.js"></script>

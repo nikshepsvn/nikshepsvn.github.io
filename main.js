@@ -1,683 +1,288 @@
-// Hydrates the DOM from window.SITE (see content.js).
+"use strict";
 
-(function () {
-  const S = window.SITE;
-  if (!S) return;
+const SITE = window.SITE;
+const m = SITE.meta;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const host = (url) => (url || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/.*$/, "");
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-  document.title = S.meta.title;
-  setMeta("description", S.meta.description);
+// Logos are local files keyed by domain; anything without one falls back to a colored monogram.
+const LOGOS = new Set(["humanplane.com", "deliverr.com", "moltlaunch.com", "kalshi.com", "instacart.com", "coinbase.com", "seatgeek.com",
+  "pagerduty.com", "uwaterloo.ca", "viberank.app", "modelgrep.com", "bloomberg.com", "businessinsider.com", "aijourn.com", "shanghai.nyu.edu", "pymnts.com"]);
+const LOGO_ALIAS = { "rits.shanghai.nyu.edu": "shanghai.nyu.edu" };
+const NAME_LOGOS = { RealmPlay: "realmplay.png", SoulBazaar: "soulbazaar.png", "MC-Bench": "mcbench.png" };
 
-  // ---- sidebar ----
-  set("#hero-name", S.meta.name);
-  set("#hero-role", S.meta.role + " · " + S.meta.location);
-  set("#hero-tag", S.meta.tagline);
-  set("#hero-philosophy", S.meta.philosophy);
+// Hand-drawn marks for projects with no logo of their own: one app-icon per idea,
+// each on its own palette (scrim and thimble borrow their READMEs' colors).
+const lin = (id, a, b, x2 = 1, y2 = 1) => `<linearGradient id="${id}" x1="0" y1="0" x2="${x2}" y2="${y2}"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
+const ART = {
+  thimble: `<defs>${lin("a-thimble", "#e4506a", "#8e1c33")}</defs><rect width="48" height="48" fill="url(#a-thimble)"/>
+    <path d="M15.5 35 17.6 17.5a6.4 6.4 0 0 1 12.8 0L32.5 35z" fill="#fff4f2"/><rect x="13" y="34" width="22" height="5" rx="2.5" fill="#fff"/>
+    <g fill="#d23a55" opacity=".5"><circle cx="21" cy="21" r="1.3"/><circle cx="27" cy="21" r="1.3"/><circle cx="24" cy="25" r="1.3"/><circle cx="20.3" cy="29" r="1.3"/><circle cx="27.7" cy="29" r="1.3"/><circle cx="24" cy="18" r="1.3"/></g>`,
+  scrim: `<defs><radialGradient id="a-scrim" cx=".5" cy=".3" r=".55"><stop offset="0" stop-color="#f6b75d"/><stop offset="1" stop-color="#f6b75d" stop-opacity="0"/></radialGradient></defs>
+    <rect width="48" height="48" fill="#17120d"/><circle cx="24" cy="15" r="20" fill="url(#a-scrim)"/>
+    <path d="M12 12.5h24V33q-3 3-6 0t-6 0-6 0-6 0z" fill="#f4efe6" opacity=".82"/>
+    <path d="M18 13v19M24 13v19M30 13v19" stroke="#17120d" stroke-opacity=".14" stroke-width="1.2"/><rect x="10" y="10" width="28" height="3" rx="1.5" fill="#f4efe6"/>`,
+  bankai: `<rect width="48" height="48" fill="#0b0d12"/>` + [0, 1, 2, 3].flatMap((r) => [0, 1, 2, 3].map((c) => {
+    // A 1-bit checkerboard with two cells flipped by the XOR patch.
+    const patched = (r === 1 && c === 2) || (r === 2 && c === 1);
+    const on = (r + c) % 2 === 0 || patched;
+    return on ? `<rect x="${9 + c * 8}" y="${9 + r * 8}" width="6" height="6" rx="1.3" fill="${patched ? "#5eead4" : "#e6eaf2"}"/>` : "";
+  })).join(""),
+  veilstream: `<defs>${lin("a-veil", "#4f46e5", "#1e1b4b")}</defs><rect width="48" height="48" fill="url(#a-veil)"/>
+    <g fill="none" stroke="#e0e7ff" stroke-width="2.8" stroke-linecap="round"><path d="M9 16q3.75-4 7.5 0t7.5 0 7.5 0 7.5 0"/><path d="M9 24q3.75-4 7.5 0t7.5 0 7.5 0 7.5 0"/><path d="M9 32q3.75-4 7.5 0t7.5 0 7.5 0 7.5 0"/></g>
+    <rect x="18" y="18.5" width="12" height="11" rx="3" fill="#a5b4fc"/>`,
+  "near-hydra": `<rect width="48" height="48" fill="#111214"/>
+    <g fill="none" stroke="#f4f4f5" stroke-width="3.2" stroke-linecap="round"><path d="M24 40c0-10-12-13-12-24"/><path d="M24 40V12"/><path d="M24 40c0-10 12-13 12-24"/></g>
+    <circle cx="12" cy="14" r="4.4" fill="#f7931a"/><circle cx="24" cy="10" r="4.4" fill="#7b8ff0"/><circle cx="36" cy="14" r="4.4" fill="#a45bff"/>`,
+  blindcache: `<defs>${lin("a-bcache", "#14b8a6", "#083a37")}</defs><rect width="48" height="48" fill="url(#a-bcache)"/>
+    <circle cx="24" cy="24" r="11" fill="none" stroke="#ccfbf1" stroke-width="6.5" stroke-dasharray="18.9 4.14" transform="rotate(-78 24 24)"/>
+    <circle cx="24" cy="22.3" r="2.6" fill="#ecfeff"/><rect x="22.9" y="23" width="2.2" height="5.6" rx="1.1" fill="#ecfeff"/>`,
+  blindchat: `<defs>${lin("a-bchat", "#8b5cf6", "#312e81")}</defs><rect width="48" height="48" fill="url(#a-bchat)"/>
+    <path d="M15 11h18a4.5 4.5 0 0 1 4.5 4.5v12A4.5 4.5 0 0 1 33 32H22l-7 6v-6a4.5 4.5 0 0 1-4.5-4.5v-12A4.5 4.5 0 0 1 15 11z" fill="#f5f3ff"/>
+    <circle cx="24" cy="19.2" r="3.1" fill="#6d28d9"/><path d="M22.4 21h3.2l1 5.6h-5.2z" fill="#6d28d9"/>`,
+  "nemo-ai": `<defs>${lin("a-nemo", "#38bdf8", "#075985", 0, 1)}<clipPath id="c-nemo"><path d="M9 24c4-8.5 18-10 24 0-6 10-20 8.5-24 0z"/></clipPath></defs>
+    <rect width="48" height="48" fill="url(#a-nemo)"/><path d="M31.5 24 40 16.5v15z" fill="#f97316"/>
+    <path d="M9 24c4-8.5 18-10 24 0-6 10-20 8.5-24 0z" fill="#fb923c"/>
+    <g clip-path="url(#c-nemo)" fill="#fff"><rect x="15" y="12" width="3.4" height="24"/><rect x="23.5" y="12" width="3.4" height="24"/></g>
+    <circle cx="13.2" cy="22.6" r="1.5" fill="#0c1a2b"/><circle cx="37" cy="10" r="1.7" fill="#e0f2fe" opacity=".85"/><circle cx="33" cy="7" r="1.1" fill="#e0f2fe" opacity=".7"/>`,
+  tremor: `<defs>${lin("a-tremor", "#fbbf24", "#ef4444", 1, 0)}</defs><rect width="48" height="48" fill="#121418"/>
+    <path d="M6 17h36M6 35h36" stroke="#fff" stroke-opacity=".07"/>
+    <path d="M6 26h8l3-6 3 13 4-23 4 28 3-16 3 6 2-2h6" fill="none" stroke="url(#a-tremor)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
+  openvenice: `<defs>${lin("a-venice", "#fb7185", "#b91c1c", 0, 1)}</defs><rect width="48" height="48" fill="url(#a-venice)"/>
+    <g fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"><path d="M9 35V23a5 5 0 0 1 10 0v12M19 35V23a5 5 0 0 1 10 0v12M29 35V23a5 5 0 0 1 10 0v12"/><path d="M6.5 35h35" stroke-linecap="round"/></g>
+    <path d="M11 40h6M21 40h6M31 40h6" stroke="#fecdd3" stroke-width="1.8" stroke-linecap="round"/>`,
+  sniffchain: `<defs>${lin("a-sniff", "#22c55e", "#14532d")}</defs><rect width="48" height="48" fill="url(#a-sniff)"/>
+    <circle cx="21" cy="21" r="9.5" fill="#052e16" fill-opacity=".35" stroke="#ecfdf5" stroke-width="3.2"/><path d="M28.2 28.2 37 37" stroke="#ecfdf5" stroke-width="4.6" stroke-linecap="round"/>
+    <g fill="none" stroke="#86efac" stroke-width="2"><rect x="14.5" y="18.5" width="8" height="5" rx="2.5"/><rect x="19.5" y="18.5" width="8" height="5" rx="2.5"/></g>`,
+  Spine: `<defs>${lin("a-spine", "#0f172a", "#334155")}</defs><rect width="48" height="48" fill="url(#a-spine)"/>
+    <g stroke="#94a3b8" stroke-width="1.6"><path d="M24 24 12 13M24 24l12-11M24 24 11 34M24 24l13 10M12 13l24 0M11 34l26 0"/></g>
+    <circle cx="12" cy="13" r="3.6" fill="#38bdf8"/><circle cx="36" cy="13" r="3.6" fill="#a78bfa"/><circle cx="11" cy="34" r="3.6" fill="#34d399"/><circle cx="37" cy="34" r="3.6" fill="#fbbf24"/>
+    <circle cx="24" cy="24" r="5.2" fill="#f8fafc"/>`,
+  "clip.fun": `<defs>${lin("a-clip", "#f472b6", "#f97316")}</defs><rect width="48" height="48" fill="url(#a-clip)"/>
+    <path d="M18.5 15.5 33 24l-14.5 8.5z" fill="#fff" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M37 7.5l1.3 3.2 3.2 1.3-3.2 1.3L37 16.5l-1.3-3.2-3.2-1.3 3.2-1.3z" fill="#fff7ed"/>`,
+  dreamloom: `<defs>${lin("a-dream", "#1e1b4b", "#7c3aed", 0, 1)}<mask id="m-dream"><rect width="48" height="48" fill="#fff"/><circle cx="28" cy="16.5" r="8.5" fill="#000"/></mask></defs>
+    <rect width="48" height="48" fill="url(#a-dream)"/><circle cx="22" cy="20" r="9.5" fill="#fde68a" mask="url(#m-dream)"/>
+    <g fill="none" stroke="#c4b5fd" stroke-width="1.8" stroke-linecap="round"><path d="M8 34q5-3 10 0t10 0 10 0 10 0"/><path d="M8 39q5 3 10 0t10 0 10 0 10 0"/></g>
+    <circle cx="36" cy="11" r="1.1" fill="#fff"/><circle cx="12" cy="10" r=".9" fill="#fff" opacity=".7"/>`,
+};
 
-  // "Previously" logo row with rich hover tooltip
-  const prevEl = $("#prev-items");
-  if (prevEl && Array.isArray(S.previously)) {
-    prevEl.innerHTML = S.previously
-      .map((p) => `
-        <a class="prev-item"
-           href="${esc(p.url)}"
-           target="_blank"
-           rel="noreferrer"
-           aria-label="${esc(p.name)} · ${esc(p.role)} · ${esc(p.period)}">
-          <img src="https://www.google.com/s2/favicons?sz=128&domain=${esc(p.domain)}"
-               alt="${esc(p.name)}"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-          <span class="prev-fallback">${esc(p.name.slice(0,2).toUpperCase())}</span>
-          <span class="prev-tip" role="tooltip">
-            <strong>${esc(p.name)}</strong>
-            <span class="prev-tip-role">${esc(p.role)}</span>
-            <span class="prev-tip-period">${esc(p.period)}</span>
-          </span>
-        </a>`)
-      .join("");
+const logoFor = (name, url, { size } = {}) => {
+  let d = host(url);
+  d = LOGO_ALIAS[d] || d;
+  // Repos in the humanplane org wear the HumanPlane mark.
+  if (d === "github.com" && url.includes("/humanplane/")) d = "humanplane.com";
+  const sizeVar = size ? `--s:${size};` : "";
+  const file = NAME_LOGOS[name] || (LOGOS.has(d) ? `${d}.png` : null);
+  if (file) return `<span class="logo" style="${sizeVar}"><img src="logos/${file}" alt=""></span>`;
+  if (ART[name]) return `<span class="logo art" style="${sizeVar}" aria-hidden="true"><svg viewBox="0 0 48 48">${ART[name]}</svg></span>`;
+  return `<span class="logo ghost" style="${sizeVar}" aria-hidden="true">${esc(name[0].toUpperCase())}</span>`;
+};
+
+// Pills are links to the matching entry further down the page.
+const pill = (target, name, url) =>
+  `<a class="pill" href="#${target}" data-jump="${target}">${logoFor(name, url)}${esc(name)}</a>`;
+const ventureById = Object.fromEntries(SITE.ventures.map((v) => [v.name, v]));
+const expByCo = Object.fromEntries(SITE.experience.map((x) => [x.company, x]));
+const projByName = Object.fromEntries(SITE.projects.map((p) => [p.name, p]));
+const pressBySource = Object.fromEntries(SITE.press.map((p) => [p.source, p]));
+const vp = (n) => pill("v-" + slug(n), n, ventureById[n].url);
+const xp = (n, label) => pill("x-" + slug(n), label || n, expByCo[n].url);
+const pp = (n) => pill("p-" + slug(n), n, projByName[n].url);
+const prp = (n) => pill("pr-" + slug(n), n, pressBySource[n].url);
+const ep = (title) => {
+  const i = SITE.essays.findIndex((e) => e.title === title);
+  return `<a class="pill" href="#writing" data-essay="${i}"><span class="logo ghost" aria-hidden="true">¶</span>${esc(title)}</a>`;
+};
+const prose = (paras, lead = false) => `<div class="prose${lead ? " lead" : ""}">${paras.map((p) => `<p>${p}</p>`).join("")}</div>`;
+
+const totalStars = SITE.projects.reduce((sum, p) => sum + (p.stars || 0), 0);
+const byStars = [...SITE.projects].sort((a, b) => (b.stars ?? -1) - (a.stars ?? -1));
+const now = m.now.url ? `<a href="${esc(m.now.url)}" target="_blank" rel="noreferrer">${esc(m.now.label)}</a>` : `<b>${esc(m.now.label)}</b>`;
+
+const ventureItem = (v) => `
+  <li><${v.url ? "a" : "div"} class="item" id="v-${slug(v.name)}"${v.url ? ` href="${esc(v.url)}" target="_blank" rel="noreferrer"` : ""}>
+    ${logoFor(v.name, v.url)}
+    <span class="item-t">${esc(v.name)} <span>· ${esc(v.status)}</span></span>
+    <span class="item-k">${v.kpi ? `${esc(v.kpi.value)}<small>${esc(v.kpi.label)}</small>` : ""}</span>
+    <span class="item-d">${esc(v.summary)}</span>
+    ${v.metrics?.length ? `<span class="tags">${v.metrics.map((t) => `<span>${esc(t)}</span>`).join("")}</span>` : ""}
+  </${v.url ? "a" : "div"}></li>`;
+
+const expItem = (x) => `
+  <li><a class="item" id="x-${slug(x.company)}" href="${esc(x.url)}" target="_blank" rel="noreferrer">
+    ${logoFor(x.company, x.url)}
+    <span class="item-t">${esc(x.company)} <span>· ${esc(x.role)}${x.team ? `, ${esc(x.team)}` : ""}</span></span>
+    <span class="item-m">${esc(x.period)}</span>
+    <span class="item-d">${esc(x.description)}</span>
+  </a></li>`;
+
+// Theme per project drives the filter chips in the open-source chapter.
+const monthLabel = (d) => new Date(d + "-15").toLocaleDateString("en-US", { month: "short", year: "numeric" });
+const isNew = (d) => (Date.now() - new Date(d + "-15")) / 864e5 < 75;
+
+const GROUPS = [
+  ["products", "Products", "live, with real traffic"],
+  ["research", "Research", "models, papers, and agents"],
+  ["oss", "Open source", "tools people star and fork"],
+  ["experiments", "Earlier products", ""],
+];
+const OSS_SHOWN = 5;
+const compact = (n) => (n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n));
+
+const projItem = (p, foldIndex) => {
+  const tag = p.url ? "a" : "div";
+  const attrs = p.url ? ` href="${esc(p.url)}" target="_blank" rel="noreferrer"` : "";
+  const fresh = p.date && isNew(p.date);
+  const feature = Boolean(p.stats);
+  // Products link to their site; everything with a repo shows stars and forks.
+  const meta = p.group !== "products" && p.stars != null
+    ? `<b>★ ${compact(p.stars)}</b>${p.forks ? `<span>${p.forks} forks</span>` : ""}`
+    : (p.url ? `<span>${esc(host(p.url))} ↗</span>` : "");
+  const fold = foldIndex !== null && foldIndex >= OSS_SHOWN && !fresh;
+  return `<li${fold ? " data-fold hidden" : ""}><${tag} class="proj${feature ? " feature" : ""}${fresh ? " is-new" : ""}" id="p-${slug(p.name)}"${attrs}>
+    ${logoFor(p.name, p.url || "")}
+    <span class="proj-name"><span>${esc(p.name)}</span>${fresh ? `<span class="new-chip">New · ${monthLabel(p.date)}</span>` : ""}<small>${esc(p.tag)}</small></span>
+    <span class="proj-meta">${meta}</span>
+    <span class="proj-sum">${esc(p.summary)}</span>
+    ${p.stats ? `<span class="stats">${p.stats.map((x) => `<span class="stat"><b>${esc(x.value)}</b><span>${esc(x.label)}</span></span>`).join("")}</span>` : ""}
+    ${p.wins?.length ? `<span class="wins">${p.wins.map((w) => `<span class="win">${esc(w)}</span>`).join("")}</span>` : ""}
+  </${tag}></li>`;
+};
+
+const projectGroups = () => GROUPS.map(([id, label, blurb]) => {
+  const items = SITE.projects.filter((p) => p.group === id);
+  if (!items.length) return "";
+  // Only the long open-source list folds; everything else is always visible.
+  const folds = id === "oss" || id === "experiments";
+  const body = items.map((p, i) => projItem(p, folds ? (id === "experiments" ? OSS_SHOWN + i : i) : null)).join("");
+  return `<div class="group" data-group="${id}"${id === "experiments" ? " data-fold hidden" : ""}>
+    <div class="group-h"><h3>${label}</h3>${blurb ? `<span>${blurb}</span>` : ""}</div>
+    <ol class="plist">${body}</ol></div>`;
+}).join("");
+
+const essayItem = (e, i) => e.url ? `
+  <li><a class="item" href="${esc(e.url)}" target="_blank" rel="noreferrer" style="grid-template-columns: minmax(0,1fr) auto">
+    <span class="item-h">${esc(e.title)} <span class="ext">↗</span></span><span class="item-m">${esc(e.kind)} · ${esc(e.date)}</span>
+    <span class="item-d" style="grid-column:1/-1">${esc(e.subtitle)}</span>
+  </a></li>` : `
+  <li><button type="button" class="item" data-essay="${i}" style="grid-template-columns: minmax(0,1fr) auto">
+    <span class="item-h">${esc(e.title)}</span><span class="item-m">${esc(e.date)}</span>
+    <span class="item-d" style="grid-column:1/-1">${esc(e.subtitle)}</span>
+  </button></li>`;
+
+const pressItem = (p) => `
+  <li><a class="item" id="pr-${slug(p.source)}" href="${esc(p.url)}" target="_blank" rel="noreferrer">
+    ${logoFor(p.source, p.url)}
+    <span class="item-h">${esc(p.title)}</span>
+    <span class="item-m">${esc(p.date)}</span>
+    <span class="item-d">${esc(p.source)} — ${esc(p.blurb)}</span>
+  </a></li>`;
+
+const email = SITE.links.find((l) => l.href.startsWith("mailto:"));
+
+// Each chapter: a nav label, a side label, prose, then the items the prose refers to.
+const chapters = [
+  { id: "about", label: "About", side: "Hello", body: `
+      <span class="status"><span class="dot" aria-hidden="true"></span><span>Building ${m.now.url ? `${now}, ${esc(m.now.note)}` : `a consumer product, <b>in stealth</b>`} · <span id="clock">Toronto</span></span></span>
+      ${prose([`I'm <b>Nikshep</b>, an engineer in Toronto. I build first versions of things at the edges of AI, crypto, and markets — two exits so far, and a protocol that moved $50M+.`], true)}
+      ${prose([`<em>${esc(m.philosophy)}</em> Right now that's pointed at a consumer product I can't talk about yet. Away from the keyboard: techno, psydub, and mountains with friends.`])}` },
+  { id: "ventures", label: "Ventures", side: "Ventures", count: SITE.ventures.length, body: `
+      ${prose([`I built ${vp("HumanPlane")}, a chart room for prediction markets, and ${vp("Moltlaunch")}, a work protocol for agents that cleared $50M+ in volume. I exited ${vp("RealmPlay")}, and ${vp("SoulBazaar")} was acquired before it launched.`])}
+      <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },
+  { id: "experience", label: "Experience", side: "Experience", count: SITE.experience.length, body: `
+      ${prose([`I was a ${xp("Kalshi")} Builder Fellow, and before going independent spent three years as a senior engineer and tech lead at ${xp("Instacart")}. Earlier: ${xp("Coinbase")}, ${xp("Deliverr")}, ${xp("SeatGeek")}, ${xp("PagerDuty")}, and computer science at ${xp("University of Waterloo", "Waterloo")}.`])}
+      <ul class="list">${SITE.experience.map(expItem).join("")}</ul>` },
+  { id: "projects", label: "Projects", side: "Projects", count: SITE.projects.length, body: `
+      ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,238 developers across 18 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code, a 266K-star repo.`, `On the research side, ${pp("thimble")} beats a funded team's tool-calling model at 48M parameters, ${pp("bankai")} has been independently verified and ported to Rust, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
+      <div class="projects">${projectGroups()}</div>
+      <button type="button" class="more" id="more">Show more projects</button>
+      <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>` },
+  { id: "writing", label: "Writing", side: "Essays", count: SITE.essays.length, body: `
+      ${prose([`I write about where AI and markets are heading — start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
+      <ul class="list">${SITE.essays.map(essayItem).join("")}</ul>` },
+  { id: "press", label: "Press", side: "Coverage", count: SITE.press.length, body: `
+      ${prose([`My work has been covered by ${prp("Bloomberg")}, ${prp("Business Insider")}, ${prp("PYMNTS")} and others.`])}
+      <ul class="list">${SITE.press.map(pressItem).join("")}</ul>` },
+  { id: "contact", label: "Contact", side: "Contact", body: `
+      ${prose([`The best way to reach me is a DM on <a href="https://twitter.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
+      <div class="links">
+        ${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${esc(l.label)} <span>${esc(l.handle)}</span></a>`).join("")}
+        ${email ? `<button type="button" id="copy-email">${esc(email.handle)} <span id="copy-state">copy</span></button>` : ""}
+      </div>` },
+];
+
+$("main").innerHTML = chapters.map((c) => `
+  <section class="chap" id="${c.id}" aria-labelledby="${c.id}-h">
+    <h2 class="side" id="${c.id}-h">${c.side}${c.count ? `<small>${c.count}</small>` : ""}</h2>
+    <div class="body">${c.body}</div>
+  </section>`).join("");
+$("nav").innerHTML = chapters.map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("");
+$("who").textContent = m.name;
+$("foot").textContent = `© ${new Date().getFullYear()} ${m.name} · Toronto`;
+
+const tick = () => ($("clock").textContent = new Date().toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit", timeZone: "America/Toronto" }) + " in Toronto");
+tick(); setInterval(tick, 30000);
+
+// Highlight the chapter currently in view.
+const navLinks = [...document.querySelectorAll("[data-nav]")];
+const spy = new IntersectionObserver((entries) => {
+  entries.filter((e) => e.isIntersecting).forEach((e) => {
+    navLinks.forEach((a) => a.setAttribute("aria-current", String(a.dataset.nav === e.target.id)));
+    document.querySelector(`[data-nav="${e.target.id}"]`)?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  });
+}, { rootMargin: "-45% 0px -50% 0px" });
+chapters.forEach((c) => spy.observe($(c.id)));
+
+// Pills scroll to their entry and flash it; hidden projects are revealed first.
+const reveal = () => {
+  document.querySelectorAll("#projects [data-fold]").forEach((el) => (el.hidden = false));
+  $("more").hidden = true;
+};
+// Fresh releases never fold, so count what is actually hidden (experiments count as one list).
+$("more").textContent = `Show ${document.querySelectorAll("#projects li[data-fold], #projects .group[data-fold] li").length} more projects`;
+document.addEventListener("click", (ev) => {
+  const jump = ev.target.closest("[data-jump]");
+  if (jump) {
+    ev.preventDefault();
+    const el = $(jump.dataset.jump);
+    if (el?.closest("[hidden]")) reveal();
+    el?.scrollIntoView({ block: "center" });
+    el?.classList.remove("flash"); void el?.offsetWidth; el?.classList.add("flash");
+    return;
   }
+  const essay = ev.target.closest("[data-essay]");
+  if (essay) { ev.preventDefault(); openEssay(+essay.dataset.essay); }
+});
+$("more").addEventListener("click", reveal);
 
-  // CTA email: click-to-copy
-  const ctaEmail = $("#cta-email");
-  if (ctaEmail) {
-    ctaEmail.addEventListener("click", async (e) => {
-      const email = ctaEmail.getAttribute("href").replace(/^mailto:/, "");
-      try {
-        await navigator.clipboard.writeText(email);
-        e.preventDefault();
-        showToast("copied · " + email);
-      } catch {
-        /* fall back to mailto */
-      }
-    });
-  }
+$("copy-email")?.addEventListener("click", () => {
+  navigator.clipboard?.writeText(email.handle).then(() => ($("copy-state").textContent = "copied"), () => ($("copy-state").textContent = "select to copy"));
+});
 
-  // live Toronto time
-  const timeEl = $("#hero-time");
-  if (timeEl) {
-    const updateTime = () => {
-      try {
-        const t = new Date()
-          .toLocaleTimeString("en-US", {
-            timeZone: "America/Toronto",
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-          })
-          .replace(/\s?(AM|PM)/i, (m) => m.trim().toLowerCase());
-        timeEl.textContent = t;
-      } catch {
-        timeEl.textContent = "";
-      }
-    };
-    updateTime();
-    setInterval(updateTime, 20_000);
-  }
-
-  // links as icon row
-  const linksEl = $("#links-list");
-  if (linksEl) {
-    const ICONS = {
-      github: `<svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>`,
-      "x / twitter": `<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M12.6 0h2.45L9.7 6.12 16 14.4h-4.93l-3.86-5.05L2.79 14.4H.33l5.72-6.53L0 0h5.06l3.49 4.62L12.6 0zm-.86 12.9h1.36L4.33 1.42H2.87L11.74 12.9z"/></svg>`,
-      linkedin: `<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M13.632 13.635h-2.37V9.922c0-.886-.018-2.025-1.234-2.025-1.235 0-1.424.964-1.424 1.961v3.778h-2.37V6h2.276v1.04h.03c.318-.6 1.092-1.233 2.247-1.233 2.4 0 2.845 1.58 2.845 3.637v4.191zM3.558 4.955a1.375 1.375 0 1 1 0-2.75 1.375 1.375 0 0 1 0 2.75zm1.188 8.68H2.37V6h2.376v7.635zM14.816 0H1.18C.528 0 0 .516 0 1.153v13.694C0 15.484.528 16 1.18 16h13.635c.652 0 1.185-.516 1.185-1.153V1.153C16 .516 15.467 0 14.815 0z"/></svg>`,
-      email: `<svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h12v8H2z"/><path d="M2 4l6 4 6-4"/></svg>`,
-    };
-    S.links.forEach((l) => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = l.href;
-      const isMail = l.href.startsWith("mailto:");
-      if (!isMail) {
-        a.target = "_blank";
-        a.rel = "noreferrer";
-      }
-      const iconSvg = ICONS[l.label.toLowerCase()] || "";
-      a.setAttribute("title", l.label + (l.handle ? " · " + l.handle : ""));
-      a.setAttribute("aria-label", l.label + (l.handle ? " · " + l.handle : ""));
-      a.innerHTML = iconSvg || `<span class="icon-text">${esc(l.label[0].toUpperCase())}</span>`;
-      if (isMail) {
-        a.addEventListener("click", async (e) => {
-          const email = l.href.replace(/^mailto:/, "");
-          try {
-            await navigator.clipboard.writeText(email);
-            e.preventDefault();
-            showToast("copied · " + email);
-          } catch {
-            /* fall back to mailto */
-          }
-        });
-      }
-      li.appendChild(a);
-      linksEl.appendChild(li);
-    });
-  }
-
-  // ---- ventures (startups / closed-source) ----
-  set("#ventures-count", String((S.ventures || []).length).padStart(2, "0"));
-
-  const vs = $("#ventures-rows");
-  if (vs && S.ventures) {
-    S.ventures.forEach((v, i) => {
-      const row = document.createElement("button");
-      const status = (v.status || "").toLowerCase();
-      const isFeature = status === "building" || status === "live";
-      row.className = "vrow" + (isFeature ? " vrow-feature" : "");
-      row.type = "button";
-      const kpi = v.kpi || null;
-      const supporting = (v.metrics || []).slice(0, 3);
-      row.innerHTML = `
-        ${isFeature ? `<div class="vrow-eyebrow"><span class="vrow-eyebrow-dot"></span>currently shipping</div>` : ""}
-        <div class="vrow-head">
-          <span class="vrow-name">${esc(v.name)}</span>
-          ${status ? `<span class="vstatus vstatus-${esc(status)}">${esc(status)}</span>` : ""}
-        </div>
-        <div class="vrow-sum">${esc(v.summary)}</div>
-        <div class="vrow-foot">
-          ${kpi
-            ? `<div class="vrow-kpi">
-                <span class="vrow-kpi-value">${esc(kpi.value)}</span>
-                ${kpi.label ? `<span class="vrow-kpi-label">${esc(kpi.label)}</span>` : ""}
-              </div>`
-            : ""}
-          ${supporting.length
-            ? `<div class="vrow-meta">${supporting.map((m) => `<span>${esc(m)}</span>`).join('<span class="vrow-sep">·</span>')}</div>`
-            : ""}
-        </div>
-      `;
-      row.addEventListener("click", () => openVenture(i));
-      vs.appendChild(row);
-    });
-  }
-
-  function openVenture(i) {
-    const v = S.ventures[i];
-    if (!modalContent || !modal || !v) return;
-    const d = v.detail || {};
-    const allMetrics = [];
-    if (v.kpi) {
-      allMetrics.push(
-        v.kpi.label ? `${v.kpi.value} ${v.kpi.label}` : v.kpi.value
-      );
-    }
-    if (Array.isArray(v.metrics)) allMetrics.push(...v.metrics);
-    const metrics = allMetrics
-      .map((m) => `<span class="vd-metric">${esc(m)}</span>`)
-      .join("");
-    const paragraphs = (d.paragraphs || [])
-      .map((p) => `<p>${esc(p)}</p>`)
-      .join("");
-    const highlights = (d.highlights || [])
-      .map((h) => `<li>${esc(h)}</li>`)
-      .join("");
-    const images = (d.images || [])
-      .map(
-        (img) => `
-          <a href="${esc(img.src)}" target="_blank" rel="noreferrer">
-            <img src="${esc(img.src)}" alt="${esc(img.alt || "")}" loading="lazy" />
-          </a>`
-      )
-      .join("");
-    modalContent.innerHTML = `
-      <article class="venture-detail">
-        <div class="vd-head">
-          <h2 class="vd-name">${esc(v.name)}</h2>
-        </div>
-        ${metrics ? `<div class="vd-metrics">${metrics}</div>` : ""}
-        ${paragraphs ? `<div class="vd-paras">${paragraphs}</div>` : ""}
-        ${highlights
-          ? `<div class="vd-section"><div class="vd-section-label">Highlights</div><ul class="vd-highlights">${highlights}</ul></div>`
-          : ""}
-        ${images ? `<div class="d-images">${images}</div>` : ""}
-        ${v.url
-          ? `<div class="d-links"><a href="${esc(v.url)}" class="d-link primary" target="_blank" rel="noreferrer">visit ↗</a></div>`
-          : ""}
-      </article>
-    `;
-    prevFocus = document.activeElement;
-    modal.hidden = false;
-    document.body.style.overflow = "hidden";
-    modal.querySelector(".pmodal-close")?.focus();
-  }
-  // expose for potential external use
-  let prevFocus = null;
-
-  // ---- work ----
-  set("#work-count", String(S.projects.length).padStart(2, "0"));
-
-  const list = $("#work-list");
-  const modal = $("#pmodal");
-  const modalContent = $("#pmodal-content");
-
-  if (list) {
-    S.projects.forEach((p, i) => {
-      const btn = document.createElement("button");
-      btn.className = "prow" + (i < 2 ? " is-flag" : "");
-      btn.type = "button";
-      const stars = p.stars != null ? p.stars : "";
-      btn.innerHTML = `
-        <div class="prow-head">
-          <span class="prow-name">${esc(p.name)}</span>
-        </div>
-        <div class="prow-sum">${esc(p.summary)}</div>
-        <div class="prow-foot">
-          <span class="prow-tag">${esc(p.tag)}</span>
-          <span class="prow-meta ${stars === "" ? "dim" : ""}">
-            ${stars !== "" ? `${esc(stars)} ★` : ""}
-          </span>
-        </div>
-      `;
-      btn.addEventListener("click", () => openModal(i));
-      list.appendChild(btn);
-    });
-  }
-
-  if (modal) {
-    let prevFocus = null;
-    modal.addEventListener("click", (e) => {
-      if (e.target.hasAttribute("data-close")) closeModal();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.hidden) closeModal();
-    });
-
-    window._openProject = openModal;
-    window._closeProject = closeModal;
-
-    function openModal(i) {
-      renderModal(S.projects[i]);
-      prevFocus = document.activeElement;
-      modal.hidden = false;
-      document.body.style.overflow = "hidden";
-      modal.querySelector(".pmodal-close")?.focus();
-    }
-    function closeModal() {
-      modal.hidden = true;
-      document.body.style.overflow = "";
-      modalContent.closest(".pmodal-card")?.classList.remove("is-essay");
-      prevFocus?.focus?.();
-    }
-  }
-
-  function renderModal(p) {
-    if (!modalContent) return;
-    const d = p.detail || {};
-    const paragraphs = (d.paragraphs || []).map((t) => `<p>${esc(t)}</p>`).join("");
-    const images = (d.images || [])
-      .map(
-        (img) => `
-          <a href="${esc(img.src)}" target="_blank" rel="noreferrer">
-            <img src="${esc(img.src)}" alt="${esc(img.alt || "")}" loading="lazy" />
-          </a>`
-      )
-      .join("");
-    const tweets = (d.tweets || [])
-      .map(
-        (t) => `
-          <div class="d-tweet">
-            <div class="t-text">${esc(t.text)}</div>
-            <footer>
-              <a href="${esc(t.url)}" target="_blank" rel="noreferrer">@${esc(
-            t.author
-          )}${t.date ? " · " + esc(t.date) : ""}</a>
-            </footer>
-          </div>`
-      )
-      .join("");
-    const links = (d.links || [])
-      .map(
-        (l, i) => `
-          <a href="${esc(l.href)}" class="d-link ${
-            i === 0 ? "primary" : ""
-          }" target="_blank" rel="noreferrer">${esc(l.label)}</a>`
-      )
-      .join("");
-
-    const stars = p.stars != null ? p.stars + " ★" : "";
-    modalContent.innerHTML = `
-      <div class="d-head">
-        <div class="d-name">${esc(p.name)}</div>
-        <div class="d-meta">
-          ${esc(p.tag)}
-          ${stars ? `<span class="stars">${esc(stars)}</span>` : ""}
-        </div>
-      </div>
-      <div class="d-paragraphs">${paragraphs}</div>
-      ${images ? `<div class="d-images">${images}</div>` : ""}
-      ${tweets ? `<div class="d-tweets">${tweets}</div>` : ""}
-      ${links ? `<div class="d-links">${links}</div>` : ""}
-    `;
-  }
-
-  // ---- experience ----
-  set("#experience-count", String((S.experience || []).length).padStart(2, "0"));
-  const xs = $("#experience-rows");
-  if (xs && Array.isArray(S.experience)) {
-    S.experience.forEach((x) => {
-      const row = document.createElement(x.url ? "a" : "div");
-      row.className = "xrow";
-      if (x.url) {
-        row.href = x.url;
-        row.target = "_blank";
-        row.rel = "noreferrer";
-      }
-      row.innerHTML = `
-        <div class="xrow-period">${esc(x.period || "")}</div>
-        <div class="xrow-body">
-          <div class="xrow-head">
-            <span class="xrow-company">${esc(x.company)}</span>
-            ${x.role ? `<span class="xrow-dot">·</span><span class="xrow-role">${esc(x.role)}</span>` : ""}
-            ${x.team ? `<span class="xrow-team">${esc(x.team)}</span>` : ""}
-          </div>
-          ${x.description ? `<div class="xrow-desc">${esc(x.description)}</div>` : ""}
-        </div>
-      `;
-      xs.appendChild(row);
-    });
-  }
-
-  // ---- writing ----
-  set("#writing-count", String(S.essays.length).padStart(2, "0"));
-
-  const es = $("#writing-rows");
-  if (es) {
-    es.classList.remove("erows");
-    es.classList.add("wrows");
-    S.essays.forEach((e, i) => {
-      const row = document.createElement("button");
-      row.className = "wrow";
-      row.type = "button";
-      const mins = Math.max(
-        1,
-        Math.round(String(e.body || "").trim().split(/\s+/).length / 220)
-      );
-      row.innerHTML = `
-        <div class="wrow-date">${esc(e.date || "")}</div>
-        <div class="wrow-body">
-          <div class="wrow-title">${esc(e.title)}</div>
-          ${e.subtitle ? `<div class="wrow-sub">${esc(e.subtitle)}</div>` : ""}
-          ${e.desc ? `<div class="wrow-desc">${esc(e.desc)}</div>` : ""}
-        </div>
-        <div class="wrow-meta">
-          <span class="wrow-kind">${esc(e.kind.toLowerCase())}</span>
-          <span class="wrow-mins">${mins} min</span>
-        </div>
-      `;
-      row.addEventListener("click", () => openEssay(i));
-      es.appendChild(row);
-    });
-  }
-
-  // Full-page reader
-  const reader = $("#reader");
-  const readerInner = $("#reader-inner");
-  const readerScroll = $("#reader-scroll");
-  const readerBar = $("#reader-progress-bar");
-  const readerTitle = $("#reader-title");
-  let currentEssay = -1;
-  let readerPrev = null;
-
-  function openEssay(i) {
-    if (!reader || !readerInner) return;
-    const e = S.essays[i];
-    if (!e) return;
-    currentEssay = i;
-
-    const mins = readingTime(e.body);
-    readerInner.innerHTML = `
-      <article class="essay">
-        <div class="e-meta">
-          <span>${esc(e.kind)}</span>
-          ${e.date ? `<span class="e-dot">·</span><span>${esc(e.date)}</span>` : ""}
-          <span class="e-dot">·</span><span>${mins} min read</span>
-        </div>
-        <h1 class="e-title">${esc(e.title)}</h1>
-        ${e.subtitle ? `<div class="e-subtitle">${esc(e.subtitle)}</div>` : ""}
-        <div class="e-body">${renderMd(e.body || "")}</div>
-      </article>
-      ${renderPrevNext(i)}
-    `;
-
-    if (readerTitle) {
-      readerTitle.textContent = e.title;
-    }
-
-    readerPrev = document.activeElement;
-    reader.hidden = false;
-    document.body.style.overflow = "hidden";
-    readerScroll.scrollTop = 0;
-    updateReaderProgress();
-    reader.querySelector(".reader-close")?.focus();
-  }
-
-  function closeEssay() {
-    if (!reader) return;
-    reader.hidden = true;
-    document.body.style.overflow = "";
-    currentEssay = -1;
-    readerPrev?.focus?.();
-  }
-
-  function updateReaderProgress() {
-    if (!readerScroll || !readerBar) return;
-    const max = readerScroll.scrollHeight - readerScroll.clientHeight;
-    const pct = max > 0 ? (readerScroll.scrollTop / max) * 100 : 0;
-    readerBar.style.width = Math.min(100, Math.max(0, pct)) + "%";
-  }
-
-  function readingTime(text) {
-    const words = String(text).trim().split(/\s+/).length;
-    return Math.max(1, Math.round(words / 220));
-  }
-
-  function renderPrevNext(i) {
-    const prev = i > 0 ? S.essays[i - 1] : null;
-    const next = i < S.essays.length - 1 ? S.essays[i + 1] : null;
-    return `
-      <div class="reader-pn">
-        <button class="pn-btn pn-prev" ${!prev ? "disabled" : ""} data-essay-idx="${i - 1}">
-          <span class="pn-dir">← previous</span>
-          <span class="pn-title ${!prev ? "muted" : ""}">${prev ? esc(prev.title) : "—"}</span>
-        </button>
-        <button class="pn-btn pn-next" ${!next ? "disabled" : ""} data-essay-idx="${i + 1}">
-          <span class="pn-dir">next →</span>
-          <span class="pn-title ${!next ? "muted" : ""}">${next ? esc(next.title) : "—"}</span>
-        </button>
-      </div>
-    `;
-  }
-
-  if (reader) {
-    reader.addEventListener("click", (e) => {
-      if (e.target.hasAttribute("data-reader-close") || e.target.closest("[data-reader-close]")) {
-        closeEssay();
-        return;
-      }
-      const nav = e.target.closest("[data-essay-idx]");
-      if (nav && !nav.disabled) {
-        const idx = parseInt(nav.dataset.essayIdx, 10);
-        if (!isNaN(idx)) openEssay(idx);
-      }
-    });
-    readerScroll?.addEventListener("scroll", updateReaderProgress, { passive: true });
-    document.addEventListener("keydown", (ev) => {
-      if (reader.hidden) return;
-      if (ev.key === "Escape") { ev.preventDefault(); closeEssay(); }
-      if (ev.key === "ArrowLeft" && currentEssay > 0) {
-        ev.preventDefault();
-        openEssay(currentEssay - 1);
-      }
-      if (ev.key === "ArrowRight" && currentEssay < S.essays.length - 1) {
-        ev.preventDefault();
-        openEssay(currentEssay + 1);
-      }
-    });
-  }
-
-  // Minimal markdown renderer: supports ## h2, ### h3, paragraphs, - lists.
-  function renderMd(src) {
-    const lines = String(src).split("\n");
-    let html = "";
-    let para = [];
-    let list = [];
-    const flushPara = () => {
-      if (para.length) {
-        html += `<p>${para.map(esc).join(" ")}</p>`;
-        para = [];
-      }
-    };
-    const flushList = () => {
-      if (list.length) {
-        html += `<ul>${list.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
-        list = [];
-      }
-    };
-    for (const raw of lines) {
-      const line = raw.trim();
-      if (!line) { flushPara(); flushList(); continue; }
-      if (line.startsWith("## ")) {
-        flushPara(); flushList();
-        html += `<h2>${esc(line.slice(3))}</h2>`;
-      } else if (line.startsWith("### ")) {
-        flushPara(); flushList();
-        html += `<h3>${esc(line.slice(4))}</h3>`;
-      } else if (line.startsWith("- ") || line.startsWith("* ")) {
-        flushPara();
-        list.push(line.slice(2));
-      } else {
-        flushList();
-        para.push(line);
-      }
-    }
-    flushPara(); flushList();
-    return html;
-  }
-
-  // ---- press strip (in sidebar) ----
-  const stripEl = $("#press-side-items");
-  const stripRoot = $("#press-side");
-  if (stripEl && Array.isArray(S.press) && S.press.length) {
-    // De-dupe by source so we don't repeat Bloomberg/Financial Post side-by-side.
-    const seen = new Set();
-    const top = [];
-    for (const pr of S.press) {
-      const src = (pr.source || "").trim();
-      if (!src || seen.has(src)) continue;
-      seen.add(src);
-      top.push(pr);
-      if (top.length >= 5) break;
-    }
-    stripEl.innerHTML = top
-      .map(
-        (pr) => `<a class="press-side-link"
-           href="${esc(pr.url)}"
-           target="_blank"
-           rel="noreferrer"
-           title="${esc(pr.title)}">${esc(pr.source)}</a>`
-      )
-      .join('<span class="press-side-sep">·</span>');
-  } else if (stripRoot) {
-    stripRoot.style.display = "none";
-  }
-
-  // ---- press (full list, bottom) ----
-  set("#press-count", String((S.press || []).length).padStart(2, "0"));
-  const pressEl = $("#press-rows");
-  if (pressEl && Array.isArray(S.press)) {
-    pressEl.classList.remove("erows");
-    pressEl.classList.add("press-grid");
-    S.press.forEach((pr) => {
-      const card = document.createElement("a");
-      card.className = "press-card";
-      card.href = pr.url;
-      card.target = "_blank";
-      card.rel = "noreferrer";
-      card.innerHTML = `
-        <div class="press-card-head">
-          <span class="press-card-source">${esc(pr.source)}</span>
-          ${pr.date ? `<span class="press-card-date">${esc(pr.date)}</span>` : ""}
-        </div>
-        <div class="press-card-title">${esc(pr.title)}</div>
-        ${pr.blurb ? `<div class="press-card-blurb">${esc(pr.blurb)}</div>` : ""}
-      `;
-      pressEl.appendChild(card);
-    });
-  }
-
-  // ---- section nav (right floating, desktop) ----
-  const sectionNav = $("#section-nav");
-  if (sectionNav) {
-    // Smooth scroll on click
-    sectionNav.querySelectorAll("a[data-target]").forEach((a) => {
-      a.addEventListener("click", (e) => {
-        const id = a.dataset.target;
-        const el = document.getElementById(id);
-        if (!el) return;
-        e.preventDefault();
-        const offset = el.getBoundingClientRect().top + window.scrollY - 24;
-        window.scrollTo({ top: offset, behavior: "smooth" });
-        history.replaceState(null, "", "#" + id);
-      });
-    });
-
-    // Active state via scroll spy — pick the last section whose top is above the trigger line
-    const targets = ["ventures", "experience", "work", "writing", "press"]
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-    const setActive = (id) => {
-      sectionNav.querySelectorAll("a").forEach((a) => {
-        a.classList.toggle("is-active", a.dataset.target === id);
-      });
-    };
-    if (targets.length) {
-      const TRIGGER = 120; // px from top of viewport
-      let ticking = false;
-      const update = () => {
-        ticking = false;
-        let active = targets[0].id;
-        for (const t of targets) {
-          if (t.getBoundingClientRect().top - TRIGGER <= 0) active = t.id;
-          else break;
-        }
-        setActive(active);
-      };
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (!ticking) {
-            requestAnimationFrame(update);
-            ticking = true;
-          }
-        },
-        { passive: true }
-      );
-      update();
-    }
-  }
-
-  // ---- scroll progress bar ----
-  const progressBar = $("#scroll-progress");
-  if (progressBar) {
-    let ticking = false;
-    const updateProgress = () => {
-      ticking = false;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-      progressBar.style.width = Math.min(100, Math.max(0, pct)) + "%";
-    };
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(updateProgress);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-    updateProgress();
-  }
-
-  // ---- footer year ----
-  set("#foot-year", new Date().getFullYear());
-
-
-  // ---- toast ----
-  function showToast(text) {
-    const existing = document.getElementById("toast");
-    if (existing) existing.remove();
-    const toast = document.createElement("div");
-    toast.id = "toast";
-    toast.className = "toast";
-    toast.textContent = text;
-    document.body.appendChild(toast);
-    requestAnimationFrame(() => toast.classList.add("show"));
-    setTimeout(() => {
-      toast.classList.remove("show");
-      setTimeout(() => toast.remove(), 250);
-    }, 1800);
-  }
-
-  // ---- helpers ----
-  function $(sel) { return document.querySelector(sel); }
-  function set(sel, val) {
-    const el = $(sel);
-    if (el) el.textContent = val;
-  }
-  function setMeta(name, val) {
-    let m = document.querySelector(`meta[name="${name}"]`);
-    if (!m) {
-      m = document.createElement("meta");
-      m.setAttribute("name", name);
-      document.head.appendChild(m);
-    }
-    m.setAttribute("content", val);
-  }
-  function esc(s) {
-    if (s == null) return "";
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-})();
+// Reader overlay for essays, with scroll progress and a pointer to the next one.
+const reader = $("reader");
+let lastFocus = null;
+const openEssay = (i) => {
+  const e = SITE.essays[i];
+  // Skip externally published pieces when pointing to the next essay.
+  let nextIndex = (i + 1) % SITE.essays.length;
+  while (SITE.essays[nextIndex].url) nextIndex = (nextIndex + 1) % SITE.essays.length;
+  if (reader.hidden) lastFocus = document.activeElement;
+  $("reader-crumb").textContent = `${e.title} · ${e.date}`;
+  $("reader-body").innerHTML = `<p class="kicker">${esc(e.kind)} · ${esc(e.date)}</p><h1 id="reader-h">${esc(e.title)}</h1><p class="sub">${esc(e.subtitle)}</p>` +
+    e.body.split(/\n\n+/).map((para) => `<p class="txt">${esc(para)}</p>`).join("") +
+    `<button type="button" class="next" data-essay="${nextIndex}"><span>Next essay</span><b>${esc(SITE.essays[nextIndex].title)}</b></button>`;
+  reader.hidden = false; reader.scrollTop = 0; document.body.style.overflow = "hidden";
+  $("progress").style.setProperty("--p", 0);
+  $("reader-close").focus();
+};
+const closeEssay = () => { reader.hidden = true; document.body.style.overflow = ""; lastFocus?.focus(); };
+reader.addEventListener("scroll", () => {
+  const max = reader.scrollHeight - reader.clientHeight;
+  $("progress").style.setProperty("--p", max > 0 ? reader.scrollTop / max : 1);
+});
+$("reader-close").addEventListener("click", closeEssay);
+document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && !reader.hidden) closeEssay(); });

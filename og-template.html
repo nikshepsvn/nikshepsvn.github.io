@@ -3,151 +3,44 @@
 <head>
 <meta charset="UTF-8" />
 <title>OG</title>
+<!-- Rendered at 1200×630 to produce og.png (link previews on X, LinkedIn, Slack). -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,450&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root { color-scheme: light; }
   html, body { margin: 0; padding: 0; }
   body {
-    width: 1200px; height: 630px;
-    background: #faf8f3;
-    color: #1c1813;
-    font-family: "Inter", system-ui, sans-serif;
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #ffffff; color: #121418;
+    font-family: "Hanken Grotesk", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-    position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 72px 88px; box-sizing: border-box;
   }
-  .grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(to right, rgba(28,24,19,0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(28,24,19,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-  .frame {
-    position: absolute;
-    inset: 56px;
-    border: 1px solid rgba(28,24,19,0.08);
-    background: #fffdf8;
-    padding: 56px 64px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 14px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #8b8275;
-  }
-  .live {
-    width: 8px; height: 8px;
-    background: #1c1813;
-    border-radius: 50%;
-  }
-  .name {
-    font-size: 88px;
-    line-height: 1.0;
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    color: #1c1813;
-    margin: 0;
-  }
-  .tag {
-    margin-top: 22px;
-    font-size: 26px;
-    line-height: 1.32;
-    color: #4b443b;
-    max-width: 920px;
-    letter-spacing: -0.012em;
-    font-weight: 400;
-  }
-  .tag b { color: #1c1813; font-weight: 600; }
-  .bottom {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 32px;
-  }
-  .ventures {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .ventures-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #8b8275;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .ventures-label::before {
-    content: "";
-    width: 10px; height: 10px;
-    background: #d98e2b;
-    display: inline-block;
-    border: 1px solid #1c1813;
-  }
-  .ventures-list {
-    font-family: "Inter", sans-serif;
-    font-size: 18px;
-    color: #1c1813;
-    font-weight: 500;
-    letter-spacing: -0.005em;
-  }
-  .ventures-list span { color: #c9bfae; margin: 0 8px; }
-  .press {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-  }
-  .press-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #8b8275;
-  }
-  .press-list {
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    color: #4b443b;
-    font-weight: 500;
-    letter-spacing: -0.005em;
-  }
-  .press-list span { color: #c9bfae; margin: 0 7px; }
+  .top { display: flex; align-items: center; gap: 18px; font-size: 26px; font-weight: 600; }
+  .top svg { width: 56px; height: 56px; }
+  .status { margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 500; color: #3f444d; background: #f7f8fa; border: 1px solid #e6e8ec; border-radius: 999px; padding: 8px 18px 8px 14px; }
+  .status i { width: 10px; height: 10px; border-radius: 50%; background: #1f9d55; }
+  h1 { margin: 0; font-family: "Newsreader", Georgia, serif; font-weight: 400; font-size: 60px; line-height: 1.18; letter-spacing: -.015em; max-width: 980px; }
+  h1 b { font-weight: 450; }
+  .stats { display: flex; gap: 56px; padding-top: 28px; border-top: 1px solid #e6e8ec; }
+  .stat b { display: block; font-family: "Newsreader", Georgia, serif; font-weight: 450; font-size: 44px; line-height: 1; }
+  .stat span { display: block; margin-top: 8px; font-size: 18px; color: #6f7580; }
 </style>
 </head>
 <body>
-  <div class="grid"></div>
-  <div class="frame">
-    <div>
-      <div class="top">
-        <span class="live"></span>
-        <span>shipping · toronto</span>
-      </div>
-      <h1 class="name" style="margin-top:42px;">Nikshep Saravanan</h1>
-      <p class="tag">Building at the edges of <b>AI</b>, <b>crypto</b>, and <b>prediction&nbsp;markets</b>. Shipping small to large, opinionated projects to test theses in emerging categories.</p>
-    </div>
-    <div class="bottom">
-      <div class="ventures">
-        <div class="ventures-label">Now building</div>
-        <div class="ventures-list"><b>Meterline</b><span>—</span>the AI spend platform</div>
-      </div>
-      <div class="press">
-        <div class="press-label">Featured in</div>
-        <div class="press-list">Bloomberg<span>·</span>Business Insider<span>·</span>The AI Journal<span>·</span>PYMNTS</div>
-      </div>
-    </div>
+  <div class="top">
+    <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#2c4bb0"/><path d="M21 46V24M21 31c0-5 4-8 9-8s10 3 10 9v14" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M14 47h13M34 47h13" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="49" cy="15" r="6" fill="#4ade80" stroke="#2c4bb0" stroke-width="2.5"/></svg>
+    Nikshep Saravanan
+    <span class="status"><i></i>Building a consumer product, in stealth</span>
+  </div>
+  <h1>I build first versions of things at the edges of <b>AI, crypto, and markets</b>.</h1>
+  <div class="stats">
+    <div class="stat"><b>2</b><span>exits</span></div>
+    <div class="stat"><b>$50M+</b><span>protocol volume</span></div>
+    <div class="stat"><b>400K+</b><span>search impressions</span></div>
+    <div class="stat"><b>1,478</b><span>GitHub stars</span></div>
   </div>
 </body>
 </html>

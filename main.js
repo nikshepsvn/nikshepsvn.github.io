@@ -8,7 +8,7 @@ const host = (url) => (url || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 // Logos are local files keyed by domain; anything without one falls back to a colored monogram.
-const LOGOS = new Set(["humanplane.com", "deliverr.com", "moltlaunch.com", "kalshi.com", "instacart.com", "coinbase.com", "seatgeek.com",
+const LOGOS = new Set([...SITE.community.orgs.map((o) => o.domain), "humanplane.com", "deliverr.com", "moltlaunch.com", "kalshi.com", "instacart.com", "coinbase.com", "seatgeek.com",
   "pagerduty.com", "uwaterloo.ca", "viberank.app", "modelgrep.com", "bloomberg.com", "businessinsider.com", "aijourn.com", "shanghai.nyu.edu", "pymnts.com"]);
 const LOGO_ALIAS = { "rits.shanghai.nyu.edu": "shanghai.nyu.edu" };
 const NAME_LOGOS = { RealmPlay: "realmplay.png", SoulBazaar: "soulbazaar.png", "MC-Bench": "mcbench.png" };
@@ -152,6 +152,19 @@ const projItem = (p, foldIndex) => {
   </${tag}></li>`;
 };
 
+// Starred-and-followed-by band: headline numbers, company badges, then where people are.
+const communityBand = () => {
+  const c = SITE.community;
+  const fmt = (n) => n.toLocaleString("en-US");
+  const shown = c.topCountries.reduce((sum, [, n]) => sum + n, 0);
+  return `<div class="community">
+    <p class="community-h">Starred and followed by <b>${fmt(c.people)}</b> developers in <b>${c.countries}</b> countries, including people at</p>
+    <div class="orgs">${c.orgs.map((o) => `<span class="org">${logoFor(o.name, "https://" + o.domain)}${esc(o.name)}</span>`).join("")}</div>
+    <div class="where">${c.topCountries.map(([name, n]) => `<span><b>${n}</b> ${esc(name)}</span>`).join("")}<span class="more-c">+${c.countries - c.topCountries.length} more countries</span></div>
+    <p class="makers">Also on the list: the creators of ${c.makers.slice(0, -1).map(esc).join(", ")} and ${esc(c.makers.at(-1))}.</p>
+  </div>`;
+};
+
 const projectGroups = () => GROUPS.map(([id, label, blurb]) => {
   const items = SITE.projects.filter((p) => p.group === id);
   if (!items.length) return "";
@@ -197,6 +210,7 @@ const chapters = [
       <ul class="list">${SITE.experience.map(expItem).join("")}</ul>` },
   { id: "projects", label: "Projects", side: "Projects", count: SITE.projects.length, body: `
       ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,238 developers across 18 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code, a 266K-star repo.`, `On the research side, ${pp("thimble")} beats a funded team's tool-calling model at 48M parameters, ${pp("bankai")} has been independently verified and ported to Rust, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
+      ${communityBand()}
       <div class="projects">${projectGroups()}</div>
       <button type="button" class="more" id="more">Show more projects</button>
       <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>` },

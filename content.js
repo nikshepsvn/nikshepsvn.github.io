@@ -854,8 +854,32 @@ This is a starting point, not a finished design. The economics need more work. T
   ],
 
   colophon: {
-    typography: ["JetBrains Mono", "Inter"],
-    render: "WebGL fragment shader — FBM topographic contour field",
+    typography: ["Newsreader", "Hanken Grotesk"],
     source: "content.js",
+  },
+
+  // Who stars and follows the work. Snapshot from the GitHub GraphQL API (Sep 2026):
+  // every stargazer of every public repo plus followers, deduplicated. Companies come
+  // only from people's own "company" field; countries from their "location" field.
+  community: {
+    people: 1521,
+    countries: 50,
+    topCountries: [["United States", 141], ["Germany", 32], ["China", 32], ["Canada", 28], ["United Kingdom", 28], ["India", 20], ["Japan", 14], ["Australia", 12]],
+    orgs: [
+      { name: "Google", domain: "google.com" },
+      { name: "Microsoft", domain: "microsoft.com" },
+      { name: "Meta", domain: "meta.com" },
+      { name: "Apple", domain: "apple.com" },
+      { name: "Amazon", domain: "amazon.com" },
+      { name: "NVIDIA", domain: "nvidia.com" },
+      { name: "Vercel", domain: "vercel.com" },
+      { name: "Stripe", domain: "stripe.com" },
+      { name: "Airbnb", domain: "airbnb.com" },
+      { name: "SpaceX", domain: "spacex.com" },
+      { name: "Tencent", domain: "tencent.com" },
+      { name: "ByteDance", domain: "bytedance.com" },
+      { name: "Atlassian", domain: "atlassian.com" },
+    ],
+    makers: ["everything-claude-code", "tokscale", "Sablier", "Rainbow", "egghead.io"],
   },
 };

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Thimble</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#ad3957"/><stop offset="1" stop-color="#611e37"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M14 33.5 16.1 18a8 8 0 0 1 15.8 0L34 33.5Z" fill="#fff1e6"/>
+  <path d="M13 35h22" stroke="#ffcfb8" stroke-width="4" stroke-linecap="round"/>
+  <g fill="#a9435b"><circle cx="21" cy="17" r="1.4"/><circle cx="27" cy="17" r="1.4"/><circle cx="19.8" cy="23" r="1.4"/><circle cx="25" cy="23" r="1.4"/><circle cx="29.3" cy="28.5" r="1.4"/><circle cx="23.8" cy="28.5" r="1.4"/><circle cx="18.3" cy="28.5" r="1.4"/></g>
+</svg>

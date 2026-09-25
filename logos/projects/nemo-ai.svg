@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Nemo</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#21556d"/><stop offset="1" stop-color="#152c45"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M8 24c5-11 17-12 25-4l8-6v20l-8-6c-8 8-20 7-25-4Z" fill="#f6b577"/>
+  <path d="M19 15a20 20 0 0 0 0 18M27 16a19 19 0 0 0 0 16" stroke="#fff1d8" stroke-width="3.5"/>
+  <circle cx="13.5" cy="23" r="1.7" fill="#17334b"/>
+  <path d="m21 12 6-4 2 7" fill="#e4915d"/>
+</svg>

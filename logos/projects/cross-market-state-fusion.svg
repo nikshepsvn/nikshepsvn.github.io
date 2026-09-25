@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Cross-market state fusion</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#244967"/><stop offset="1" stop-color="#152638"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M10 14h7c8 0 6 20 14 20h7" stroke="#7bd3df" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M10 34h7c8 0 6-20 14-20h7" stroke="#ecf5ee" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="24" cy="24" r="4" fill="#152d40" stroke="#ecf5ee" stroke-width="2.5"/>
+</svg>

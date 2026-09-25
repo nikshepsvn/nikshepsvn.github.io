@@ -1,5 +1,6 @@
 // Refresh `stars: N` (and `forks: N`) fields in content.js by hitting the GitHub API.
-// Auto-scans each project entry for its first github.com URL — no manual map.
+// Uses the project's explicit repo, falling back to its main URL. Source links
+// may point to upstream projects and must never contribute their star counts.
 
 import fs from "node:fs/promises";
 
@@ -33,7 +34,9 @@ if (process.env.GITHUB_TOKEN) {
 const changes = [];
 
 for (const entry of entries) {
-  const gh = entry.match(/https?:\/\/github\.com\/([^/]+)\/([^/"\s]+)/);
+  const repoUrl = entry.match(/^ {6}repo:\s*"([^"]+)"/m)?.[1]
+    ?? entry.match(/^ {6}url:\s*"([^"]+)"/m)?.[1];
+  const gh = repoUrl?.match(/^https?:\/\/github\.com\/([^/]+)\/([^/#?\s]+)\/?$/);
   if (!gh) continue;
   const [, owner, repo] = gh;
 

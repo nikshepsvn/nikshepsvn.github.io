@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>SniffChain</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#4b5634"/><stop offset="1" stop-color="#252f20"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M14 12h13c5 0 8 4 8 9v2l5 3-4 9H22c-7 0-11-5-11-11v-7c0-3 1-5 3-5Z" fill="#e1ecc2"/>
+  <path d="M14 12c-5 0-7 3-7 8v8c0 3 2 5 5 5s5-3 5-6V12Z" fill="#a5be7e"/>
+  <circle cx="28" cy="21" r="2" fill="#2b3b25"/>
+  <path d="M35 23h5v4l-4 2-3-4Z" fill="#2b3b25"/>
+  <path d="M26 31h5" stroke="#71894f" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

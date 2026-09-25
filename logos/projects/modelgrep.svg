@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>modelgrep</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#252a21"/><stop offset="1" stop-color="#101510"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="m12 14 10 10-10 10" stroke="#eff6e7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26 33h10" stroke="#b7e76a" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="33" cy="15" r="3" fill="#b7e76a"/>
+</svg>

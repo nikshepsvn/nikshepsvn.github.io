@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>MC-Bench</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#244e45"/><stop offset="1" stop-color="#102b2a"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="m24 8 14 8-14 8-14-8Z" fill="#b9ecb5"/>
+  <path d="m10 16 14 8v16l-14-8Z" fill="#66b79d"/>
+  <path d="m24 24 14-8v16l-14 8Z" fill="#e4f5d9"/>
+  <path d="m17 20 7-4 7 4M17 28l7 4 7-4M24 8v8M10 24l7 4v8M38 24l-7 4v8" stroke="#18443c" stroke-opacity=".65" stroke-width="1.8" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Bankai</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#252d33"/><stop offset="1" stop-color="#0d141c"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M12 10h8l16 28h-8Z" fill="#f1f3ed"/>
+  <path d="M28 10h8L25.6 28.2l-4-7Z" fill="#80e3c2"/>
+  <path d="m18.4 26.6 4 7-2.4 4.4h-8Z" fill="#80e3c2"/>
+  <path d="m28 10 8 0-2.3 4h-8Z" fill="#c7f9e8"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Dreamloom</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#50476f"/><stop offset="1" stop-color="#25233c"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M11 36V22a13 13 0 0 1 26 0v14" stroke="#c0acd9" stroke-width="3" stroke-linecap="round"/>
+  <path d="M27 12a9 9 0 0 0 4 16 10 10 0 1 1-4-16Z" fill="#ffdfb0"/>
+  <path d="M9 33c5-4 10 4 15 0s10 4 15 0M9 39c5-4 10 4 15 0s10 4 15 0" stroke="#e4d6f5" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

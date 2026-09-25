@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Veilstream</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#4d4780"/><stop offset="1" stop-color="#252443"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M9 16c6-7 10 7 16 0s10 7 14 0M9 24c6-7 10 7 16 0s10 7 14 0M9 32c6-7 10 7 16 0s10 7 14 0" stroke="#aba9df" stroke-width="3" stroke-linecap="round"/>
+  <path d="M20 10h8v28h-8Z" fill="#eeebff"/>
+  <path d="m20 10 8 4v24l-8-4Z" fill="#d7d0f4"/>
+  <path d="M20 15c3 1 5 3 8 2M20 23c3 1 5 3 8 2M20 31c3 1 5 3 8 2" stroke="#766ba4" stroke-width="2.8"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>viberank</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#48281e"/><stop offset="1" stop-color="#211716"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M10 29a2 2 0 0 1 2-2h4v11h-4a2 2 0 0 1-2-2Z" fill="#c66b40"/>
+  <path d="M21 21a2 2 0 0 1 2-2h4v19h-6Z" fill="#ef9c60"/>
+  <path d="M32 12a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v24a2 2 0 0 1-2 2h-4Z" fill="#ffe0a8"/>
+</svg>

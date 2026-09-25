@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>Moltlaunch</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#c44159"/><stop offset="1" stop-color="#781f3d"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M10 34V15a2 2 0 0 1 3.5-1.3L24 26l10.5-12.3A2 2 0 0 1 38 15v19" stroke="#ffecdf" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m16 29 8 9 8-9" stroke="#f49aa9" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m20 13 4-4 4 4-4 4Z" fill="#ffecdf"/>
+</svg>

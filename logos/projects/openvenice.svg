@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>OpenVenice</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#a44f3d"/><stop offset="1" stop-color="#632d2a"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M10 32V22a14 14 0 0 1 28 0v10h-5V22a9 9 0 0 0-18 0v10Z" fill="#ffe9d3"/>
+  <path d="M21.5 21h5v11h-5Z" fill="#ffe9d3"/>
+  <path d="M11 37h8m5 0h13" stroke="#efb998" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M8 32h32" stroke="#efb998" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

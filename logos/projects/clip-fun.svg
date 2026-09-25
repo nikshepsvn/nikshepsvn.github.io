@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>clip.fun</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#934761"/><stop offset="1" stop-color="#502741"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="m12 10 25 14-25 14Z" fill="#f9d6d1" stroke="#f9d6d1" stroke-width="2" stroke-linejoin="round"/>
+  <path d="m12 10 11 6v16l-11 6Z" fill="#ee9bac"/>
+  <path d="m12 10 11 6-6 8 6 8-11 6Z" fill="#f6c0cb"/>
+  <path d="m23 16 14 8-14 8 6-8Z" fill="#fff0d9"/>
+</svg>

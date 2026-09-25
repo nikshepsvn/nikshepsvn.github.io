@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>BlindChat</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#465583"/><stop offset="1" stop-color="#242e50"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="M13 11h22a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H24l-9 7v-7h-2a4 4 0 0 1-4-4V15a4 4 0 0 1 4-4Z" fill="#e3e9fa"/>
+  <path d="M17 21h14" stroke="#6179ad" stroke-width="5" stroke-linecap="round"/>
+  <path d="M22 14h8" stroke="#b0bddb" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

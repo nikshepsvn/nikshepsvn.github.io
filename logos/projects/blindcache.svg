@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <title>BlindCache</title>
+  <defs><linearGradient id="surface" x1="4" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse"><stop stop-color="#236264"/><stop offset="1" stop-color="#15363c"/></linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#surface)"/>
+  <rect x=".5" y=".5" width="47" height="47" rx="11.5" stroke="#fff" stroke-opacity=".1"/>
+  <path d="m24 8 14 8-6 3.5-8-4.5-8 4.5-6-3.5Z" fill="#d6f4e9"/>
+  <path d="m10 19 6 3.5v9L24 36v7l-14-8Z" fill="#86c8c0" transform="translate(0 -3)"/>
+  <path d="m38 19-6 3.5v9L24 36v7l14-8Z" fill="#aedfd1" transform="translate(0 -3)"/>
+  <path d="m24 20 5 3v6l-5 3-5-3v-6Z" fill="#ecfcf2"/>
+</svg>

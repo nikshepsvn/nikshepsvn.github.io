@@ -33,16 +33,17 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="bar"><div class="bar-in">
       <a class="who" href="#about" id="who"></a>
       <nav class="nav" id="nav" aria-label="Sections"></nav>
     </div></header>
 
-    <main class="page" id="main"></main>
+    <main class="page" id="main" tabindex="-1"></main>
     <footer><span id="foot"></span><a href="#about">Back to top ↑</a></footer>
 
     <div class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-labelledby="reader-h">
-      <div class="reader-bar"><button type="button" id="reader-close">← Back</button><span id="reader-crumb"></span><i class="progress" id="progress" aria-hidden="true"></i></div>
+      <div class="reader-bar"><button type="button" id="reader-close" aria-label="Close essay">← Back</button><span id="reader-crumb"></span><i class="progress" id="progress" aria-hidden="true"></i></div>
       <article id="reader-body"></article>
     </div>
 

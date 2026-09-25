@@ -96,7 +96,7 @@ const ep = (title) => {
   const i = SITE.essays.findIndex((e) => e.title === title);
   return `<a class="pill" href="#writing" data-essay="${i}"><span class="logo ghost" aria-hidden="true">¶</span>${esc(title)}</a>`;
 };
-const prose = (paras, lead = false) => `<div class="prose${lead ? " lead" : ""}">${paras.map((p) => `<p>${p}</p>`).join("")}</div>`;
+const prose = (paras, lead = false) => `<div class="prose${lead ? " lead" : ""}">${paras.map((p) => lead ? `<h1>${p}</h1>` : `<p>${p}</p>`).join("")}</div>`;
 
 const totalStars = SITE.projects.reduce((sum, p) => sum + (p.stars || 0), 0);
 const byStars = [...SITE.projects].sort((a, b) => (b.stars ?? -1) - (a.stars ?? -1));
@@ -177,13 +177,13 @@ const projectGroups = () => GROUPS.map(([id, label, blurb]) => {
 }).join("");
 
 const essayItem = (e, i) => e.url ? `
-  <li><a class="item" href="${esc(e.url)}" target="_blank" rel="noreferrer" style="grid-template-columns: minmax(0,1fr) auto">
+  <li><a class="item item-essay" href="${esc(e.url)}" target="_blank" rel="noreferrer">
     <span class="item-h">${esc(e.title)} <span class="ext">↗</span></span><span class="item-m">${esc(e.kind)} · ${esc(e.date)}</span>
-    <span class="item-d" style="grid-column:1/-1">${esc(e.subtitle)}</span>
+    <span class="item-d">${esc(e.subtitle)}</span>
   </a></li>` : `
-  <li><button type="button" class="item" data-essay="${i}" style="grid-template-columns: minmax(0,1fr) auto">
+  <li><button type="button" class="item item-essay" data-essay="${i}" aria-haspopup="dialog">
     <span class="item-h">${esc(e.title)}</span><span class="item-m">${esc(e.date)}</span>
-    <span class="item-d" style="grid-column:1/-1">${esc(e.subtitle)}</span>
+    <span class="item-d">${esc(e.subtitle)}</span>
   </button></li>`;
 
 const pressItem = (p) => `
@@ -199,7 +199,7 @@ const email = SITE.links.find((l) => l.href.startsWith("mailto:"));
 // Each chapter: a nav label, a side label, prose, then the items the prose refers to.
 const chapters = [
   { id: "about", label: "About", side: "Hello", body: `
-      <span class="status"><span class="dot" aria-hidden="true"></span><span>Building ${m.now.url ? `${now}, ${esc(m.now.note)}` : `a consumer product, <b>in stealth</b>`} · <span id="clock">Toronto</span></span></span>
+      <span class="status"><span class="status-now"><span class="dot" aria-hidden="true"></span><span>Building ${m.now.url ? `${now}, ${esc(m.now.note)}` : `a consumer product, <b>in stealth</b>`}</span></span><span class="status-time" id="clock">Toronto</span></span>
       ${prose([`I'm <b>Nikshep</b>, an engineer in Toronto. I build first versions of things at the edges of AI, crypto, and markets — two exits so far, and a protocol that moved $50M+.`], true)}
       ${prose([`<em>${esc(m.philosophy)}</em> Right now that's pointed at a consumer product I can't talk about yet. Away from the keyboard: techno, psydub, and mountains with friends.`])}` },
   { id: "ventures", label: "Ventures", side: "Ventures", count: SITE.ventures.length, body: `
@@ -211,8 +211,8 @@ const chapters = [
   { id: "projects", label: "Projects", side: "Projects", count: SITE.projects.length, body: `
       ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,238 developers across 18 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code, a 266K-star repo.`, `On the research side, ${pp("thimble")} beats a funded team's tool-calling model at 48M parameters, ${pp("bankai")} has been independently verified and ported to Rust, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
       ${communityBand()}
-      <div class="projects">${projectGroups()}</div>
-      <button type="button" class="more" id="more">Show more projects</button>
+      <div class="projects" id="project-list">${projectGroups()}</div>
+      <button type="button" class="more" id="more" aria-expanded="false" aria-controls="project-list">Show more projects</button>
       <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>` },
   { id: "writing", label: "Writing", side: "Essays", count: SITE.essays.length, body: `
       ${prose([`I write about where AI and markets are heading — start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
@@ -224,7 +224,7 @@ const chapters = [
       ${prose([`The best way to reach me is a DM on <a href="https://twitter.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
       <div class="links">
         ${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${esc(l.label)} <span>${esc(l.handle)}</span></a>`).join("")}
-        ${email ? `<button type="button" id="copy-email">${esc(email.handle)} <span id="copy-state">copy</span></button>` : ""}
+        ${email ? `<button type="button" id="copy-email" aria-label="Copy email address"><span id="email-address">${esc(email.handle)}</span><span id="copy-state" role="status">copy</span></button>` : ""}
       </div>` },
 ];
 
@@ -240,20 +240,44 @@ $("foot").textContent = `© ${new Date().getFullYear()} ${m.name} · Toronto`;
 const tick = () => ($("clock").textContent = new Date().toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit", timeZone: "America/Toronto" }) + " in Toronto");
 tick(); setInterval(tick, 30000);
 
-// Highlight the chapter currently in view.
+// Follow the reading position; scrolling the nav must never move the page.
 const navLinks = [...document.querySelectorAll("[data-nav]")];
-const spy = new IntersectionObserver((entries) => {
-  entries.filter((e) => e.isIntersecting).forEach((e) => {
-    navLinks.forEach((a) => a.setAttribute("aria-current", String(a.dataset.nav === e.target.id)));
-    document.querySelector(`[data-nav="${e.target.id}"]`)?.scrollIntoView({ block: "nearest", inline: "nearest" });
+const sections = chapters.map((c) => $(c.id));
+let activeChapter = "";
+let navFrame = 0;
+const updateNav = () => {
+  navFrame = 0;
+  const threshold = document.querySelector(".bar").getBoundingClientRect().bottom + 80;
+  let current = sections[0];
+  sections.forEach((section) => {
+    if (section.getBoundingClientRect().top <= threshold) current = section;
   });
-}, { rootMargin: "-45% 0px -50% 0px" });
-chapters.forEach((c) => spy.observe($(c.id)));
+  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) current = sections.at(-1);
+  if (activeChapter === current.id) return;
+  activeChapter = current.id;
+  navLinks.forEach((a) => {
+    if (a.dataset.nav === current.id) {
+      a.setAttribute("aria-current", "true");
+      const linkRect = a.getBoundingClientRect();
+      const navRect = $("nav").getBoundingClientRect();
+      if (linkRect.left < navRect.left + 5) $("nav").scrollLeft += linkRect.left - navRect.left - 5;
+      else if (linkRect.right > navRect.right - 5) $("nav").scrollLeft += linkRect.right - navRect.right + 5;
+    } else a.removeAttribute("aria-current");
+  });
+};
+const queueNav = () => { if (!navFrame) navFrame = requestAnimationFrame(updateNav); };
+window.addEventListener("scroll", queueNav, { passive: true });
+window.addEventListener("resize", queueNav);
+updateNav();
 
 // Pills scroll to their entry and flash it; hidden projects are revealed first.
 const reveal = () => {
+  const firstHidden = document.querySelector("#projects li[data-fold] a");
+  const moveFocus = document.activeElement === $("more");
   document.querySelectorAll("#projects [data-fold]").forEach((el) => (el.hidden = false));
+  $("more").setAttribute("aria-expanded", "true");
   $("more").hidden = true;
+  if (moveFocus) firstHidden?.focus({ preventScroll: true });
 };
 // Fresh releases never fold, so count what is actually hidden (experiments count as one list).
 $("more").textContent = `Show ${document.querySelectorAll("#projects li[data-fold], #projects .group[data-fold] li").length} more projects`;
@@ -268,35 +292,76 @@ document.addEventListener("click", (ev) => {
     return;
   }
   const essay = ev.target.closest("[data-essay]");
-  if (essay) { ev.preventDefault(); openEssay(+essay.dataset.essay); }
+  if (essay) { ev.preventDefault(); openEssay(+essay.dataset.essay, essay); }
 });
 $("more").addEventListener("click", reveal);
 
-$("copy-email")?.addEventListener("click", () => {
-  navigator.clipboard?.writeText(email.handle).then(() => ($("copy-state").textContent = "copied"), () => ($("copy-state").textContent = "select to copy"));
+let copyTimer;
+$("copy-email")?.addEventListener("click", async () => {
+  clearTimeout(copyTimer);
+  try {
+    await navigator.clipboard.writeText(email.handle);
+    $("copy-state").textContent = "copied";
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents($("email-address"));
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    $("copy-state").textContent = "select to copy";
+  }
+  copyTimer = setTimeout(() => ($("copy-state").textContent = "copy"), 3000);
 });
 
 // Reader overlay for essays, with scroll progress and a pointer to the next one.
 const reader = $("reader");
 let lastFocus = null;
-const openEssay = (i) => {
+let readerScroll = 0;
+const background = [...document.querySelectorAll("body > :is(.skip-link, .bar, main, footer)")];
+const openEssay = (i, opener) => {
   const e = SITE.essays[i];
   // Skip externally published pieces when pointing to the next essay.
   let nextIndex = (i + 1) % SITE.essays.length;
   while (SITE.essays[nextIndex].url) nextIndex = (nextIndex + 1) % SITE.essays.length;
-  if (reader.hidden) lastFocus = document.activeElement;
+  if (reader.hidden) {
+    lastFocus = opener || document.activeElement;
+    readerScroll = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${readerScroll}px`;
+    document.body.style.width = "100%";
+    background.forEach((el) => (el.inert = true));
+  }
   $("reader-crumb").textContent = `${e.title} · ${e.date}`;
   $("reader-body").innerHTML = `<p class="kicker">${esc(e.kind)} · ${esc(e.date)}</p><h1 id="reader-h">${esc(e.title)}</h1><p class="sub">${esc(e.subtitle)}</p>` +
-    e.body.split(/\n\n+/).map((para) => `<p class="txt">${esc(para)}</p>`).join("") +
+    e.body.split(/\n\n+/).map((para) => /^##\s/.test(para) ? `<h2>${esc(para.replace(/^##\s+/, ""))}</h2>` : `<p class="txt">${esc(para)}</p>`).join("") +
     `<button type="button" class="next" data-essay="${nextIndex}"><span>Next essay</span><b>${esc(SITE.essays[nextIndex].title)}</b></button>`;
   reader.hidden = false; reader.scrollTop = 0; document.body.style.overflow = "hidden";
   $("progress").style.setProperty("--p", 0);
   $("reader-close").focus();
 };
-const closeEssay = () => { reader.hidden = true; document.body.style.overflow = ""; lastFocus?.focus(); };
+const closeEssay = () => {
+  reader.hidden = true;
+  document.body.style.overflow = "";
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.width = "";
+  background.forEach((el) => (el.inert = false));
+  window.scrollTo({ top: readerScroll, behavior: "instant" });
+  lastFocus?.focus({ preventScroll: true });
+  queueNav();
+};
 reader.addEventListener("scroll", () => {
   const max = reader.scrollHeight - reader.clientHeight;
   $("progress").style.setProperty("--p", max > 0 ? reader.scrollTop / max : 1);
 });
 $("reader-close").addEventListener("click", closeEssay);
-document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && !reader.hidden) closeEssay(); });
+document.addEventListener("keydown", (ev) => {
+  if (reader.hidden) return;
+  if (ev.key === "Escape") { ev.preventDefault(); closeEssay(); }
+  if (ev.key === "Tab") {
+    const first = $("reader-close");
+    const last = reader.querySelector(".next");
+    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+  }
+});

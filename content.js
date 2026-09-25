@@ -206,7 +206,7 @@ window.SITE = {
       status: "exited",
       summary:
         "AI storytelling platform on a custom fine-tuned LLM running on consumer-grade GPUs.",
-      kpi: { value: "Mid 5-fig ARR", label: "bootstrapped · west mountain ai" },
+      kpi: { value: "Mid 5-fig ARR", label: "bootstrapped · West Mountain AI" },
       metrics: [
         {"label": "Bootstrapped → acquired", "url": "https://www.linkedin.com/in/nikshepsvn", "source": "Public career profile"},
         {"label": "Solo launch in 3 weeks", "url": "https://www.linkedin.com/in/nikshepsvn", "source": "Public career profile"},
@@ -239,7 +239,7 @@ window.SITE = {
       status: "acquired",
       summary:
         "Autonomous AI influencer platform for crypto tokens & communities. Acquired pre-launch.",
-      kpi: { value: "$5M+", label: "post-acq token marketcap" },
+      kpi: { value: "$5M+", label: "post-acquisition token market cap" },
       metrics: [
         {"label": "Acquired before launch", "url": "https://www.linkedin.com/in/nikshepsvn", "source": "Public career profile"},
         {"label": "Autonomous social agents", "url": "https://www.linkedin.com/in/nikshepsvn", "source": "Public career profile"},
@@ -640,7 +640,7 @@ window.SITE = {
       title: "Control Surface",
       subtitle: "The bottleneck isn't model intelligence anymore. It's the interface.",
       kind: "Essay",
-      date: "January 2026",
+      date: "Jan 2026",
       desc: "The best AI operators might not be engineers. They might be StarCraft players.",
       body: `Most of the discourse about AI progress focuses on model capability. Bigger models, better benchmarks, newer scaling laws. This is the obvious frontier, and probably the one where the least interesting problem actually lives.
 
@@ -695,7 +695,7 @@ I don't know, and I think most of the field doesn't either. But we're very clear
       title: "The Missing Networking Layer",
       subtitle: "We're at the standalone-computer-before-the-internet moment for AI.",
       kind: "Essay",
-      date: "July 2025",
+      date: "Jul 2025",
       desc: "Agents can't find each other, pay each other, or trust each other. That's what needs to be built.",
       body: `There's an assumption underneath most AI investment that's rarely stated out loud: that the next phase of AI progress will come from smarter individual models. Bigger, more capable, better at more things.
 
@@ -748,7 +748,7 @@ Will the coordination layer emerge from protocol standardization, market forces,
       title: "Liquid Talent",
       subtitle: "Full-time employment is a coordination hack disguised as a natural category.",
       kind: "Essay",
-      date: "July 2025",
+      date: "Jul 2025",
       desc: "What organizations look like when switching costs collapse.",
       body: `Full-time employment is a coordination hack disguised as a natural category. Companies hire people permanently because onboarding is expensive, context is hard to transfer, and trust takes time to build. Long-term employment amortizes those costs across years — it's a financial optimization, not a moral truth.
 
@@ -811,7 +811,7 @@ These are possibilities, not predictions. The actual shape of future organizatio
       title: "Speculative Coordination",
       subtitle: "Memecoins coordinate better than most DAOs. That fact is worth sitting with.",
       kind: "Essay",
-      date: "July 2025",
+      date: "Jul 2025",
       desc: "On channeling memecoin energy into actual work.",
       body: `Memecoins are dumb. This is easy to say and mostly true. They're also the single most effective coordination mechanism crypto has produced, and sitting with that fact is uncomfortable in a way that's worth taking seriously.
 
@@ -898,7 +898,7 @@ None of these have theoretical answers. The framework needs testing in the wild.
       title: "REFLEX",
       subtitle: "A framework for productive speculation: trading fees fund missions, and verified work burns supply.",
       kind: "Design pattern",
-      date: "July 2025",
+      date: "Jul 2025",
       url: "https://sculpt.fun/reflex",
     },
     {
@@ -906,7 +906,7 @@ None of these have theoretical answers. The framework needs testing in the wild.
       title: "BLOOM",
       subtitle: "A marketplace for fast ZK proofs on Solana.",
       kind: "Technical",
-      date: "July 2025",
+      date: "Jul 2025",
       desc: "Turning validator GPUs into proof-generation infrastructure.",
       body: `Zero-knowledge proofs promise privacy and scalability — the two properties blockchains keep failing to deliver together. On paper, they work. In practice, they split into two worlds, and only one of them is useful.
 
@@ -986,15 +986,15 @@ This is a starting point, not a finished design. The economics need more work. T
       source: "The AI Journal",
       date: "Feb 2026",
       url: "https://aijourn.com/inside-the-gig-economy-built-for-ai-moltlaunch/",
-      blurb: "Feature framing Moltlaunch as Upwork for AI agents — cites 21K+ ERC-8004 agents, 70% on Base.",
+      blurb: "A look at Moltlaunch’s agent-to-agent work, identity, and escrow payments on Base.",
     },
     {
       id: "PR-04",
       title: "Bankai: Kilobyte-Scale Patches for 1-Bit LLMs via XOR Adaptation",
-      source: "Shanghai NYU RITS",
+      source: "NYU Shanghai RITS",
       date: "Apr 2026",
       url: "https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation",
-      blurb: "Academic pickup — Shanghai NYU research institute summary of the bankai paper.",
+      blurb: "NYU Shanghai’s Research and Instructional Technology Services covers the bankai paper.",
     },
     {
       id: "PR-05",
@@ -1007,9 +1007,9 @@ This is a starting point, not a finished design. The economics need more work. T
   ],
 
   links: [
-    { label: "github",      href: "https://github.com/nikshepsvn",  handle: "@nikshepsvn" },
-    { label: "x / twitter", href: "https://twitter.com/nikshepsvn", handle: "@nikshepsvn" },
-    { label: "linkedin",    href: "https://linkedin.com/in/nikshepsvn", handle: "nikshepsvn" },
+    { label: "GitHub",   icon: "github",   href: "https://github.com/nikshepsvn",      handle: "@nikshepsvn" },
+    { label: "X",        icon: "x",        href: "https://x.com/nikshepsvn",           handle: "@nikshepsvn" },
+    { label: "LinkedIn", icon: "linkedin", href: "https://linkedin.com/in/nikshepsvn", handle: "nikshepsvn" },
     { label: "email",       href: "mailto:nikshepsvn@gmail.com",    handle: "nikshepsvn@gmail.com" },
   ],
 

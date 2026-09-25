@@ -6,6 +6,13 @@ const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const host = (url) => (url || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/.*$/, "");
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const UI_ICONS = {
+  external: '<path d="M7 17 17 7M7 7h10v10"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
+  article: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8M8 17h5"/>',
+};
+const icon = (name) => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name]}</svg>`;
+const socialLogo = (name) => `<svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><use href="logos/social.svg#${name}"/></svg>`;
 
 // Logos are local files keyed by domain; anything without one falls back to a colored monogram.
 const LOGOS = new Set([...SITE.community.orgs.map((o) => o.domain), "humanplane.com", "deliverr.com", "moltlaunch.com", "kalshi.com", "instacart.com", "coinbase.com", "seatgeek.com",
@@ -40,9 +47,13 @@ const pp = (n) => `<a class="pill" href="#p-${slug(n)}" data-jump="p-${slug(n)}"
 const prp = (n) => pill("pr-" + slug(n), n, pressBySource[n].url);
 const ep = (title) => {
   const i = SITE.essays.findIndex((e) => e.title === title);
-  return `<a class="pill" href="#writing" data-essay="${i}"><span class="logo ghost" aria-hidden="true">¶</span>${esc(title)}</a>`;
+  return `<a class="pill" href="#writing" data-essay="${i}" aria-haspopup="dialog">${icon("article")}${esc(title)}</a>`;
 };
-const prose = (paras, lead = false) => `<div class="prose${lead ? " lead" : ""}">${paras.map((p) => lead ? `<h1>${p}</h1>` : `<p>${p}</p>`).join("")}</div>`;
+// Keep commas and full stops attached to inline mentions when a line wraps.
+const prose = (paras, lead = false) => `<div class="prose${lead ? " lead" : ""}">${paras.map((p) => {
+  const text = p.replace(/<a class="pill"[\s\S]*?<\/a>[,.!?;:]?/g, (mention) => /[,.!?;:]$/.test(mention) ? `<span class="mention">${mention}</span>` : mention);
+  return lead ? `<h1>${text}</h1>` : `<p>${text}</p>`;
+}).join("")}</div>`;
 
 const totalStars = SITE.projects.reduce((sum, p) => sum + (p.stars || 0), 0);
 const now = m.now.url ? `<a href="${esc(m.now.url)}" target="_blank" rel="noreferrer">${esc(m.now.label)}</a>` : `<b>${esc(m.now.label)}</b>`;
@@ -50,7 +61,7 @@ const now = m.now.url ? `<a href="${esc(m.now.url)}" target="_blank" rel="norefe
 // Source links are siblings of the main entry link, never nested inside it.
 const highlights = (items, kind) => items?.length ? `<div class="highlights ${kind}-highlights">${items.map((item) => {
   if (typeof item === "string") return `<span class="highlight">${esc(item)}</span>`;
-  return `<a class="highlight" href="${esc(item.url)}" target="_blank" rel="noreferrer" title="Source: ${esc(item.source)}" aria-label="${esc(item.label)} — source: ${esc(item.source)}">${esc(item.label)}<span aria-hidden="true">↗</span></a>`;
+  return `<a class="highlight" href="${esc(item.url)}" target="_blank" rel="noreferrer" title="Source: ${esc(item.source)}" aria-label="${esc(item.label)} — source: ${esc(item.source)}">${esc(item.label)}${icon("external")}</a>`;
 }).join("")}</div>` : "";
 
 const ventureItem = (v) => `
@@ -65,14 +76,14 @@ const ventureItem = (v) => `
 const expItem = (x) => `
   <li class="entry"><a class="item" id="x-${slug(x.company)}" href="${esc(x.url)}" target="_blank" rel="noreferrer">
     ${logoFor(x.company, x.url)}
-    <span class="item-t">${esc(x.company)} <span>· ${esc(x.role)}${x.team ? `, ${esc(x.team)}` : ""}</span></span>
+    <span class="item-t">${esc(x.company)}<span class="item-role">${esc(x.role)}${x.team ? ` · ${esc(x.team)}` : ""}</span></span>
     <span class="item-m">${esc(x.period)}</span>
     <span class="item-d">${esc(x.description)}</span>
   </a>${highlights(x.highlights, "entry")}</li>`;
 
 // Recent releases stay visible when the longer project list is folded.
 const monthLabel = (d) => new Date(d + "-15").toLocaleDateString("en-US", { month: "short", year: "numeric" });
-const isNew = (d) => (Date.now() - new Date(d + "-15")) / 864e5 < 75;
+const isNew = (d) => { const age = (Date.now() - new Date(d + "-15")) / 864e5; return age >= 0 && age < 75; };
 
 const GROUPS = [
   ["products", "Products", "live, with real traffic"],
@@ -90,8 +101,8 @@ const projItem = (p, foldIndex) => {
   const feature = Boolean(p.stats);
   // Products link to their site; everything with a repo shows stars and forks.
   const meta = p.group !== "products" && p.stars != null
-    ? `<b>★ ${compact(p.stars)}</b>${p.forks ? `<span>${p.forks} forks</span>` : ""}`
-    : (p.url ? `<span>${esc(host(p.url))} ↗</span>` : "");
+    ? `<b aria-label="${p.stars} GitHub stars"><span aria-hidden="true">★</span> ${compact(p.stars)}</b>${p.forks ? `<span>${p.forks} forks</span>` : ""}`
+    : (p.url ? `<span class="project-domain">${esc(host(p.url))}${icon("external")}</span>` : "");
   const fold = foldIndex !== null && foldIndex >= OSS_SHOWN && !fresh;
   return `<li class="project${fresh ? " is-new" : ""}"${fold ? " data-fold hidden" : ""}><${tag} class="proj${feature ? " feature" : ""}" id="p-${slug(p.name)}"${attrs}>
     ${projectLogo(p.name)}
@@ -125,25 +136,27 @@ const projectGroups = () => GROUPS.map(([id, label, blurb]) => {
     <ol class="plist">${body}</ol></div>`;
 }).join("");
 
+const readingTime = (e) => `${Math.max(1, Math.ceil((e.body || "").trim().split(/\s+/).length / 230))} min read`;
 const essayItem = (e, i) => e.url ? `
   <li><a class="item item-essay" href="${esc(e.url)}" target="_blank" rel="noreferrer">
-    <span class="item-h">${esc(e.title)} <span class="ext">↗</span></span><span class="item-m">${esc(e.kind)} · ${esc(e.date)}</span>
+    <span class="item-h">${esc(e.title)} ${icon("external")}</span><span class="item-m">${esc(e.date)}<span class="item-reading">${esc(e.kind)}</span></span>
     <span class="item-d">${esc(e.subtitle)}</span>
   </a></li>` : `
   <li><button type="button" class="item item-essay" data-essay="${i}" aria-haspopup="dialog">
-    <span class="item-h">${esc(e.title)}</span><span class="item-m">${esc(e.date)}</span>
+    <span class="item-h">${esc(e.title)}</span><span class="item-m">${esc(e.date)}<span class="item-reading">${readingTime(e)}</span></span>
     <span class="item-d">${esc(e.subtitle)}</span>
   </button></li>`;
 
 const pressItem = (p) => `
-  <li><a class="item" id="pr-${slug(p.source)}" href="${esc(p.url)}" target="_blank" rel="noreferrer">
-    ${logoFor(p.source, p.url)}
+  <li><a class="item item-press" id="pr-${slug(p.source)}" href="${esc(p.url)}" target="_blank" rel="noreferrer">
+    <span class="press-source">${logoFor(p.source, p.url)}<span>${esc(p.source)}</span></span>
+    <span class="item-m">${esc(p.date)}${icon("external")}</span>
     <span class="item-h">${esc(p.title)}</span>
-    <span class="item-m">${esc(p.date)}</span>
-    <span class="item-d">${esc(p.source)} — ${esc(p.blurb)}</span>
+    <span class="item-d">${esc(p.blurb)}</span>
   </a></li>`;
 
 const email = SITE.links.find((l) => l.href.startsWith("mailto:"));
+const contactItem = (l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}<span class="contact-text"><span class="contact-label">${esc(l.label)}</span><span class="contact-handle">${esc(l.handle)}</span></span>${icon("external")}</a>`;
 
 // Each chapter: a nav label, a side label, prose, then the items the prose refers to.
 const chapters = [
@@ -170,10 +183,10 @@ const chapters = [
       ${prose([`My work has been covered by ${prp("Bloomberg")}, ${prp("Business Insider")}, ${prp("PYMNTS")} and others.`])}
       <ul class="list">${SITE.press.map(pressItem).join("")}</ul>` },
   { id: "contact", label: "Contact", side: "Contact", body: `
-      ${prose([`The best way to reach me is a DM on <a href="https://twitter.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
+      ${prose([`The best way to reach me is a DM on <a href="https://x.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
       <div class="links">
-        ${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${esc(l.label)} <span>${esc(l.handle)}</span></a>`).join("")}
-        ${email ? `<button type="button" id="copy-email" aria-label="Copy email address"><span id="email-address">${esc(email.handle)}</span><span id="copy-state" role="status">copy</span></button>` : ""}
+        ${SITE.links.filter((l) => l !== email).map(contactItem).join("")}
+        ${email ? `<button type="button" id="copy-email" aria-label="Copy email address">${icon("mail")}<span class="contact-text"><span class="contact-label">Email</span><span class="contact-handle" id="email-address">${esc(email.handle)}</span></span><span id="copy-state" role="status">copy</span></button>` : ""}
       </div>` },
 ];
 
@@ -237,6 +250,8 @@ document.addEventListener("click", (ev) => {
     const el = $(jump.dataset.jump);
     if (el?.closest("[hidden]")) reveal();
     el?.scrollIntoView({ block: "center" });
+    if (el && !el.matches("a, button")) el.tabIndex = -1;
+    el?.focus({ preventScroll: true });
     el?.classList.remove("flash"); void el?.offsetWidth; el?.classList.add("flash");
     return;
   }
@@ -281,7 +296,7 @@ const openEssay = (i, opener) => {
     background.forEach((el) => (el.inert = true));
   }
   $("reader-crumb").textContent = `${e.title} · ${e.date}`;
-  $("reader-body").innerHTML = `<p class="kicker">${esc(e.kind)} · ${esc(e.date)}</p><h1 id="reader-h">${esc(e.title)}</h1><p class="sub">${esc(e.subtitle)}</p>` +
+  $("reader-body").innerHTML = `<p class="kicker">${esc(e.kind)} · ${esc(e.date)} · ${readingTime(e)}</p><h1 id="reader-h">${esc(e.title)}</h1><p class="sub">${esc(e.subtitle)}</p>` +
     e.body.split(/\n\n+/).map((para) => /^##\s/.test(para) ? `<h2>${esc(para.replace(/^##\s+/, ""))}</h2>` : `<p class="txt">${esc(para)}</p>`).join("") +
     `<button type="button" class="next" data-essay="${nextIndex}"><span>Next essay</span><b>${esc(SITE.essays[nextIndex].title)}</b></button>`;
   reader.hidden = false; reader.scrollTop = 0; document.body.style.overflow = "hidden";

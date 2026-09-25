@@ -145,6 +145,17 @@ window.SITE = {
     },
   ],
 
+  // Earlier internship retained in a compact, optional part of Experience.
+  earlierExperience: [
+    {
+      name: "Magmic",
+      period: "May — Aug 2017",
+      role: "SWE Intern · Backend Services",
+      description: "Reworked service authorization, added rate and bot filtering, and built a test app for the internal Dark Matter SDK.",
+      url: "https://www.linkedin.com/in/nikshepsvn",
+    },
+  ],
+
   // Experiments — startups & closed-source products I've built.
   // Metrics may be text or { label, url, source } objects linking to supporting evidence.
   ventures: [
@@ -281,9 +292,10 @@ window.SITE = {
       stats: [{value: "402K", label: "Google impressions, last 90 days"},{value: "7.7K", label: "search clicks, last 90 days"},{value: "215K", label: "impressions in the last 28 days alone"}],
       repo: "https://github.com/sculptdotfun/modelgrep",
       wins: [
-        {"label": "300+ models", "url": "https://github.com/sculptdotfun/modelgrep", "source": "Project documentation"},
         {"label": "Free JSON API", "url": "https://modelgrep.com/api", "source": "Project documentation"},
-        {"label": "OpenRouter + independent benchmarks", "url": "https://github.com/sculptdotfun/modelgrep#data-sources", "source": "Project documentation"},
+        {"label": "Used by ZenPick", "url": "https://github.com/Michael-Obele/zenpick/blob/main/src/lib/server/modelgrep.ts", "source": "ZenPick API client"},
+        {"label": "Used by pix-data", "url": "https://cdn.jsdelivr.net/npm/@xynogen/pix-data@0.5.1/README.md", "source": "Published pix-data documentation"},
+        {"label": "Used by pi-better-models", "url": "https://github.com/ktappdev/pi-better-models", "source": "pi-better-models documentation"},
       ],
     },
     {
@@ -298,7 +310,7 @@ window.SITE = {
       stats: [{value: "1,238", label: "developers ranked"},{value: "18.2T", label: "tokens tracked"},{value: "$15.9M", label: "AI spend measured"},{value: "80K", label: "Google impressions, last 28 days"}],
       wins: [
         {"label": "Claude Code + Codex + Gemini", "url": "https://github.com/sculptdotfun/viberank", "source": "Project documentation"},
-        {"label": "One-command CLI", "url": "https://github.com/sculptdotfun/viberank#submitting-your-usage-data", "source": "Project documentation"},
+        {"label": "Listed by ccusage", "url": "https://ccusage.com/guide/related-projects", "source": "Official ccusage related-project documentation"},
         {"label": "Inspired tokscale", "url": "https://github.com/junhoyeo/tokscale#acknowledgments", "source": "tokscale acknowledgments"},
       ],
       repo: "https://github.com/sculptdotfun/viberank",
@@ -333,7 +345,7 @@ window.SITE = {
       wins: [
         {"label": "Covered by NYU Shanghai", "url": "https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation/", "source": "NYU Shanghai RITS"},
         {"label": "936-byte XOR patch", "url": "https://github.com/nikshepsvn/bankai#abstract", "source": "Project documentation"},
-        {"label": "MLX + CUDA", "url": "https://github.com/nikshepsvn/bankai", "source": "Project documentation"},
+        {"label": "Inspired Miyagi", "url": "https://github.com/smanaton/miyagi", "source": "Miyagi’s acknowledgment of Bankai"},
       ],
       repo: "https://github.com/nikshepsvn/bankai",
     },
@@ -624,9 +636,46 @@ window.SITE = {
     },
   ],
 
-  // Essays — full content lives here, no external linking.
+  // A small archive, separate from the curated project list and its star counts.
+  earlierProjects: [
+    {
+      name: "ScatterFly",
+      period: "2017",
+      description: "An early privacy experiment: background browser automation to add noise to browsing data.",
+      url: "https://github.com/nikshepsvn/ScatterFly",
+    },
+    {
+      name: "Caffeine",
+      period: "2017",
+      description: "A driver-alertness prototype pairing a Muse headband with an Android app.",
+      url: "https://github.com/nikshepsvn/Caffeine",
+    },
+    {
+      name: "Echo",
+      period: "2017",
+      description: "A phone-recovery prototype using nearby users and Wi-Fi hotspot identifiers to locate a missing phone.",
+      url: "https://github.com/nikshepsvn/Echo-",
+    },
+    {
+      name: "Delivery availability checker",
+      period: "2020",
+      description: "A small personal utility for checking available Instacart delivery slots.",
+      url: "https://github.com/nikshepsvn/instacart-delivery-availability-check",
+    },
+  ],
+
+  // Writing — hosted essays and links to externally published pieces.
   // `body` is a markdown-lite string. Supports ## h2, ### h3, paragraphs, - lists.
   essays: [
+    {
+      id: "E-07",
+      title: "The Year Crypto Stopped Needing Bitcoin",
+      subtitle: "How AI, stablecoins, and onchain businesses are changing crypto’s relationship with Bitcoin.",
+      kind: "Guest essay",
+      publication: "Token Dispatch",
+      date: "14 Jun 2026",
+      url: "https://www.thetokendispatch.com/p/the-year-crypto-stopped-needing-bitcoin",
+    },
     {
       id: "E-00",
       title: "State of AI Coding Spend 2026",

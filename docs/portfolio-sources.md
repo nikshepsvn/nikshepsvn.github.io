@@ -1,15 +1,15 @@
 # Portfolio source notes
 
-Researched 25 September 2026 with Exa search/content extraction, followed by current GitHub README and contributor checks. All 22 projects, four ventures, and seven experience entries were reviewed. Public profile statements are first-party claims; press and upstream acknowledgments are attributed to their publishers.
+Researched 25 September 2026 with Exa search/content extraction, followed by current GitHub README and contributor checks. All 22 featured projects, four ventures, and seven main experience entries were reviewed. The follow-up adds four archived student projects, the earlier Magmic internship, and a published guest essay. Public profile statements are first-party claims; press and upstream acknowledgments are attributed to their publishers.
 
 ## Published highlights
 
 | Entry | Source-backed highlights | Sources |
 | --- | --- | --- |
-| modelgrep | 300+ models; Free JSON API; OpenRouter + independent benchmarks | [Source 1](https://github.com/sculptdotfun/modelgrep); [Source 2](https://modelgrep.com/api); [Source 3](https://github.com/sculptdotfun/modelgrep#data-sources) |
-| viberank | Claude Code + Codex + Gemini; One-command CLI; Inspired tokscale | [Source 1](https://github.com/sculptdotfun/viberank); [Source 2](https://github.com/sculptdotfun/viberank#submitting-your-usage-data); [Source 3](https://github.com/junhoyeo/tokscale#acknowledgments) |
+| modelgrep | Free JSON API; Used by ZenPick; Used by pix-data; Used by pi-better-models | [Source 1](https://modelgrep.com/api); [Source 2](https://github.com/Michael-Obele/zenpick/blob/main/src/lib/server/modelgrep.ts); [Source 3](https://cdn.jsdelivr.net/npm/@xynogen/pix-data@0.5.1/README.md); [Source 4](https://github.com/ktappdev/pi-better-models) |
+| viberank | Claude Code + Codex + Gemini; Listed by ccusage; Inspired tokscale | [Source 1](https://github.com/sculptdotfun/viberank); [Source 2](https://ccusage.com/guide/related-projects); [Source 3](https://github.com/junhoyeo/tokscale#acknowledgments) |
 | thimble | C + WebAssembly runtime; Open weights; $260 total build cost | [Source 1](https://github.com/nikshepsvn/thimble#try-it-in-your-browser); [Source 2](https://huggingface.co/flashvenom/thimble); [Source 3](https://github.com/nikshepsvn/thimble/blob/master/REPRODUCING.md) |
-| bankai | Covered by NYU Shanghai; 936-byte XOR patch; MLX + CUDA | [Source 1](https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation/); [Source 2](https://github.com/nikshepsvn/bankai#abstract); [Source 3](https://github.com/nikshepsvn/bankai) |
+| bankai | Covered by NYU Shanghai; 936-byte XOR patch; Inspired Miyagi | [Source 1](https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation/); [Source 2](https://github.com/nikshepsvn/bankai#abstract); [Source 3](https://github.com/smanaton/miyagi) |
 | cross-market-state-fusion | On-device MLX training; Live data · paper execution | [Source 1](https://github.com/humanplane/cross-market-state-fusion); [Source 2](https://github.com/humanplane/cross-market-state-fusion#what-this-is) |
 | MC-Bench | 31 of 33 commits; MC-Bench in TechCrunch; Docker + Redis job queue | [Source 1](https://github.com/mc-bench/orchestrator/graphs/contributors); [Source 2](https://techcrunch.com/2025/03/20/a-high-schooler-built-a-website-that-lets-you-challenge-ai-models-to-a-minecraft-build-off/); [Source 3](https://github.com/mc-bench/orchestrator) |
 | veilstream | Provenance-anchored reversal; Under 0.1ms reversal/chunk | [Source 1](https://github.com/nikshepsvn/veilstream#the-problem-and-what-pasp-fixes); [Source 2](https://github.com/nikshepsvn/veilstream/blob/main/docs/BENCHMARKS.md) |
@@ -40,13 +40,27 @@ Researched 25 September 2026 with Exa search/content extraction, followed by cur
 | RealmPlay | Bootstrapped → acquired; Solo launch in 3 weeks; 16K context on consumer GPUs; Zero paid marketing | [Source 1](https://www.linkedin.com/in/nikshepsvn); [Source 2](https://github.com/nikshepsvn/nikshepsvn) |
 | SoulBazaar | Acquired before launch; Autonomous social agents; Rebranded to LetsAgent | [Source 1](https://www.linkedin.com/in/nikshepsvn) |
 
+## Writing and archive additions
+
+| Entry | Supported description | Source |
+| --- | --- | --- |
+| The Year Crypto Stopped Needing Bitcoin | Token Dispatch guest essay, 14 June 2026; publication links to the author's own X account and original post | [Publisher article](https://www.thetokendispatch.com/p/the-year-crypto-stopped-needing-bitcoin) |
+| ScatterFly · 2017 | Background browser automation as a browsing-data obfuscation experiment | [Repository](https://github.com/nikshepsvn/ScatterFly) |
+| Caffeine · 2017 | Android/Muse headband driver-alertness prototype | [Repository](https://github.com/nikshepsvn/Caffeine) |
+| Echo · 2017 | Crowd-assisted phone recovery using Wi-Fi hotspot identifiers | [Repository](https://github.com/nikshepsvn/Echo-) |
+| Delivery availability checker · 2020 | A personal tool to check Instacart delivery availability | [Repository](https://github.com/nikshepsvn/instacart-delivery-availability-check) |
+| Magmic · May–August 2017 | Backend internship: service authorization, rate/bot filtering, and Dark Matter SDK test app | [Public career profile](https://www.linkedin.com/in/nikshepsvn) |
+
+The archived projects are separate from the 22 curated projects and their aggregate star count. The delivery checker is a personal project, distinct from later Instacart employment. Caffeine's README-reported award and Magmic's ambiguously worded percentage improvements were not added. Magmic completes the six-internship history: Magmic, two PagerDuty terms, SeatGeek, Coinbase, and Deliverr.
+
 ## Editorial decisions
 
 - No company-wide revenue, funding, user counts, acquisitions, or accreditation were presented as personal achievements.
 - MC-Bench’s TechCrunch coverage is attributed to the collaborative project. The author’s contribution is separately supported by the orchestrator history: 31 commits versus two by the other listed contributor.
 - Cross-market state fusion is explicitly paper trading. Simulated PnL and ROI are not presented as real returns.
 - Bankai’s README corrects its original generalization result. The new highlight uses the 936-byte XOR patch; older NYU coverage is cited for coverage, not as validation of the superseded result.
-- Removed the old “listed by ccusage” and “awesome-claude-code” badges: current upstream READMEs did not establish those claims, and ccusage PR #427 is unmerged. tokScale’s acknowledgment of viberank and ECC’s credit to Homunculus were verified directly.
+- Correction from the deeper 25 September research: removing “listed by ccusage” was based on an incomplete check. PR #427 is unmerged, but its follow-up [PR #431](https://github.com/ccusage/ccusage/pull/431) was merged on 12 August 2025, and viberank appears in the current [official related-project documentation](https://ccusage.com/guide/related-projects). The highlight is restored with “Listed by ccusage”; runtime integration into ccusage is not established by this documentation change. The separate “awesome-claude-code” badge remains unverified. tokScale’s acknowledgment of viberank and ECC’s credit to Homunculus were verified directly.
+- Modelgrep's downstream source code and documentation establish use by the named projects, not usage by Pi or OpenCode's core teams or any particular commercial scale. Miyagi explicitly credits Bankai as an inspiration; that credit is not independent validation of Bankai's benchmark results.
 - Viberank now supports multiple coding tools; wording reflects the current README. Existing September 2026 traffic/usage snapshots remain dated rather than being presented as live counters.
 - The thimble WebAssembly capability is documented in the current repository. No live-demo link is added because the portfolio’s deployed /thimble/ path has not been established by this change.
 - LinkedIn search results sometimes blend adjacent job descriptions. Work highlights were checked against the full role sections before assigning them to an employer.

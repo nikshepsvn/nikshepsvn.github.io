@@ -10,6 +10,7 @@ const UI_ICONS = {
   external: '<path d="M7 17 17 7M7 7h10v10"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
   article: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8M8 17h5"/>',
+  chevron: '<path d="m9 5 7 7-7 7"/>',
 };
 const icon = (name) => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name]}</svg>`;
 const socialLogo = (name) => `<svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><use href="logos/social.svg#${name}"/></svg>`;
@@ -81,6 +82,22 @@ const expItem = (x) => `
     <span class="item-d">${esc(x.description)}</span>
   </a>${highlights(x.highlights, "entry")}</li>`;
 
+// Native disclosures keep the archive accessible without adding a second project grid.
+const archive = (id, label, note, intro, items) => `
+  <details class="archive" id="${id}">
+    <summary><span class="archive-heading">${esc(label)}<span>${esc(note)}</span></span>${icon("chevron")}</summary>
+    <div class="archive-body">
+      ${intro ? `<p class="archive-intro">${esc(intro)}</p>` : ""}
+      <ul class="archive-list">${items.map((item) => `
+        <li><a class="archive-item" href="${esc(item.url)}" target="_blank" rel="noreferrer">
+          <span class="archive-name">${esc(item.name)}${icon("external")}</span>
+          <span class="archive-date">${esc(item.period)}</span>
+          ${item.role ? `<span class="archive-role">${esc(item.role)}</span>` : ""}
+          <span class="archive-description">${esc(item.description)}</span>
+        </a></li>`).join("")}</ul>
+    </div>
+  </details>`;
+
 // Recent releases stay visible when the longer project list is folded.
 const monthLabel = (d) => new Date(d + "-15").toLocaleDateString("en-US", { month: "short", year: "numeric" });
 const isNew = (d) => { const age = (Date.now() - new Date(d + "-15")) / 864e5; return age >= 0 && age < 75; };
@@ -139,6 +156,7 @@ const projectGroups = () => GROUPS.map(([id, label, blurb]) => {
 const readingTime = (e) => `${Math.max(1, Math.ceil((e.body || "").trim().split(/\s+/).length / 230))} min read`;
 const essayItem = (e, i) => e.url ? `
   <li><a class="item item-essay" href="${esc(e.url)}" target="_blank" rel="noreferrer">
+    ${e.publication ? `<span class="essay-publication">${esc(e.publication)}</span>` : ""}
     <span class="item-h">${esc(e.title)} ${icon("external")}</span><span class="item-m">${esc(e.date)}<span class="item-reading">${esc(e.kind)}</span></span>
     <span class="item-d">${esc(e.subtitle)}</span>
   </a></li>` : `
@@ -169,13 +187,15 @@ const chapters = [
       <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },
   { id: "experience", label: "Experience", side: "Experience", body: `
       ${prose([`I was a ${xp("Kalshi")} Builder Fellow, and before going independent spent three years as a senior engineer and tech lead at ${xp("Instacart")}. Earlier: ${xp("Coinbase")}, ${xp("Deliverr")}, ${xp("SeatGeek")}, ${xp("PagerDuty")}, and computer science at ${xp("University of Waterloo", "Waterloo")}.`])}
-      <ul class="list">${SITE.experience.map(expItem).join("")}</ul>` },
+      <ul class="list">${SITE.experience.map(expItem).join("")}</ul>
+      ${archive("earlier-experience", "Earlier experience", "Magmic · 2017", "", SITE.earlierExperience)}` },
   { id: "projects", label: "Projects", side: "Projects", body: `
       ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,238 developers across 18 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code.`, `On the research side, ${pp("thimble")} puts structured tool calling into a 48M-parameter model, ${pp("bankai")} adapts 1-bit LLMs with tiny XOR patches, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
       ${communityBand()}
       <div class="projects" id="project-list">${projectGroups()}</div>
       <button type="button" class="more" id="more" aria-expanded="false" aria-controls="project-list">Show more projects</button>
-      <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>` },
+      <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>
+      ${archive("earlier-work", "Earlier work", "Student projects · 2017–2020", "A few small builds from university: privacy experiments, hardware, and everyday utilities.", SITE.earlierProjects)}` },
   { id: "writing", label: "Writing", side: "Essays", body: `
       ${prose([`I write about where AI and markets are heading — start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
       <ul class="list">${SITE.essays.map(essayItem).join("")}</ul>` },

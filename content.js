@@ -403,7 +403,7 @@ window.SITE = {
       group: "oss",
       date: "2026-01",
       tag: "claude code · adaptive agents",
-      stars: 393,
+      stars: 394,
       forks: 45,
       url: "https://github.com/humanplane/homunculus",
       summary: "A Claude Code plugin that learns from your prompts and tool use. Turns observed patterns into reusable instincts, skills, and commands.",

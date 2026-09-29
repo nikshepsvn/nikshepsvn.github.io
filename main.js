@@ -181,7 +181,7 @@ const chapters = [
   { id: "about", label: "About", side: "Hello", body: `
       <span class="status"><span class="status-now"><span class="dot" aria-hidden="true"></span><span>Building ${m.now.url ? `${now}, ${esc(m.now.note)}` : `a consumer product, <b>in stealth</b>`}</span></span><span class="status-time" id="clock">Toronto</span></span>
       ${prose([`I'm <b>Nikshep</b>, an engineer in Toronto. I build first versions of things at the edges of AI, crypto, and markets — two exits so far, and a protocol that moved $50M+.`], true)}
-      ${prose([`<em>${esc(m.philosophy)}</em> Right now that's pointed at a consumer product I can't talk about yet. Away from the keyboard: techno, psydub, and mountains with friends.`])}` },
+      ${prose([`<em>${esc(m.philosophy)}</em> Right now that's pointed at a consumer product I can't talk about yet. Away from the keyboard: techno, psydub, and mountains with friends. At it: twelve years of competitive games, peaking Diamond in Valorant and Emerald in TFT. I wrote up the numbers in ${ep("5,230 Games Later")}.`])}` },
   { id: "ventures", label: "Ventures", side: "Ventures", body: `
       ${prose([`I built ${vp("HumanPlane")}, a chart room for prediction markets, and ${vp("Moltlaunch")}, a work protocol for agents that cleared $50M+ in volume. I exited ${vp("RealmPlay")}, and ${vp("SoulBazaar")} was acquired before it launched.`])}
       <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },

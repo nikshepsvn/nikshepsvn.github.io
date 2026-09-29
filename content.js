@@ -668,6 +668,54 @@ window.SITE = {
   // `body` is a markdown-lite string. Supports ## h2, ### h3, paragraphs, - lists.
   essays: [
     {
+      id: "E-08",
+      title: "5,230 Games Later",
+      subtitle: "Twelve years of Dota 2, Valorant, and Teamfight Tactics, and what my own match history says about me.",
+      kind: "Note",
+      date: "Sep 2026",
+      body: `I kept score for twelve years without meaning to. Dota 2 from 2014 to 2018: 1,402 games. Valorant since 2021: 2,512 competitive matches, about 1,400 hours. Teamfight Tactics across eight sets: 1,316 ranked games. Before any of that, years on World of Warcraft private servers, which kept no stats I can find, which is probably for the best.
+
+That's 5,230 games with a public record. I finally pulled the numbers. A few are flattering. Most are just informative.
+
+## The Peaks
+
+Valorant: Diamond 3 in December 2022, roughly the top 8% of ranked players. Most of it on Reyna — 795 matches, 51% wins.
+
+TFT: Emerald IV in Set 12, the top 10.7% of North American ranked. Platinum or better in seven of the eight sets I played.
+
+Dota never gave me an official rank to point at. What it gave me instead was a 49.9% win rate over 1,402 games, which is about as average as a number can get.
+
+## Consistent, Not Clutch
+
+TFT was the clearest mirror. I finish top four 52.4% of the time, which is solid. But only 16.4% of those top fours are wins, when a typical player converts about 25%. My stats rank higher for volume than for efficiency. I'm reliably good at reaching the final table and noticeably worse at closing it out.
+
+Valorant is flat in a different way. 40,661 kills, 40,348 deaths. A 1.01 K/D and a 48.6% win rate across five years. If you wanted a picture of a perfectly even player, this is the spreadsheet.
+
+## Don't Queue After Midnight
+
+The single most useful number in the whole dataset: Valorant games I started between midnight and 6am Eastern. 530 of them, won 43.2% of the time. Afternoons and evenings sit right around 50%. Mornings were 59%, on a small sample of 61.
+
+Seven points doesn't sound like much. Over 530 games it's roughly 34 more losses than I'd otherwise have taken, all of them at the hours I should have been asleep.
+
+## Dying Is the Stat
+
+Dota made this painfully clear. In games where I died five times or fewer, I won 84.9%. At twelve or more deaths, 29.6%. And twelve or more was not rare. It was 49% of my games.
+
+Short games went better too: 62.8% wins between 25 and 35 minutes, about 42% past the 45-minute mark. I also bought exactly one observer ward across every game with detailed stats. The two facts may be related.
+
+One nice surprise: I won 53.5% of games right after a win and 49.3% right after a loss. Whatever else was going on, I wasn't tilting much.
+
+## The Tournament
+
+On 1 May 2015 I played one match in an amateur league, the Mag Gaming First Blood league, with a team called The Yolo Force. I was on Templar Assassin, my best hero at 66% over 62 games. I went 14/11/8. We lost in 44 minutes.
+
+## What It Adds Up To
+
+None of this matters, which is exactly why it's fun to measure. The same pattern shows up across all three games: I show up a lot, I'm consistently decent, and the losses live at the edges — the 2am queue, the twelve-death game, the second place that should have been a first.
+
+My most recent Valorant rank is Iron 3. The data does not lie.`,
+    },
+    {
       id: "E-07",
       title: "The Year Crypto Stopped Needing Bitcoin",
       subtitle: "How AI, stablecoins, and onchain businesses are changing crypto’s relationship with Bitcoin.",

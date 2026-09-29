@@ -50,6 +50,7 @@ Researched 25 September 2026 with Exa search/content extraction, followed by cur
 | Echo · 2017 | Crowd-assisted phone recovery using Wi-Fi hotspot identifiers | [Repository](https://github.com/nikshepsvn/Echo-) |
 | Delivery availability checker · 2020 | A personal tool to check Instacart delivery availability | [Repository](https://github.com/nikshepsvn/instacart-delivery-availability-check) |
 | Magmic · May–August 2017 | Backend internship: service authorization, rate/bot filtering, and Dark Matter SDK test app | [Public career profile](https://www.linkedin.com/in/nikshepsvn) |
+| 5,230 Games Later · Sep 2026 | Owner-supplied match history: Valorant competitive record Sep 2021–Feb 2026 (peak Diamond 3, E5A3); TFT NA ranked Sets 9–16 from lolchess.gg (peak Emerald IV, Set 12); Dota 2 2014–2018 via OpenDota. No official Dota MMR exists, so no Dota rank or MMR estimate is stated; location and server were deliberately left out | Owner-supplied stat exports |
 
 The archived projects are separate from the 22 curated projects and their aggregate star count. The delivery checker is a personal project, distinct from later Instacart employment. Caffeine's README-reported award and Magmic's ambiguously worded percentage improvements were not added. Magmic completes the six-internship history: Magmic, two PagerDuty terms, SeatGeek, Coinbase, and Deliverr.
 

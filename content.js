@@ -355,7 +355,7 @@ window.SITE = {
       group: "research",
       date: "2025-12",
       tag: "reinforcement learning · prediction markets",
-      stars: 386,
+      stars: 385,
       forks: 96,
       url: "https://github.com/humanplane/cross-market-state-fusion",
       summary: "Online PPO agent combining Binance order flow with Polymarket books. Trains on Apple Silicon and paper-trades four crypto markets.",

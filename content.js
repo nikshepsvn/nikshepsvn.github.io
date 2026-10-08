@@ -420,7 +420,7 @@ window.SITE = {
       group: "oss",
       date: "2026-04",
       tag: "polymarket · trading infrastructure",
-      stars: 121,
+      stars: 122,
       forks: 26,
       url: "https://github.com/humanplane/terminal",
       summary: "Self-hosted Polymarket terminal with live order books, trader history, and wallet-signed orders. Rust backend, keyboard-driven interface.",

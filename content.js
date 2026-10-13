@@ -20,7 +20,7 @@ window.SITE = {
     stats: [
       { value: "2", label: "exits" },
       { value: "$50M+", label: "protocol volume" },
-      { value: "400K+", label: "search impressions" },
+      { value: "790K+", label: "search impressions" },
       { value: "stars", label: "GitHub stars" },
       { value: "1.2M", label: "article views" },
     ],
@@ -274,7 +274,7 @@ window.SITE = {
   ],
 
   // Curated: grouped (products, research, oss, experiments), most impressive first.
-  // Search figures from Google Search Console and viberank.app/api/stats, Sep 2026.
+  // Search figures from Google Search Console (all available data, through 11 Oct 2026) and viberank.app/api/stats, Oct 2026.
   // Source-linked highlights researched 2026-09-25; see docs/portfolio-sources.md.
   // `repo` identifies the project itself; citations must not drive star counts.
   projects: [
@@ -287,7 +287,7 @@ window.SITE = {
       forks: 0,
       url: "https://modelgrep.com",
       summary: "Compare 300+ LLMs by intelligence, speed, price, and capability. Live provider data, independent benchmarks, and a free public API.",
-      stats: [{value: "402K", label: "Google impressions, last 90 days"},{value: "7.7K", label: "search clicks, last 90 days"},{value: "215K", label: "impressions in the last 28 days alone"}],
+      stats: [{value: "603K", label: "Google impressions since launch"},{value: "11.4K", label: "search clicks since launch"},{value: "250K", label: "impressions in the last 28 days alone"}],
       repo: "https://github.com/sculptdotfun/modelgrep",
       wins: [
         {"label": "Cited by claude-mem (100K★)", "url": "https://github.com/thedotmack/claude-mem/blob/main/scripts/openrouter-price-history/sources/popularity-eras.json", "source": "claude-mem price-history sources"},
@@ -306,7 +306,7 @@ window.SITE = {
       forks: 22,
       url: "https://viberank.app",
       summary: "The public AI coding leaderboard. Claude Code, Codex, Gemini CLI, and more — ranked by real token usage and API-equivalent spend.",
-      stats: [{value: "1,292", label: "developers ranked"},{value: "26T", label: "tokens tracked"},{value: "$20.3M", label: "API-equivalent spend measured"},{value: "80K", label: "Google impressions, last 28 days"}],
+      stats: [{value: "1,292", label: "developers ranked"},{value: "26T", label: "tokens tracked"},{value: "$20.3M", label: "API-equivalent spend measured"},{value: "189K", label: "Google impressions since May 2026"}],
       wins: [
         {"label": "Cited by Kilo Code", "url": "https://blog.kilo.ai/p/rate-limits-hit-again", "source": "Kilo Code blog, 25 Aug 2025"},
         {"label": "Named by ClickUp", "url": "https://clickup.com/blog/tokenmaxxing/", "source": "ClickUp blog, What Is Tokenmaxxing?, Aug 2026"},

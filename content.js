@@ -164,8 +164,9 @@ window.SITE = {
       kpi: { value: "$250K+", label: "platform volume" },
       metrics: [
         {"label": "Kalshi grant recipient", "url": "https://www.linkedin.com/in/nikshepsvn", "source": "Public career profile"},
-        {"label": "Polyoptions partnership", "url": "https://www.linkedin.com/posts/nikshepsvn_happy-to-announce-humanplane-is-partnering-activity-7417939948307165184-4xT1", "source": "Founder partnership announcement"},
         {"label": "Featured in Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-01-26/crypto-traders-flee-to-prediction-bets-after-150-billion-crash", "source": "Bloomberg"},
+        "Ran Horizon S1, a Solana trading comp with Kalshi + DFlow",
+        {"label": "Polyoptions partnership", "url": "https://www.linkedin.com/posts/nikshepsvn_happy-to-announce-humanplane-is-partnering-activity-7417939948307165184-4xT1", "source": "Founder partnership announcement"},
       ],
       url: "https://humanplane.com",
       detail: {
@@ -188,8 +189,9 @@ window.SITE = {
       kpi: { value: "$50M+", label: "platform volume" },
       metrics: [
         {"label": "$300K+ platform revenue", "url": "https://github.com/nikshepsvn/nikshepsvn", "source": "Public founder profile"},
-        {"label": "ERC-8004 identity + escrow", "url": "https://moltlaunch.com/docs/protocol/overview", "source": "Project documentation"},
+        {"label": "Arena: first integration partner", "url": "https://moltlaunch.com/docs/protocol/overview", "source": "Mandate Protocol documentation"},
         {"label": "Featured in The AI Journal", "url": "https://aijourn.com/inside-the-gig-economy-built-for-ai-moltlaunch/", "source": "The AI Journal"},
+        {"label": "ERC-8004 identity + escrow", "url": "https://moltlaunch.com/docs/protocol/overview", "source": "Project documentation"},
       ],
       url: "https://moltlaunch.com",
       detail: {
@@ -303,11 +305,12 @@ window.SITE = {
       forks: 22,
       url: "https://viberank.app",
       summary: "The public AI coding leaderboard. Claude Code, Codex, Gemini CLI, and more — ranked by real token usage and API-equivalent spend.",
-      stats: [{value: "1,238", label: "developers ranked"},{value: "18.2T", label: "tokens tracked"},{value: "$15.9M", label: "AI spend measured"},{value: "80K", label: "Google impressions, last 28 days"}],
+      stats: [{value: "1,292", label: "developers ranked"},{value: "26T", label: "tokens tracked"},{value: "$20.3M", label: "API-equivalent spend measured"},{value: "80K", label: "Google impressions, last 28 days"}],
       wins: [
-        {"label": "Claude Code + Codex + Gemini", "url": "https://github.com/sculptdotfun/viberank", "source": "Project documentation"},
+        {"label": "Median dev: $1,521/mo", "url": "https://www.viberank.app/data", "source": "viberank open data, Oct 2026"},
         {"label": "Listed by ccusage", "url": "https://ccusage.com/guide/related-projects", "source": "Official ccusage related-project documentation"},
         {"label": "Inspired tokscale", "url": "https://github.com/junhoyeo/tokscale#acknowledgments", "source": "tokscale acknowledgments"},
+        {"label": "Claude Code + Codex + Gemini", "url": "https://github.com/sculptdotfun/viberank", "source": "Project documentation"},
       ],
       repo: "https://github.com/sculptdotfun/viberank",
     },
@@ -322,9 +325,10 @@ window.SITE = {
       url: "https://github.com/nikshepsvn/thimble",
       summary: "A 48M-parameter tool-calling layer. Grammar-constrained decoding keeps JSON well-formed, argument names valid, and calls inside your tool catalog.",
       wins: [
-        {"label": "C + WebAssembly runtime", "url": "https://github.com/nikshepsvn/thimble#try-it-in-your-browser", "source": "Project documentation"},
+        {"label": "Beats FunctionGemma 270M on Mobile Actions", "url": "https://github.com/nikshepsvn/thimble/blob/master/RESULTS.md", "source": "Project results"},
         {"label": "Open weights", "url": "https://huggingface.co/flashvenom/thimble", "source": "Hugging Face model card"},
         {"label": "$260 total build cost", "url": "https://github.com/nikshepsvn/thimble/blob/master/REPRODUCING.md", "source": "Project documentation"},
+        {"label": "C + WebAssembly runtime", "url": "https://github.com/nikshepsvn/thimble#try-it-in-your-browser", "source": "Project documentation"},
       ],
       repo: "https://github.com/nikshepsvn/thimble",
     },
@@ -340,8 +344,9 @@ window.SITE = {
       summary: "Adapt frozen 1-bit LLMs with reversible XOR patches measured in bytes. Paper, MLX implementation, and a CUDA path for NVIDIA GPUs.",
       wins: [
         {"label": "Covered by NYU Shanghai", "url": "https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation/", "source": "NYU Shanghai RITS"},
-        {"label": "936-byte XOR patch", "url": "https://github.com/nikshepsvn/bankai#abstract", "source": "Project documentation"},
+        {"label": "Re-implemented in Neagari", "url": "https://github.com/sbenjam1n/neagari", "source": "Neagari’s independent Bankai notebook"},
         {"label": "Inspired Miyagi", "url": "https://github.com/smanaton/miyagi", "source": "Miyagi’s acknowledgment of Bankai"},
+        {"label": "936-byte XOR patch", "url": "https://github.com/nikshepsvn/bankai#abstract", "source": "Project documentation"},
       ],
       repo: "https://github.com/nikshepsvn/bankai",
     },
@@ -357,9 +362,10 @@ window.SITE = {
       summary: "Online PPO agent combining Binance order flow with Polymarket books. Trains on Apple Silicon and paper-trades four crypto markets.",
       repo: "https://github.com/humanplane/cross-market-state-fusion",
       wins: [
-        {"label": "On-device MLX training", "url": "https://github.com/humanplane/cross-market-state-fusion", "source": "Project documentation"},
-        {"label": "Live data · paper execution", "url": "https://github.com/humanplane/cross-market-state-fusion#what-this-is", "source": "Project documentation"},
         {"label": "890K+ views on X", "url": "https://x.com/nikshepsvn/status/2005747452113195483", "source": "Launch posts on X, Dec 2025 – Jan 2026"},
+        {"label": "Inspired polymarket-model", "url": "https://github.com/shubhxho/polymarket-model", "source": "polymarket-model README, built on the LACUNA thesis"},
+        {"label": "Open weights", "url": "https://huggingface.co/HumanPlane/LACUNA", "source": "Hugging Face model card"},
+        {"label": "On-device MLX training", "url": "https://github.com/humanplane/cross-market-state-fusion", "source": "Project documentation"},
       ],
     },
     {
@@ -509,10 +515,10 @@ window.SITE = {
       summary: "Unofficial CLI and MCP server for NEAR. Derive accounts, sign transactions, and swap across chains through Chain Signatures and Intents.",
       repo: "https://github.com/nikshepsvn/near-hydra",
       wins: [
+        {"label": "Covered by The Agent Times", "url": "https://theagenttimes.com/articles/near-hydra-gives-us-one-cli-to-transact-across-10-chains-a8529a2e", "source": "The Agent Times, 7 May 2026"},
+        {"label": "32K views at launch", "url": "https://x.com/nikshepsvn/status/2052037921960849410", "source": "Launch post on X, May 2026"},
         {"label": "One account · 10 chains", "url": "https://github.com/nikshepsvn/near-hydra#chain-support-matrix", "source": "Project documentation"},
         {"label": "21 MCP tools", "url": "https://github.com/nikshepsvn/near-hydra#tools-21-total", "source": "Project documentation"},
-        {"label": "Read-only by default", "url": "https://github.com/nikshepsvn/near-hydra", "source": "Project documentation"},
-        {"label": "32K views at launch", "url": "https://x.com/nikshepsvn/status/2052037921960849410", "source": "Launch post on X, May 2026"},
       ],
     },
     {
@@ -721,7 +727,7 @@ window.SITE = {
     archive: "https://x.com/nikshepsvn/articles",
     articles: [
       { title: "The Year Crypto Stopped Needing Bitcoin", topic: "Token Dispatch · guest essay", date: "14 Jun 2026", views: "325K", featured: true, url: "https://www.thetokendispatch.com/p/the-year-crypto-stopped-needing-bitcoin",
-        dek: "How AI, stablecoins, and onchain businesses are changing crypto’s relationship with Bitcoin." },
+        dek: "How AI, stablecoins, and onchain businesses are changing crypto’s relationship with Bitcoin. Translated by Golden Finance and TechFlow." },
       { title: "Why $NEAR Captures the Agent Economy", topic: "NEAR", date: "5 May 2026", views: "183K", featured: true, url: "https://x.com/nikshepsvn/status/2051658516142727602",
         dek: "A coordination-layer thesis: why agents that act across chains need one account, one settlement layer, and private intents." },
       { title: "I Found the Token That Sam Altman Accidentally Described", topic: "Venice · VVV", date: "15 Feb 2026", views: "168K", featured: true, url: "https://x.com/nikshepsvn/status/2022911365527023771",
@@ -1114,6 +1120,14 @@ This is a starting point, not a finished design. The economics need more work. T
       date: "Apr 2026",
       url: "https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation",
       blurb: "NYU Shanghai’s Research and Instructional Technology Services covers the bankai paper.",
+    },
+    {
+      id: "PR-06",
+      title: "Near-Hydra Gives Us One CLI to Transact Across 10+ Chains",
+      source: "The Agent Times",
+      date: "May 2026",
+      url: "https://theagenttimes.com/articles/near-hydra-gives-us-one-cli-to-transact-across-10-chains-a8529a2e",
+      blurb: "A look at near-hydra, the CLI and MCP server that lets agents sign and swap across 10+ chains from one NEAR account.",
     },
     {
       id: "PR-05",

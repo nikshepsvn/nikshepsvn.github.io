@@ -20,7 +20,7 @@ const LOGOS = new Set([...SITE.community.orgs.map((o) => o.domain), "humanplane.
   "pagerduty.com", "uwaterloo.ca", "viberank.app", "modelgrep.com", "bloomberg.com", "businessinsider.com", "aijourn.com", "shanghai.nyu.edu", "pymnts.com",
   ...SITE.investments.map((i) => i.domain)]);
 const LOGO_ALIAS = { "rits.shanghai.nyu.edu": "shanghai.nyu.edu" };
-const NAME_LOGOS = { RealmPlay: "realmplay.webp", SoulBazaar: "soulbazaar.webp", "MC-Bench": "mcbench.webp" };
+const NAME_LOGOS = { RealmPlay: "realmplay.webp", SoulBazaar: "soulbazaar.webp", "MC-Bench": "mcbench.webp", "The Agent Times": "theagenttimes.com.svg" };
 
 // Project SVGs use isolated image documents, so repeated prose/list icons never
 // share gradient IDs. Company and venture marks keep their original artwork.
@@ -232,11 +232,11 @@ const chapters = [
       <ul class="list">${featuredRoles.map(expItem).join("")}</ul>
       <ul class="rows">${otherRoles.map(expRow).join("")}</ul>` },
   { id: "projects", label: "Projects", side: "Projects", body: `
-      ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,238 developers across 18 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code.`, `On the research side, ${pp("thimble")} puts structured tool calling into a 48M-parameter model, ${pp("bankai")} adapts 1-bit LLMs with tiny XOR patches, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
+      ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,292 developers across 26 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code.`, `On the research side, ${pp("thimble")} puts structured tool calling into a 48M-parameter model, ${pp("bankai")} adapts 1-bit LLMs with tiny XOR patches, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
       ${communityBand()}
       <div class="projects" id="project-list">${projectGroups()}</div>
       <button type="button" class="more" id="more" aria-expanded="false" aria-controls="project-list">Show more projects</button>
-      <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>
+      <p class="source">Search figures from Google Search Console, September 2026; viberank figures from viberank.app/api/stats, October 2026.</p>
       ${archive("earlier-work", "Earlier work", "Student projects · 2017–2020", "A few small builds from university: privacy experiments, hardware, and everyday utilities.", SITE.earlierProjects)}` },
   { id: "investing", label: "Investing", side: "Investing", body: `
       ${prose([`I invest in public, and in writing. I bought ${ip("Venice")} around $2, when almost no one was talking about it, and sold near the $34 top. I called ${ip("NEAR")} at $1.30 as the settlement layer for agents, and found ${ip("Nillion")} while looking for private memory for my own agents.`])}
@@ -250,7 +250,7 @@ const chapters = [
         ${subgroup("Essays", "and reports", `<ul class="list list-tight">${SITE.essays.map(essayItem).join("")}</ul>`)}
       </div>` },
   { id: "press", label: "Press", side: "Press", body: `
-      ${prose([`${prp("Bloomberg")} and ${prp("PYMNTS")} wrote about HumanPlane, ${prp("Business Insider")} about tremor, ${prp("The AI Journal")} about Moltlaunch, and ${prp("NYU Shanghai RITS", "NYU Shanghai")} about the bankai paper.`])}
+      ${prose([`${prp("Bloomberg")} and ${prp("PYMNTS")} wrote about HumanPlane, ${prp("Business Insider")} about tremor, ${prp("The AI Journal")} about Moltlaunch, ${prp("NYU Shanghai RITS", "NYU Shanghai")} about the bankai paper, and ${prp("The Agent Times")} about near-hydra.`])}
       <ul class="list">${SITE.press.map(pressItem).join("")}</ul>` },
   { id: "contact", label: "Contact", side: "Contact", body: `
       ${prose([`The best way to reach me is a DM on <a href="https://x.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}

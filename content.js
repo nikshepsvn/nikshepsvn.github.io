@@ -11,7 +11,7 @@ window.SITE = {
     location: "Toronto, CA",
     // Hero copy. `intro` may contain <b>; `aside` follows the italic philosophy line.
     intro:
-      "I'm <b>Nikshep</b>, an engineer in Toronto. I explore ideas by building them, at the edges of AI, crypto, and markets.",
+      "I'm <b>Nikshep</b>, based in Toronto. I explore ideas by building them, at the edges of AI, crypto, and markets.",
     philosophy:
       "Infinitely curious, delusional optimist.",
     aside:
@@ -31,7 +31,7 @@ window.SITE = {
     },
     title: "Nikshep Saravanan",
     description:
-      "Engineer in Toronto who explores ideas by building them, at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch (\$50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider.",
+      "Based in Toronto, exploring ideas by building them at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch (\$50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider.",
     url: "https://nikshepsvn.com/",
     ogImage: "https://nikshepsvn.com/og.png",
   },

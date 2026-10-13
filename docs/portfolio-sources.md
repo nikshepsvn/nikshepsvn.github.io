@@ -71,4 +71,19 @@ The archived projects are separate from the 22 curated projects and their aggreg
 
 ## Artwork
 
-All 22 project entries have custom SVG files in `logos/projects/`, built on a 48×48 grid with a 12-unit corner radius. Marks use broad silhouettes and shared optical weight, and are inspected at 20px, 32px, and 64px on light and dark backgrounds. Original employer and venture logos remain separate. External SVG images isolate gradient IDs when a project appears in both prose and a list.
+Since 13 October 2026, 18 of the 22 project icons are Swiss two-tone logomarks made with Recraft V4 on Venice. This art direction was picked from three rendered options. Each mark has its own hand-written prompt that combines the project's name with what it does: thimble's dome is drawn from JSON braces, blindchat is a closed eye in a speech bubble, clip-fun is a paperclip bent into a play button. Every mark uses two colors, a strong silhouette, and faint paper grain. The prompts live in `docs/project-icon-prompts.py`. Each icon is the better of two or three variants, exported as 128px WebP. modelgrep, viberank, moltlaunch, and MC-Bench keep their real brand marks as SVG.
+
+Earlier, hand-drawn SVG notes (still apply to the remaining SVGs): All 22 project entries have custom SVG files in `logos/projects/`, built on a 48×48 grid with a 12-unit corner radius. Marks use broad silhouettes and shared optical weight, and are inspected at 20px, 32px, and 64px on light and dark backgrounds. Original employer and venture logos remain separate. External SVG images isolate gradient IDs when a project appears in both prose and a list.
+
+## Investing and analysis (13 October 2026)
+
+Pulled from the full public X timeline (1,483 posts and high-engagement replies via the Apify tweet scraper; posts before August 2024 are no longer public). Every X link on the site was checked against that pull.
+
+- **Track record.** Entry, exit, and peak prices come from the owner's own dated posts, consolidated in the pinned [track-record thread](https://x.com/nikshepsvn/status/2103137147117326662) of 24 September 2026. Multiples are computed from those figures: VVV $2 → $34 (17×); NEAR $1.30 → $4.30 as of 24 September (3.3×), with "a peak of almost $5" left as the owner's statement. Nillion is shown at its first-call price only, because the position is still open.
+- **VVV exit.** The owner took profits at $28 on [9 September](https://x.com/nikshepsvn/status/2097594417628741820), [went short at $34](https://x.com/nikshepsvn/status/2101961882357866535) on 21 September, and published the [exit thesis](https://x.com/nikshepsvn/status/2102459259078492471) on 22 September. "Sold near the $34 top" summarizes those three posts.
+- **Flipr FDV.** The $4–5M FDV comes from the owner's [3 October 2025 post](https://x.com/nikshepsvn/status/1974222479359930575), which quotes the Flipr article.
+- **Article reach.** View and bookmark counts are X's own counters as of 13 October 2026, totalled across all 31 articles: 1,248,565 views and 2,473 bookmarks, shown as "1.2M" and "2,400+".
+- **Project reach.** The cross-market-state-fusion figure adds three launch posts (283K + 373K + 239K views).
+- **Not added.** Leveraged and short-dated positions (XPL, GRASS, TAO, WLD, CLAUS, YOWL, the SOL ETF options) are omitted because the owner never published their outcomes. Shore launched on 28 September 2026 and is left out pending the owner's decision.
+
+Company, venture, and token logos in `logos/*.webp` are opaque 96×96 square tiles (WebP, quality 90; 2× the largest 44px display size); the page rounds them and draws a hairline ring. Brand tiles (Kalshi, NEAR, Vercel and similar) are used as published. Bare marks sit centered on a white tile, sized optically at 52–66% of the tile. Low-resolution or transparent sources were rebuilt in October 2026 from vector or larger originals, in brand colors: Amazon, Apple, NVIDIA, and SpaceX from Simple Icons; Bloomberg and Atlassian from their apple-touch icons. NYU Shanghai is still a 48px source; it only appears at 24px.

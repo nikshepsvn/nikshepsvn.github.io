@@ -363,6 +363,7 @@ window.SITE = {
       wins: [
         {"label": "On-device MLX training", "url": "https://github.com/humanplane/cross-market-state-fusion", "source": "Project documentation"},
         {"label": "Live data · paper execution", "url": "https://github.com/humanplane/cross-market-state-fusion#what-this-is", "source": "Project documentation"},
+        {"label": "890K+ views on X", "url": "https://x.com/nikshepsvn/status/2005747452113195483", "source": "Launch posts on X, Dec 2025 – Jan 2026"},
       ],
     },
     {
@@ -446,6 +447,7 @@ window.SITE = {
         {"label": "Visual model workflows", "url": "https://github.com/nikshepsvn/openvenice#workflows", "source": "Project documentation"},
         {"label": "Agent-built workflow canvas", "url": "https://github.com/nikshepsvn/openvenice#playground", "source": "Project documentation"},
         {"label": "No backend required", "url": "https://github.com/nikshepsvn/openvenice#why-openvenice", "source": "Project documentation"},
+        {"label": "41K views at launch", "url": "https://x.com/nikshepsvn/status/2032457905010561131", "source": "Launch post on X, Mar 2026"},
       ],
     },
     {
@@ -514,6 +516,7 @@ window.SITE = {
         {"label": "One account · 10 chains", "url": "https://github.com/nikshepsvn/near-hydra#chain-support-matrix", "source": "Project documentation"},
         {"label": "21 MCP tools", "url": "https://github.com/nikshepsvn/near-hydra#tools-21-total", "source": "Project documentation"},
         {"label": "Read-only by default", "url": "https://github.com/nikshepsvn/near-hydra", "source": "Project documentation"},
+        {"label": "32K views at launch", "url": "https://x.com/nikshepsvn/status/2052037921960849410", "source": "Launch post on X, May 2026"},
       ],
     },
     {
@@ -663,6 +666,84 @@ window.SITE = {
       url: "https://github.com/nikshepsvn/instacart-delivery-availability-check",
     },
   ],
+
+  // Public calls, each traceable to the dated post that made it.
+  // Prices are as posted at the time; the track-record thread collects them:
+  // https://x.com/nikshepsvn/status/2103137147117326662
+  investments: [
+    {
+      name: "Venice",
+      ticker: "VVV",
+      domain: "venice.ai",
+      status: "exited",
+      period: "Feb – Sep 2026",
+      kpi: { value: "17×", label: "$2 entry → $34 exit" },
+      summary:
+        "Bought at a $160M cap with almost no one on the timeline talking about it: a private-AI company doing $4M a month, 1.3M users, no VCs. Held through the run, then trimmed and turned short at $34 when the token started pricing in burns that hadn't happened yet.",
+      links: [
+        { label: "First breakdown · ~$3", url: "https://x.com/nikshepsvn/status/2022911365527023771", source: "X article, 15 Feb 2026" },
+        { label: "Public call · $11", url: "https://x.com/nikshepsvn/status/2051937239253598607", source: "X post, 6 May 2026" },
+        { label: "Short at $34", url: "https://x.com/nikshepsvn/status/2101961882357866535", source: "X post, 21 Sep 2026" },
+        { label: "Exit thesis", url: "https://x.com/nikshepsvn/status/2102459259078492471", source: "X article, 22 Sep 2026" },
+      ],
+    },
+    {
+      name: "NEAR",
+      ticker: "NEAR",
+      domain: "near.org",
+      status: "called",
+      period: "May 2026",
+      kpi: { value: "3.3×", label: "$1.30 call → $4.30, peak near $5" },
+      summary:
+        "Wrote it up as the settlement and coordination layer for agents while the market was still comparing its TVL to Solana's. Chain abstraction, intents, and confidential sends were the thesis.",
+      links: [
+        { label: "Thesis · 183K views", url: "https://x.com/nikshepsvn/status/2051658516142727602", source: "X article, 5 May 2026" },
+        { label: "Call at $1.30", url: "https://x.com/nikshepsvn/status/2051937239253598607", source: "X post, 6 May 2026" },
+        { label: "Recap at $3", url: "https://x.com/nikshepsvn/status/2062177987475153233", source: "X post, 3 Jun 2026" },
+      ],
+    },
+    {
+      name: "Nillion",
+      ticker: "NIL",
+      domain: "nillion.com",
+      status: "holding",
+      period: "May 2026 –",
+      kpi: { value: "$0.05", label: "first call, at a $25M cap" },
+      summary:
+        "Found it while digging for private memory for agents. Sold when its private-AI approach looked weak, then re-entered at $0.04–0.05 the week it pivoted to encrypted markets.",
+      links: [
+        { label: "Inside the Blind Computer", url: "https://x.com/nikshepsvn/status/2054917517210960125", source: "X article, 14 May 2026" },
+        { label: "Encrypted markets thesis", url: "https://x.com/nikshepsvn/status/2103193363805819201", source: "X article, 24 Sep 2026" },
+      ],
+    },
+  ],
+
+  // Long-form research published as X articles, most-read first.
+  // Totals cover all 31 articles as of 13 Oct 2026.
+  analysis: {
+    total: { articles: 31, views: "1.2M", bookmarks: "2,400+" },
+    archive: "https://x.com/nikshepsvn/articles",
+    articles: [
+      { title: "Why $NEAR Captures the Agent Economy", topic: "NEAR", date: "5 May 2026", views: "183K", url: "https://x.com/nikshepsvn/status/2051658516142727602",
+        dek: "A coordination-layer thesis: why agents that act across chains need one account, one settlement layer, and private intents." },
+      { title: "I Found the Token That Sam Altman Accidentally Described", topic: "Venice · VVV", date: "15 Feb 2026", views: "168K", url: "https://x.com/nikshepsvn/status/2022911365527023771",
+        dek: "The first real breakdown of Venice on crypto Twitter, written with the token around $3." },
+      { title: "Every AI Platform Stores Your Data, Censors Your Output, Rents You Compute. Except One.", topic: "Venice · VVV", date: "11 Apr 2026", views: "86K", url: "https://x.com/nikshepsvn/status/2042975165970047240",
+        dek: "The full product and token map, the week Venice processed 50B tokens in a day." },
+      { title: "He Dissolved His Last Company Into a Token. Now He's Burning This One.", topic: "Venice · VVV", date: "4 Jul 2026", views: "75K", url: "https://x.com/nikshepsvn/status/2073418249602240518",
+        dek: "3,500 words on the raise, the burn, and $70M+ ARR — including an unannounced product found in Venice's own JavaScript." },
+      { title: "Flipr — Leverage and Infra for Prediction Markets", topic: "Prediction markets", date: "15 Sep 2025", views: "59K", url: "https://x.com/nikshepsvn/status/1967695387818344914",
+        dek: "Due diligence on the only prediction-market product with working leverage, posted at a $4–5M FDV." },
+      { title: "The First LLM Operating System", topic: "AI", date: "21 Jan 2026", views: "42K", url: "https://x.com/nikshepsvn/status/2014084232641921483",
+        dek: "Claude Code isn't a coding assistant. It's the first practical LLM-OS, and it enables a strange new kind of software." },
+      { title: "Venice Is a Great Company. VVV Is Priced for a Much Bigger One.", topic: "Venice · VVV", date: "22 Sep 2026", views: "35K", url: "https://x.com/nikshepsvn/status/2102459259078492471",
+        dek: "Why one of the earliest VVV bulls sold at the top: the company kept growing, the token got ahead of it." },
+      { title: "Nillion — Inside the Blind Computer", topic: "Nillion · NIL", date: "14 May 2026", views: "34K", url: "https://x.com/nikshepsvn/status/2054917517210960125",
+        dek: "A privacy-compute network trading at half the cash it raised, and the team and cryptography behind it." },
+      { title: "Plasma: Tether's Move to Take the Rails Back from Tron", topic: "Plasma · XPL", date: "17 Jun 2026", views: "19K", url: "https://x.com/nikshepsvn/status/2067257444896788482",
+        dek: "Why a chain down 94% might be the opportunity — the stablecoin issuer reclaiming its own settlement layer." },
+    ],
+  },
 
   // Writing — hosted essays and links to externally published pieces.
   // `body` is a markdown-lite string. Supports ## h2, ### h3, paragraphs, - lists.
@@ -1057,7 +1138,7 @@ This is a starting point, not a finished design. The economics need more work. T
 
   links: [
     { label: "GitHub",   icon: "github",   href: "https://github.com/nikshepsvn",      handle: "@nikshepsvn" },
-    { label: "X",        icon: "x",        href: "https://x.com/nikshepsvn",           handle: "@nikshepsvn" },
+    { label: "X",        icon: "x",        href: "https://x.com/nikshepsvn",           handle: "@nikshepsvn · 10K followers" },
     { label: "LinkedIn", icon: "linkedin", href: "https://linkedin.com/in/nikshepsvn", handle: "nikshepsvn" },
     { label: "email",       href: "mailto:nikshepsvn@gmail.com",    handle: "nikshepsvn@gmail.com" },
   ],

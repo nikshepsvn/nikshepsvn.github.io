@@ -17,13 +17,20 @@ const socialLogo = (name) => `<svg class="social-icon" viewBox="0 0 24 24" fill=
 
 // Logos are local files keyed by domain; anything without one falls back to a colored monogram.
 const LOGOS = new Set([...SITE.community.orgs.map((o) => o.domain), "humanplane.com", "deliverr.com", "moltlaunch.com", "kalshi.com", "instacart.com", "coinbase.com", "seatgeek.com",
-  "pagerduty.com", "uwaterloo.ca", "viberank.app", "modelgrep.com", "bloomberg.com", "businessinsider.com", "aijourn.com", "shanghai.nyu.edu", "pymnts.com"]);
+  "pagerduty.com", "uwaterloo.ca", "viberank.app", "modelgrep.com", "bloomberg.com", "businessinsider.com", "aijourn.com", "shanghai.nyu.edu", "pymnts.com",
+  ...SITE.investments.map((i) => i.domain)]);
 const LOGO_ALIAS = { "rits.shanghai.nyu.edu": "shanghai.nyu.edu" };
-const NAME_LOGOS = { RealmPlay: "realmplay.png", SoulBazaar: "soulbazaar.png", "MC-Bench": "mcbench.png" };
+const NAME_LOGOS = { RealmPlay: "realmplay.webp", SoulBazaar: "soulbazaar.webp", "MC-Bench": "mcbench.webp" };
 
 // Project SVGs use isolated image documents, so repeated prose/list icons never
 // share gradient IDs. Company and venture marks keep their original artwork.
-const projectLogo = (name) => `<span class="logo project-logo" aria-hidden="true"><img src="logos/projects/${slug(name)}.svg" alt="" width="48" height="48" decoding="async"></span>`;
+// Generated Swiss two-tone marks (Recraft V4 via Venice, prompts in docs/project-icon-prompts.py); real product brands keep their vector marks.
+const GENERATED_ICONS = new Set(["thimble", "bankai", "cross-market-state-fusion", "veilstream", "homunculus", "terminal", "openvenice",
+  "scrim", "updownarena", "near-hydra", "blindcache", "blindchat", "nemo-ai", "tremor", "sniffchain", "clip-fun", "dreamloom", "spine"]);
+const projectLogo = (name) => {
+  const file = GENERATED_ICONS.has(slug(name)) ? `${slug(name)}.webp` : `${slug(name)}.svg`;
+  return `<span class="logo project-logo" aria-hidden="true"><img src="logos/projects/${file}" alt="" width="48" height="48" loading="lazy" decoding="async"></span>`;
+};
 
 const logoFor = (name, url, { size } = {}) => {
   let d = host(url);
@@ -31,8 +38,8 @@ const logoFor = (name, url, { size } = {}) => {
   // Repos in the humanplane org wear the HumanPlane mark.
   if (d === "github.com" && url.includes("/humanplane/")) d = "humanplane.com";
   const sizeVar = size ? `--s:${size};` : "";
-  const file = NAME_LOGOS[name] || (LOGOS.has(d) ? `${d}.png` : null);
-  if (file) return `<span class="logo" style="${sizeVar}"><img src="logos/${file}" alt=""></span>`;
+  const file = NAME_LOGOS[name] || (LOGOS.has(d) ? `${d}.webp` : null);
+  if (file) return `<span class="logo" style="${sizeVar}"><img src="logos/${file}" alt="" width="96" height="96" loading="lazy" decoding="async"></span>`;
   return `<span class="logo ghost" style="${sizeVar}" aria-hidden="true">${esc(name[0].toUpperCase())}</span>`;
 };
 
@@ -46,6 +53,8 @@ const vp = (n) => pill("v-" + slug(n), n, ventureById[n].url);
 const xp = (n, label) => pill("x-" + slug(n), label || n, expByCo[n].url);
 const pp = (n) => `<a class="pill" href="#p-${slug(n)}" data-jump="p-${slug(n)}">${projectLogo(n)}${esc(n)}</a>`;
 const prp = (n) => pill("pr-" + slug(n), n, pressBySource[n].url);
+const investByName = Object.fromEntries(SITE.investments.map((i) => [i.name, i]));
+const ip = (n) => pill("i-" + slug(n), n, "https://" + investByName[n].domain);
 const ep = (title) => {
   const i = SITE.essays.findIndex((e) => e.title === title);
   return `<a class="pill" href="#writing" data-essay="${i}" aria-haspopup="dialog">${icon("article")}${esc(title)}</a>`;
@@ -73,6 +82,22 @@ const ventureItem = (v) => `
     <span class="item-d">${esc(v.summary)}</span>
   </${v.url ? "a" : "div"}>
   ${highlights(v.metrics, "entry")}</li>`;
+
+// Calls are not links themselves: each one carries the dated posts that back it.
+const investItem = (i) => `
+  <li class="entry"><div class="item" id="i-${slug(i.name)}">
+    ${logoFor(i.name, "https://" + i.domain)}
+    <span class="item-t">${esc(i.name)} <span>· $${esc(i.ticker)} · ${esc(i.status)}</span><span class="item-role">${esc(i.period)}</span></span>
+    <span class="item-k">${esc(i.kpi.value)}<small>${esc(i.kpi.label)}</small></span>
+    <span class="item-d">${esc(i.summary)}</span>
+  </div>${highlights(i.links, "entry")}</li>`;
+
+const analysisItem = (a) => `
+  <li><a class="item item-essay" href="${esc(a.url)}" target="_blank" rel="noreferrer">
+    <span class="essay-publication">${esc(a.topic)}</span>
+    <span class="item-h">${esc(a.title)} ${icon("external")}</span><span class="item-m">${esc(a.date)}<span class="item-reading">${esc(a.views)} views</span></span>
+    <span class="item-d">${esc(a.dek)}</span>
+  </a></li>`;
 
 const expItem = (x) => `
   <li class="entry"><a class="item" id="x-${slug(x.company)}" href="${esc(x.url)}" target="_blank" rel="noreferrer">
@@ -196,6 +221,14 @@ const chapters = [
       <button type="button" class="more" id="more" aria-expanded="false" aria-controls="project-list">Show more projects</button>
       <p class="source">Search figures from Google Search Console; viberank figures from viberank.app/api/stats. September 2026.</p>
       ${archive("earlier-work", "Earlier work", "Student projects · 2017–2020", "A few small builds from university: privacy experiments, hardware, and everyday utilities.", SITE.earlierProjects)}` },
+  { id: "investing", label: "Investing", side: "Investing", body: `
+      ${prose([`I invest in public, and in writing. I bought ${ip("Venice")} around $2, when almost no one was talking about it, and sold near the $34 top. I called ${ip("NEAR")} at $1.30 as the settlement layer for agents, and found ${ip("Nillion")} while looking for private memory for my own agents.`])}
+      <ul class="list">${SITE.investments.map(investItem).join("")}</ul>
+      <p class="source">Prices and dates are as I posted them at the time; every link goes to the original post. <a href="https://x.com/nikshepsvn/status/2103137147117326662" target="_blank" rel="noreferrer">Full track record</a>. Not financial advice.</p>` },
+  { id: "analysis", label: "Analysis", side: "Analysis", body: `
+      ${prose([`I publish long-form research on X: company deep dives, token math, and the arguments behind the calls above. ${SITE.analysis.total.articles} articles so far, with ${SITE.analysis.total.views} views and ${SITE.analysis.total.bookmarks} bookmarks. The most-read, <a href="https://x.com/nikshepsvn/status/2061818529909776873" target="_blank" rel="noreferrer">The Year Crypto Stopped Needing Bitcoin</a>, drew 325K views and ran as a guest essay in Token Dispatch.`])}
+      <ul class="list">${SITE.analysis.articles.map(analysisItem).join("")}</ul>
+      <a class="more more-link" href="${esc(SITE.analysis.archive)}" target="_blank" rel="noreferrer">All ${SITE.analysis.total.articles} articles on X ${icon("external")}</a>` },
   { id: "writing", label: "Writing", side: "Essays", body: `
       ${prose([`I write about where AI and markets are heading — start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
       <ul class="list">${SITE.essays.map(essayItem).join("")}</ul>` },
@@ -215,7 +248,7 @@ $("main").innerHTML = chapters.map((c) => `
     <h2 class="side" id="${c.id}-h">${c.side}</h2>
     <div class="body">${c.body}</div>
   </section>`).join("");
-$("nav").innerHTML = chapters.map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("");
+$("nav").innerHTML = chapters.map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("") + `<i class="nav-ink" id="nav-ink" aria-hidden="true"></i>`;
 $("who").textContent = m.name;
 $("foot").textContent = `© ${new Date().getFullYear()} ${m.name} · Toronto`;
 
@@ -227,30 +260,69 @@ const navLinks = [...document.querySelectorAll("[data-nav]")];
 const sections = chapters.map((c) => $(c.id));
 let activeChapter = "";
 let navFrame = 0;
+const bar = document.querySelector(".bar");
+// One indicator slides between links; it measures in the nav's own scroll space.
+const moveInk = (a) => {
+  const ink = $("nav-ink");
+  ink.style.setProperty("--x", `${a.offsetLeft}px`);
+  ink.style.setProperty("--w", `${a.offsetWidth}px`);
+  ink.style.setProperty("--o", 1);
+  if (!ink.classList.contains("is-ready")) requestAnimationFrame(() => requestAnimationFrame(() => ink.classList.add("is-ready")));
+};
+// Section offsets are measured only when layout changes, so scrolling reads nothing but scrollY.
+let layout = { tops: [], barBottom: 0, maxScroll: 0 };
+const measure = () => {
+  layout = {
+    tops: sections.map((section) => section.offsetTop),
+    barBottom: bar.offsetHeight,
+    maxScroll: document.documentElement.scrollHeight - window.innerHeight,
+  };
+};
 const updateNav = () => {
   navFrame = 0;
-  const threshold = document.querySelector(".bar").getBoundingClientRect().bottom + 80;
-  let current = sections[0];
-  sections.forEach((section) => {
-    if (section.getBoundingClientRect().top <= threshold) current = section;
-  });
-  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) current = sections.at(-1);
+  const y = window.scrollY;
+  bar.classList.toggle("is-scrolled", y > 4);
+  const threshold = y + Math.max(layout.barBottom + 80, window.innerHeight * .35);
+  let index = 0;
+  layout.tops.forEach((top, i) => { if (top <= threshold) index = i; });
+  if (y >= layout.maxScroll - 2) index = sections.length - 1;
+  const current = sections[index];
   if (activeChapter === current.id) return;
   activeChapter = current.id;
   navLinks.forEach((a) => {
     if (a.dataset.nav === current.id) {
       a.setAttribute("aria-current", "true");
+      moveInk(a);
       const linkRect = a.getBoundingClientRect();
       const navRect = $("nav").getBoundingClientRect();
-      if (linkRect.left < navRect.left + 5) $("nav").scrollLeft += linkRect.left - navRect.left - 5;
-      else if (linkRect.right > navRect.right - 5) $("nav").scrollLeft += linkRect.right - navRect.right + 5;
+      const inset = 28;
+      if (linkRect.left < navRect.left + inset) $("nav").scrollLeft += linkRect.left - navRect.left - inset;
+      else if (linkRect.right > navRect.right - inset) $("nav").scrollLeft += linkRect.right - navRect.right + inset;
     } else a.removeAttribute("aria-current");
   });
 };
 const queueNav = () => { if (!navFrame) navFrame = requestAnimationFrame(updateNav); };
+// Re-measure on anything that moves sections: resizes, webfonts, folds opening, the archive toggling.
+const relayout = () => { measure(); activeChapter = ""; queueNav(); };
 window.addEventListener("scroll", queueNav, { passive: true });
-window.addEventListener("resize", queueNav);
+window.addEventListener("resize", relayout);
+if ("ResizeObserver" in window) new ResizeObserver(relayout).observe($("main"));
+measure();
 updateNav();
+document.fonts?.ready.then(relayout);
+
+// Chapters below the fold ease in once; anything already on screen stays put.
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const pending = sections.filter((s) => s.getBoundingClientRect().top > window.innerHeight);
+  pending.forEach((s) => s.classList.add("is-pending"));
+  document.documentElement.classList.add("js-reveal");
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    e.target.classList.remove("is-pending");
+    io.unobserve(e.target);
+  }), { rootMargin: "0px 0px -8% 0px" });
+  pending.forEach((s) => io.observe(s));
+}
 
 // Pills scroll to their entry and flash it; hidden projects are revealed first.
 const reveal = () => {
@@ -301,6 +373,10 @@ $("copy-email")?.addEventListener("click", async () => {
 const reader = $("reader");
 let lastFocus = null;
 let readerScroll = 0;
+let pageHash = "";
+const pageTitle = document.title;
+// Hosted essays get a shareable address without adding history entries.
+const essayHash = (e) => `#essay/${slug(e.title)}`;
 const background = [...document.querySelectorAll("body > :is(.skip-link, .bar, main, footer)")];
 const openEssay = (i, opener) => {
   const e = SITE.essays[i];
@@ -314,7 +390,10 @@ const openEssay = (i, opener) => {
     document.body.style.top = `-${readerScroll}px`;
     document.body.style.width = "100%";
     background.forEach((el) => (el.inert = true));
+    pageHash = location.hash.startsWith("#essay/") ? "" : location.hash;
   }
+  history.replaceState(null, "", essayHash(e));
+  document.title = `${e.title} — ${m.name}`;
   $("reader-crumb").textContent = `${e.title} · ${e.date}`;
   $("reader-body").innerHTML = `<p class="kicker">${esc(e.kind)} · ${esc(e.date)} · ${readingTime(e)}</p><h1 id="reader-h">${esc(e.title)}</h1><p class="sub">${esc(e.subtitle)}</p>` +
     e.body.split(/\n\n+/).map((para) => /^##\s/.test(para) ? `<h2>${esc(para.replace(/^##\s+/, ""))}</h2>` : `<p class="txt">${esc(para)}</p>`).join("") +
@@ -330,6 +409,8 @@ const closeEssay = () => {
   document.body.style.top = "";
   document.body.style.width = "";
   background.forEach((el) => (el.inert = false));
+  history.replaceState(null, "", location.pathname + location.search + pageHash);
+  document.title = pageTitle;
   window.scrollTo({ top: readerScroll, behavior: "instant" });
   lastFocus?.focus({ preventScroll: true });
   queueNav();
@@ -349,3 +430,11 @@ document.addEventListener("keydown", (ev) => {
     else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
   }
 });
+
+const linkedEssay = SITE.essays.findIndex((e) => !e.url && essayHash(e) === location.hash);
+// Closing a linked essay lands on its entry in Writing, as if it had been opened from there.
+if (linkedEssay >= 0) {
+  const entry = document.querySelector(`button.item[data-essay="${linkedEssay}"]`);
+  entry?.scrollIntoView({ block: "center", behavior: "instant" });
+  openEssay(linkedEssay, entry);
+}

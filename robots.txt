@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /og-template.html
+
+Sitemap: https://nikshepsvn.com/sitemap.xml

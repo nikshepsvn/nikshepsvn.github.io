@@ -31,7 +31,7 @@ window.SITE = {
     },
     title: "Nikshep Saravanan",
     description:
-      "Engineer in Toronto building first versions at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch (\$50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider.",
+      "Engineer in Toronto who explores ideas by building them, at the edges of AI, crypto, and markets. Two exits; HumanPlane, Moltlaunch (\$50M+ volume), modelgrep, viberank. Featured in Bloomberg and Business Insider.",
     url: "https://nikshepsvn.com/",
     ogImage: "https://nikshepsvn.com/og.png",
   },

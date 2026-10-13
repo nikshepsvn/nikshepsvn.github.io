@@ -290,6 +290,7 @@ window.SITE = {
       stats: [{value: "402K", label: "Google impressions, last 90 days"},{value: "7.7K", label: "search clicks, last 90 days"},{value: "215K", label: "impressions in the last 28 days alone"}],
       repo: "https://github.com/sculptdotfun/modelgrep",
       wins: [
+        {"label": "Cited by claude-mem (100K★)", "url": "https://github.com/thedotmack/claude-mem/blob/main/scripts/openrouter-price-history/sources/popularity-eras.json", "source": "claude-mem price-history sources"},
         {"label": "Free JSON API", "url": "https://modelgrep.com/api", "source": "Project documentation"},
         {"label": "Used by ZenPick", "url": "https://github.com/Michael-Obele/zenpick/blob/main/src/lib/server/modelgrep.ts", "source": "ZenPick API client"},
         {"label": "Used by pix-data", "url": "https://cdn.jsdelivr.net/npm/@xynogen/pix-data@0.5.1/README.md", "source": "Published pix-data documentation"},
@@ -307,8 +308,10 @@ window.SITE = {
       summary: "The public AI coding leaderboard. Claude Code, Codex, Gemini CLI, and more — ranked by real token usage and API-equivalent spend.",
       stats: [{value: "1,292", label: "developers ranked"},{value: "26T", label: "tokens tracked"},{value: "$20.3M", label: "API-equivalent spend measured"},{value: "80K", label: "Google impressions, last 28 days"}],
       wins: [
-        {"label": "Median dev: $1,521/mo", "url": "https://www.viberank.app/data", "source": "viberank open data, Oct 2026"},
+        {"label": "Cited by Kilo Code", "url": "https://blog.kilo.ai/p/rate-limits-hit-again", "source": "Kilo Code blog, 25 Aug 2025"},
+        {"label": "Named by ClickUp", "url": "https://clickup.com/blog/tokenmaxxing/", "source": "ClickUp blog, What Is Tokenmaxxing?, Aug 2026"},
         {"label": "Listed by ccusage", "url": "https://ccusage.com/guide/related-projects", "source": "Official ccusage related-project documentation"},
+        {"label": "Median dev: $1,521/mo", "url": "https://www.viberank.app/data", "source": "viberank open data, Oct 2026"},
         {"label": "Inspired tokscale", "url": "https://github.com/junhoyeo/tokscale#acknowledgments", "source": "tokscale acknowledgments"},
         {"label": "Claude Code + Codex + Gemini", "url": "https://github.com/sculptdotfun/viberank", "source": "Project documentation"},
       ],
@@ -345,6 +348,7 @@ window.SITE = {
       wins: [
         {"label": "Covered by NYU Shanghai", "url": "https://rits.shanghai.nyu.edu/ai/bankai-kilobyte-scale-patches-for-1-bit-llms-via-xor-adaptation/", "source": "NYU Shanghai RITS"},
         {"label": "Re-implemented in Neagari", "url": "https://github.com/sbenjam1n/neagari", "source": "Neagari’s independent Bankai notebook"},
+        {"label": "Reproduced by NCDC", "url": "https://zenn.dev/ncdc/articles/8f2f79973fd419", "source": "NCDC engineering blog on Zenn, 19 Apr 2026"},
         {"label": "Inspired Miyagi", "url": "https://github.com/smanaton/miyagi", "source": "Miyagi’s acknowledgment of Bankai"},
         {"label": "936-byte XOR patch", "url": "https://github.com/nikshepsvn/bankai#abstract", "source": "Project documentation"},
       ],
@@ -363,6 +367,7 @@ window.SITE = {
       repo: "https://github.com/humanplane/cross-market-state-fusion",
       wins: [
         {"label": "890K+ views on X", "url": "https://x.com/nikshepsvn/status/2005747452113195483", "source": "Launch posts on X, Dec 2025 – Jan 2026"},
+        {"label": "In Odaily’s top Polymarket tools", "url": "https://www.odaily.news/zh-CN/post/5209012", "source": "Odaily, 27 Jan 2026"},
         {"label": "Inspired polymarket-model", "url": "https://github.com/shubhxho/polymarket-model", "source": "polymarket-model README, built on the LACUNA thesis"},
         {"label": "Open weights", "url": "https://huggingface.co/HumanPlane/LACUNA", "source": "Hugging Face model card"},
         {"label": "On-device MLX training", "url": "https://github.com/humanplane/cross-market-state-fusion", "source": "Project documentation"},

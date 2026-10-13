@@ -52,7 +52,7 @@ const pressBySource = Object.fromEntries(SITE.press.map((p) => [p.source, p]));
 const vp = (n) => pill("v-" + slug(n), n, ventureById[n].url);
 const xp = (n, label) => pill("x-" + slug(n), label || n, expByCo[n].url);
 const pp = (n) => `<a class="pill" href="#p-${slug(n)}" data-jump="p-${slug(n)}">${projectLogo(n)}${esc(n)}</a>`;
-const prp = (n) => pill("pr-" + slug(n), n, pressBySource[n].url);
+const prp = (n, label) => pill("pr-" + slug(n), label || n, pressBySource[n].url);
 const investByName = Object.fromEntries(SITE.investments.map((i) => [i.name, i]));
 const ip = (n) => pill("i-" + slug(n), n, "https://" + investByName[n].domain);
 const ep = (title) => {
@@ -69,7 +69,8 @@ const totalStars = SITE.projects.reduce((sum, p) => sum + (p.stars || 0), 0);
 const now = m.now.url ? `<a href="${esc(m.now.url)}" target="_blank" rel="noreferrer">${esc(m.now.label)}</a>` : `<b>${esc(m.now.label)}</b>`;
 
 // Source links are siblings of the main entry link, never nested inside it.
-const highlights = (items, kind) => items?.length ? `<div class="highlights ${kind}-highlights">${items.map((item) => {
+const MAX_HIGHLIGHTS = 3;
+const highlights = (items, kind, max = MAX_HIGHLIGHTS) => items?.length ? `<div class="highlights ${kind}-highlights">${items.slice(0, max).map((item) => {
   if (typeof item === "string") return `<span class="highlight">${esc(item)}</span>`;
   return `<a class="highlight" href="${esc(item.url)}" target="_blank" rel="noreferrer" title="Source: ${esc(item.source)}" aria-label="${esc(item.label)} — source: ${esc(item.source)}">${esc(item.label)}${icon("external")}</a>`;
 }).join("")}</div>` : "";
@@ -90,13 +91,21 @@ const investItem = (i) => `
     <span class="item-t">${esc(i.name)} <span>· $${esc(i.ticker)} · ${esc(i.status)}</span><span class="item-role">${esc(i.period)}</span></span>
     <span class="item-k">${esc(i.kpi.value)}<small>${esc(i.kpi.label)}</small></span>
     <span class="item-d">${esc(i.summary)}</span>
-  </div>${highlights(i.links, "entry")}</li>`;
+  </div>${highlights(i.links, "entry", Infinity)}</li>`;
 
 const analysisItem = (a) => `
   <li><a class="item item-essay" href="${esc(a.url)}" target="_blank" rel="noreferrer">
     <span class="essay-publication">${esc(a.topic)}</span>
-    <span class="item-h">${esc(a.title)} ${icon("external")}</span><span class="item-m">${esc(a.date)}<span class="item-reading">${esc(a.views)} views</span></span>
+    <span class="item-h">${esc(a.title)} ${icon("external")}</span><span class="item-m"><b>${esc(a.views)}</b> views<span class="item-reading">${esc(a.date)}</span></span>
     <span class="item-d">${esc(a.dek)}</span>
+  </a></li>`;
+
+const expRow = (x) => `
+  <li><a class="row" id="x-${slug(x.company)}" href="${esc(x.url)}" target="_blank" rel="noreferrer">
+    ${logoFor(x.company, x.url)}
+    <span class="row-t">${esc(x.company)}<span>${esc(x.role)}${x.team ? ` · ${esc(x.team)}` : ""}</span></span>
+    <span class="row-m">${esc(x.period)}</span>
+    <span class="row-d">${esc(x.description)}</span>
   </a></li>`;
 
 const expItem = (x) => `
@@ -125,7 +134,7 @@ const archive = (id, label, note, intro, items) => `
 
 // Recent releases stay visible when the longer project list is folded.
 const monthLabel = (d) => new Date(d + "-15").toLocaleDateString("en-US", { month: "short", year: "numeric" });
-const isNew = (d) => { const age = (Date.now() - new Date(d + "-15")) / 864e5; return age >= 0 && age < 75; };
+const isNew = (d) => { const age = (Date.now() - new Date(d + "-15")) / 864e5; return age >= 0 && age < 45; };
 
 const GROUPS = [
   ["products", "Products", "live, with real traffic"],
@@ -133,7 +142,7 @@ const GROUPS = [
   ["oss", "Open source", "tools people star and fork"],
   ["experiments", "Earlier products", ""],
 ];
-const OSS_SHOWN = 5;
+const OSS_SHOWN = 3;
 const compact = (n) => (n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n));
 
 const projItem = (p, foldIndex) => {
@@ -195,25 +204,33 @@ const pressItem = (p) => `
     <span class="press-source">${logoFor(p.source, p.url)}<span>${esc(p.source)}</span></span>
     <span class="item-m">${esc(p.date)}${icon("external")}</span>
     <span class="item-h">${esc(p.title)}</span>
-    <span class="item-d">${esc(p.blurb)}</span>
   </a></li>`;
 
 const email = SITE.links.find((l) => l.href.startsWith("mailto:"));
 const contactItem = (l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}<span class="contact-text"><span class="contact-label">${esc(l.label)}</span><span class="contact-handle">${esc(l.handle)}</span></span>${icon("external")}</a>`;
 
+const heroStats = m.stats.map((x) => `<li><b>${x.value === "stars" ? totalStars.toLocaleString("en-US") : esc(x.value)}</b><span>${esc(x.label)}</span></li>`).join("");
+const featuredRoles = SITE.experience.filter((x) => x.featured);
+const otherRoles = SITE.experience.filter((x) => !x.featured);
+const topReads = SITE.analysis.articles.filter((a) => a.featured);
+const subgroup = (label, blurb, list) => `<div class="group"><div class="group-h"><h3>${label}</h3>${blurb ? `<span>${blurb}</span>` : ""}</div>${list}</div>`;
+
 // Each chapter: a nav label, a side label, prose, then the items the prose refers to.
+// Order: who I am, what I built and where, then projects, calls, and writing.
 const chapters = [
-  { id: "about", label: "About", side: "Hello", body: `
+  { id: "about", label: "About", side: "About", hero: true, body: `
       <span class="status"><span class="status-now"><span class="dot" aria-hidden="true"></span><span>Building ${m.now.url ? `${now}, ${esc(m.now.note)}` : `a consumer product, <b>in stealth</b>`}</span></span><span class="status-time" id="clock">Toronto</span></span>
-      ${prose([`I'm <b>Nikshep</b>, an engineer in Toronto. I build first versions of things at the edges of AI, crypto, and markets — two exits so far, and a protocol that moved $50M+.`], true)}
-      ${prose([`<em>${esc(m.philosophy)}</em> Right now that's pointed at a consumer product I can't talk about yet. Away from the keyboard: techno, psydub, and mountains with friends.`])}` },
+      ${prose([m.intro], true)}
+      ${prose([`<em>${esc(m.philosophy)}</em> ${esc(m.aside)}`])}
+      <div class="hero-links">${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}${esc(l.label)}</a>`).join("")}<a href="${esc(email.href)}">${icon("mail")}Email</a></div>
+      <ul class="hero-stats">${heroStats}</ul>` },
   { id: "ventures", label: "Ventures", side: "Ventures", body: `
       ${prose([`I built ${vp("HumanPlane")}, a chart room for prediction markets, and ${vp("Moltlaunch")}, a work protocol for agents that cleared $50M+ in volume. I exited ${vp("RealmPlay")}, and ${vp("SoulBazaar")} was acquired before it launched.`])}
       <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },
   { id: "experience", label: "Experience", side: "Experience", body: `
-      ${prose([`I was a ${xp("Kalshi")} Builder Fellow, and before going independent spent three years as a senior engineer and tech lead at ${xp("Instacart")}. Earlier: ${xp("Coinbase")}, ${xp("Deliverr")}, ${xp("SeatGeek")}, ${xp("PagerDuty")}, and computer science at ${xp("University of Waterloo", "Waterloo")}.`])}
-      <ul class="list">${SITE.experience.map(expItem).join("")}</ul>
-      ${archive("earlier-experience", "Earlier experience", "Magmic · 2017", "", SITE.earlierExperience)}` },
+      ${prose([`I was a ${xp("Kalshi")} Builder Fellow, and before going independent spent three years as a senior engineer and tech lead at ${xp("Instacart")}. Earlier, data infrastructure internships at ${xp("Coinbase")}, ${xp("Deliverr")}, ${xp("SeatGeek")}, and ${xp("PagerDuty")}, and computer science at ${xp("University of Waterloo", "Waterloo")}.`])}
+      <ul class="list">${featuredRoles.map(expItem).join("")}</ul>
+      <ul class="rows">${otherRoles.map(expRow).join("")}</ul>` },
   { id: "projects", label: "Projects", side: "Projects", body: `
       ${prose([`Some of it finds a real audience. ${pp("modelgrep")} drew 400K+ Google impressions in the last three months, and ${pp("viberank")} has ranked 1,238 developers across 18 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code.`, `On the research side, ${pp("thimble")} puts structured tool calling into a 48M-parameter model, ${pp("bankai")} adapts 1-bit LLMs with tiny XOR patches, and I built the orchestrator behind ${pp("MC-Bench")}. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
       ${communityBand()}
@@ -225,32 +242,33 @@ const chapters = [
       ${prose([`I invest in public, and in writing. I bought ${ip("Venice")} around $2, when almost no one was talking about it, and sold near the $34 top. I called ${ip("NEAR")} at $1.30 as the settlement layer for agents, and found ${ip("Nillion")} while looking for private memory for my own agents.`])}
       <ul class="list">${SITE.investments.map(investItem).join("")}</ul>
       <p class="source">Prices and dates are as I posted them at the time; every link goes to the original post. <a href="https://x.com/nikshepsvn/status/2103137147117326662" target="_blank" rel="noreferrer">Full track record</a>. Not financial advice.</p>` },
-  { id: "analysis", label: "Analysis", side: "Analysis", body: `
-      ${prose([`I publish long-form research on X: company deep dives, token math, and the arguments behind the calls above. ${SITE.analysis.total.articles} articles so far, with ${SITE.analysis.total.views} views and ${SITE.analysis.total.bookmarks} bookmarks. The most-read, <a href="https://x.com/nikshepsvn/status/2061818529909776873" target="_blank" rel="noreferrer">The Year Crypto Stopped Needing Bitcoin</a>, drew 325K views and ran as a guest essay in Token Dispatch.`])}
-      <ul class="list">${SITE.analysis.articles.map(analysisItem).join("")}</ul>
-      <a class="more more-link" href="${esc(SITE.analysis.archive)}" target="_blank" rel="noreferrer">All ${SITE.analysis.total.articles} articles on X ${icon("external")}</a>` },
-  { id: "writing", label: "Writing", side: "Essays", body: `
-      ${prose([`I write about where AI and markets are heading — start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
-      <ul class="list">${SITE.essays.map(essayItem).join("")}</ul>` },
-  { id: "press", label: "Press", side: "Coverage", body: `
-      ${prose([`My work has been covered by ${prp("Bloomberg")}, ${prp("Business Insider")}, ${prp("PYMNTS")} and others.`])}
+  { id: "writing", label: "Writing", side: "Writing", body: `
+      ${prose([`I write in public: ${SITE.analysis.total.articles} long-form pieces on X with ${SITE.analysis.total.views} views and ${SITE.analysis.total.bookmarks} bookmarks, from token deep dives to where AI is heading. For the longer arguments, start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
+      <div class="projects">
+        ${subgroup("Most read", "research and deep dives on X", `<ul class="list list-tight">${topReads.map(analysisItem).join("")}</ul>
+          <a class="more more-link" href="${esc(SITE.analysis.archive)}" target="_blank" rel="noreferrer">All ${SITE.analysis.total.articles} articles on X ${icon("external")}</a>`)}
+        ${subgroup("Essays", "and reports", `<ul class="list list-tight">${SITE.essays.map(essayItem).join("")}</ul>`)}
+      </div>` },
+  { id: "press", label: "Press", side: "Press", body: `
+      ${prose([`${prp("Bloomberg")} and ${prp("PYMNTS")} wrote about HumanPlane, ${prp("Business Insider")} about tremor, ${prp("The AI Journal")} about Moltlaunch, and ${prp("NYU Shanghai RITS", "NYU Shanghai")} about the bankai paper.`])}
       <ul class="list">${SITE.press.map(pressItem).join("")}</ul>` },
   { id: "contact", label: "Contact", side: "Contact", body: `
       ${prose([`The best way to reach me is a DM on <a href="https://x.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
       <div class="links">
         ${SITE.links.filter((l) => l !== email).map(contactItem).join("")}
         ${email ? `<button type="button" id="copy-email" aria-label="Copy email address">${icon("mail")}<span class="contact-text"><span class="contact-label">Email</span><span class="contact-handle" id="email-address">${esc(email.handle)}</span></span><span id="copy-state" role="status">copy</span></button>` : ""}
-      </div>` },
+      </div>
+      <p class="signoff"><span>© ${new Date().getFullYear()} ${esc(m.name)} · Toronto</span><a href="#about">Back to top ↑</a></p>` },
 ];
 
 $("main").innerHTML = chapters.map((c) => `
-  <section class="chap" id="${c.id}" aria-labelledby="${c.id}-h">
-    <h2 class="side" id="${c.id}-h">${c.side}</h2>
+  <section class="chap${c.hero ? " hero" : ""}" id="${c.id}" aria-labelledby="${c.id}-h">
+    <h2 class="side${c.hero ? " sr-only" : ""}" id="${c.id}-h">${c.side}</h2>
     <div class="body">${c.body}</div>
   </section>`).join("");
-$("nav").innerHTML = chapters.map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("") + `<i class="nav-ink" id="nav-ink" aria-hidden="true"></i>`;
-$("who").textContent = m.name;
-$("foot").textContent = `© ${new Date().getFullYear()} ${m.name} · Toronto`;
+$("nav").innerHTML = chapters.filter((c) => !c.hero).map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("") + `<i class="nav-ink" id="nav-ink" aria-hidden="true"></i>`;
+$("who").innerHTML = `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="logos/personal-mark.svg#mark"/></svg><span class="who-name">${esc(m.name)}</span>`;
+$("who").setAttribute("aria-label", `${m.name}, back to top`);
 
 const tick = () => ($("clock").textContent = new Date().toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit", timeZone: "America/Toronto" }) + " in Toronto");
 tick(); setInterval(tick, 30000);
@@ -289,6 +307,7 @@ const updateNav = () => {
   const current = sections[index];
   if (activeChapter === current.id) return;
   activeChapter = current.id;
+  if (!navLinks.some((a) => a.dataset.nav === current.id)) $("nav-ink").style.setProperty("--o", 0);
   navLinks.forEach((a) => {
     if (a.dataset.nav === current.id) {
       a.setAttribute("aria-current", "true");
@@ -377,7 +396,7 @@ let pageHash = "";
 const pageTitle = document.title;
 // Hosted essays get a shareable address without adding history entries.
 const essayHash = (e) => `#essay/${slug(e.title)}`;
-const background = [...document.querySelectorAll("body > :is(.skip-link, .bar, main, footer)")];
+const background = [...document.querySelectorAll("body > :is(.skip-link, .bar, main)")];
 const openEssay = (i, opener) => {
   const e = SITE.essays[i];
   // Skip externally published pieces when pointing to the next essay.

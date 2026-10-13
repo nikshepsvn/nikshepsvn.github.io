@@ -9,11 +9,21 @@ window.SITE = {
     name: "Nikshep Saravanan",
     handle: "nikshepsvn",
     location: "Toronto, CA",
-    role: "Exploration engineer",
-    tagline:
-      "Building at the edges of AI, crypto, and markets. Shipping opinionated v1s into emerging categories before they have answers.",
+    // Hero copy. `intro` may contain <b>; `aside` follows the italic philosophy line.
+    intro:
+      "I'm <b>Nikshep</b>, an engineer in Toronto. I explore ideas by building them, at the edges of AI, crypto, and markets.",
     philosophy:
       "Infinitely curious, delusional optimist.",
+    aside:
+      "Right now that's pointed at a consumer product I can't talk about yet. Away from the keyboard: techno, psydub, and mountains with friends.",
+    // Headline numbers under the intro; `stars` is computed from projects.
+    stats: [
+      { value: "2", label: "exits" },
+      { value: "$50M+", label: "protocol volume" },
+      { value: "400K+", label: "search impressions" },
+      { value: "stars", label: "GitHub stars" },
+      { value: "1.2M", label: "article views" },
+    ],
     now: {
       label: "Stealth",
       note: "a new consumer product",
@@ -26,26 +36,12 @@ window.SITE = {
     ogImage: "https://nikshepsvn.com/og.png",
   },
 
-  // Notable past roles — small logo row in sidebar.
-  previously: [
-    { name: "Kalshi",    role: "Builder Fellow",        period: "Jan–Feb 2026",   domain: "kalshi.com",    url: "https://kalshi.com" },
-    { name: "Instacart", role: "Senior SWE",            period: "2021 – 2024",    domain: "instacart.com", url: "https://instacart.com" },
-    { name: "Coinbase",  role: "SWE Intern",            period: "Summer 2020",    domain: "coinbase.com",  url: "https://coinbase.com" },
-    { name: "SeatGeek",  role: "Data Infra Intern",     period: "2019",           domain: "seatgeek.com",  url: "https://seatgeek.com" },
-    { name: "PagerDuty", role: "SWE Intern",            period: "2018",           domain: "pagerduty.com", url: "https://pagerduty.com" },
-    { name: "uWaterloo", role: "BCS, Computer Science", period: "2016 – 2021",    domain: "uwaterloo.ca",  url: "https://uwaterloo.ca" },
-  ],
-
-  about: [
-    "I'm an independent builder, shipping small, opinionated projects and writing essays.",
-    "My interests are broad: AI, crypto, markets, intelligence — really any corner of technology that's pulling at me. I work fast, in public, and iterate until it feels right.",
-  ],
-
-  // Professional experience — CV-style rows in main content.
+  // Professional experience. `featured` roles get full cards; the rest are compact rows.
   experience: [
     {
       id: "X-01",
       company: "Kalshi",
+      featured: true,
       role: "Builder Fellow",
       period: "Jan — Feb 2026",
       description: "Built HumanPlane through the Kalshi Builder Fellowship, integrating prediction markets via DFlow and working with the crypto and engineering teams.",
@@ -60,6 +56,7 @@ window.SITE = {
     {
       id: "X-02",
       company: "Instacart",
+      featured: true,
       role: "Senior SWE / Tech Lead",
       team: "Enterprise Ads",
       period: "2021 — 2024",
@@ -130,11 +127,21 @@ window.SITE = {
       ],
     },
     {
+      id: "X-07",
+      company: "Magmic",
+      role: "SWE Intern",
+      team: "Backend Services",
+      period: "Summer 2017",
+      description: "Reworked service authorization, added rate and bot filtering, and built a test app for the internal Dark Matter SDK.",
+      domain: "magmic.com",
+      url: "https://www.linkedin.com/in/nikshepsvn",
+    },
+    {
       id: "X-06",
       company: "University of Waterloo",
       role: "BCS, Computer Science",
       period: "2016 — 2021",
-      description: "Computer science at Waterloo, with six internships during the program.",
+      description: "Six internships during the program. Dean’s Honour List, President’s Scholarship of Distinction, and Velocity Entrepreneurial Residence.",
       domain: "uwaterloo.ca",
       url: "https://uwaterloo.ca",
       highlights: [
@@ -142,17 +149,6 @@ window.SITE = {
         "President’s Scholarship of Distinction",
         "Velocity Entrepreneurial Residence",
       ],
-    },
-  ],
-
-  // Earlier internship retained in a compact, optional part of Experience.
-  earlierExperience: [
-    {
-      name: "Magmic",
-      period: "May — Aug 2017",
-      role: "SWE Intern · Backend Services",
-      description: "Reworked service authorization, added rate and bot filtering, and built a test app for the internal Dark Matter SDK.",
-      url: "https://www.linkedin.com/in/nikshepsvn",
     },
   ],
 
@@ -719,22 +715,24 @@ window.SITE = {
   ],
 
   // Long-form research published as X articles, most-read first.
-  // Totals cover all 31 articles as of 13 Oct 2026.
+  // Totals cover all 31 articles as of 13 Oct 2026. `featured` pieces are listed under Writing.
   analysis: {
     total: { articles: 31, views: "1.2M", bookmarks: "2,400+" },
     archive: "https://x.com/nikshepsvn/articles",
     articles: [
-      { title: "Why $NEAR Captures the Agent Economy", topic: "NEAR", date: "5 May 2026", views: "183K", url: "https://x.com/nikshepsvn/status/2051658516142727602",
+      { title: "The Year Crypto Stopped Needing Bitcoin", topic: "Token Dispatch · guest essay", date: "14 Jun 2026", views: "325K", featured: true, url: "https://www.thetokendispatch.com/p/the-year-crypto-stopped-needing-bitcoin",
+        dek: "How AI, stablecoins, and onchain businesses are changing crypto’s relationship with Bitcoin." },
+      { title: "Why $NEAR Captures the Agent Economy", topic: "NEAR", date: "5 May 2026", views: "183K", featured: true, url: "https://x.com/nikshepsvn/status/2051658516142727602",
         dek: "A coordination-layer thesis: why agents that act across chains need one account, one settlement layer, and private intents." },
-      { title: "I Found the Token That Sam Altman Accidentally Described", topic: "Venice · VVV", date: "15 Feb 2026", views: "168K", url: "https://x.com/nikshepsvn/status/2022911365527023771",
+      { title: "I Found the Token That Sam Altman Accidentally Described", topic: "Venice · VVV", date: "15 Feb 2026", views: "168K", featured: true, url: "https://x.com/nikshepsvn/status/2022911365527023771",
         dek: "The first real breakdown of Venice on crypto Twitter, written with the token around $3." },
       { title: "Every AI Platform Stores Your Data, Censors Your Output, Rents You Compute. Except One.", topic: "Venice · VVV", date: "11 Apr 2026", views: "86K", url: "https://x.com/nikshepsvn/status/2042975165970047240",
         dek: "The full product and token map, the week Venice processed 50B tokens in a day." },
       { title: "He Dissolved His Last Company Into a Token. Now He's Burning This One.", topic: "Venice · VVV", date: "4 Jul 2026", views: "75K", url: "https://x.com/nikshepsvn/status/2073418249602240518",
         dek: "3,500 words on the raise, the burn, and $70M+ ARR — including an unannounced product found in Venice's own JavaScript." },
-      { title: "Flipr — Leverage and Infra for Prediction Markets", topic: "Prediction markets", date: "15 Sep 2025", views: "59K", url: "https://x.com/nikshepsvn/status/1967695387818344914",
+      { title: "Flipr — Leverage and Infra for Prediction Markets", topic: "Prediction markets", date: "15 Sep 2025", views: "59K", featured: true, url: "https://x.com/nikshepsvn/status/1967695387818344914",
         dek: "Due diligence on the only prediction-market product with working leverage, posted at a $4–5M FDV." },
-      { title: "The First LLM Operating System", topic: "AI", date: "21 Jan 2026", views: "42K", url: "https://x.com/nikshepsvn/status/2014084232641921483",
+      { title: "The First LLM Operating System", topic: "AI", date: "21 Jan 2026", views: "42K", featured: true, url: "https://x.com/nikshepsvn/status/2014084232641921483",
         dek: "Claude Code isn't a coding assistant. It's the first practical LLM-OS, and it enables a strange new kind of software." },
       { title: "Venice Is a Great Company. VVV Is Priced for a Much Bigger One.", topic: "Venice · VVV", date: "22 Sep 2026", views: "35K", url: "https://x.com/nikshepsvn/status/2102459259078492471",
         dek: "Why one of the earliest VVV bulls sold at the top: the company kept growing, the token got ahead of it." },
@@ -748,15 +746,6 @@ window.SITE = {
   // Writing — hosted essays and links to externally published pieces.
   // `body` is a markdown-lite string. Supports ## h2, ### h3, paragraphs, - lists.
   essays: [
-    {
-      id: "E-07",
-      title: "The Year Crypto Stopped Needing Bitcoin",
-      subtitle: "How AI, stablecoins, and onchain businesses are changing crypto’s relationship with Bitcoin.",
-      kind: "Guest essay",
-      publication: "Token Dispatch",
-      date: "14 Jun 2026",
-      url: "https://www.thetokendispatch.com/p/the-year-crypto-stopped-needing-bitcoin",
-    },
     {
       id: "E-00",
       title: "State of AI Coding Spend 2026",

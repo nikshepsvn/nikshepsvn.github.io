@@ -1,166 +1,134 @@
-// GPU hero visual: cool, technical.
-// A slowly-shifting grid of topographic contour lines in near-white on near-black,
-// with a faint moving vignette. No warmth — just pure mono data-viz energy.
+// Page atmosphere: a soft, slowly drifting mist in the page's own colors.
+// Rendered at low resolution (it is all blur) and only while visible; a static
+// frame for reduced motion, and the plain ground color when WebGL is missing.
 
 (function () {
-  const canvas = document.getElementById("gpu");
+  const canvas = document.getElementById("mist");
   if (!canvas) return;
+  const gl = canvas.getContext("webgl", { antialias: false, alpha: false, preserveDrawingBuffer: false });
+  if (!gl) { canvas.remove(); return; }
 
-  const gl = canvas.getContext("webgl", { antialias: true, alpha: false });
-  if (!gl) { canvas.style.display = "none"; return; }
-
-  const vert = /* glsl */ `
+  const vert = `
     attribute vec2 a_pos;
     void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
   `;
 
-  const frag = /* glsl */ `
-    precision highp float;
+  // Two warped noise fields mix ground, a tint and a deeper tint; contrast stays tiny.
+  const frag = `
+    precision mediump float;
     uniform float u_time;
     uniform vec2  u_res;
-    uniform vec2  u_mouse;
+    uniform vec3  u_ground;
+    uniform vec3  u_tint;
+    uniform vec3  u_deep;
+    uniform float u_strength;
 
     float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
     float noise(vec2 p) {
-      vec2 i = floor(p);
-      vec2 f = fract(p);
-      float a = hash(i);
-      float b = hash(i + vec2(1.0, 0.0));
-      float c = hash(i + vec2(0.0, 1.0));
-      float d = hash(i + vec2(1.0, 1.0));
+      vec2 i = floor(p), f = fract(p);
       vec2 u = f * f * (3.0 - 2.0 * f);
-      return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+      return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+                 mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
     }
     float fbm(vec2 p) {
-      float v = 0.0;
-      float a = 0.55;
-      mat2 rot = mat2(0.82, -0.57, 0.57, 0.82);
-      for (int i = 0; i < 5; i++) {
-        v += a * noise(p);
-        p = rot * p * 2.02;
-        a *= 0.55;
-      }
+      float v = 0.0, a = 0.5;
+      mat2 r = mat2(0.8, -0.6, 0.6, 0.8);
+      for (int i = 0; i < 3; i++) { v += a * noise(p); p = r * p * 2.0; a *= 0.5; }
       return v;
     }
 
     void main() {
-      vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / min(u_res.x, u_res.y);
-      vec2 m = (u_mouse - 0.5 * u_res) / min(u_res.x, u_res.y);
-      p += m * 0.05;
+      vec2 uv = gl_FragCoord.xy / u_res;
+      vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / max(u_res.x, u_res.y) * 1.3;
+      float t = u_time * 0.018;
+      vec2 q = vec2(fbm(p + vec2(0.0, t)), fbm(p + vec2(5.2, -t)));
+      float n = fbm(p + 1.6 * q + vec2(t * 0.6, t * 0.3));
+      float m = fbm(p * 0.7 - q + vec2(-t * 0.4, 2.0));
 
-      float t = u_time * 0.04;
-      float n = fbm(p * 1.9 + vec2(t, -t * 0.6));
-      n = fbm(p * 1.9 + vec2(n * 1.1, t * 0.9));
-
-      // Contour lines (topographic)
-      float bands = 12.0;
-      float v = abs(fract(n * bands) - 0.5);
-      float aa = fwidth(n * bands) * 1.4;
-      float line = 1.0 - smoothstep(aa, aa + 0.06, v);
-
-      // Major lines every 5th contour (brighter, thinner)
-      float majorV = abs(fract(n * bands / 5.0) - 0.5);
-      float majorAA = fwidth(n * bands / 5.0) * 1.6;
-      float majorLine = 1.0 - smoothstep(majorAA, majorAA + 0.04, majorV);
-
-      // Base — pure white
-      vec3 bg = vec3(1.0);
-
-      // Contour color — near-black
-      vec3 contour = vec3(0.04);
-
-      float intensity = line * 0.06 + majorLine * 0.16;
-
-      // Soft radial attenuation so lines are even subtler at edges
-      float edge = smoothstep(1.4, 0.2, length(p));
-      intensity *= mix(0.25, 1.0, edge);
-
-      vec3 col = bg - contour * intensity;
-
-      // Mouse-tracking subtle darkening — a soft ink halo
-      float halo = exp(-pow(length(p - m * 0.8) * 1.6, 2.0));
-      col -= vec3(0.04) * halo * 0.5;
-
+      // Mist gathers toward the top of the screen and thins toward the bottom.
+      float lift = mix(0.55, 1.0, smoothstep(0.0, 1.0, uv.y));
+      vec3 col = u_ground;
+      col = mix(col, u_tint, smoothstep(0.2, 0.95, n) * u_strength * lift);
+      col = mix(col, u_deep, smoothstep(0.25, 1.0, m) * u_strength * 0.6 * lift);
       gl_FragColor = vec4(col, 1.0);
     }
   `;
 
-  function compile(type, src) {
+  const compile = (type, src) => {
     const s = gl.createShader(type);
     gl.shaderSource(s, src);
     gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      console.error("shader:", gl.getShaderInfoLog(s));
-      return null;
-    }
-    return s;
-  }
-
-  gl.getExtension("OES_standard_derivatives");
-
-  const vs = compile(gl.VERTEX_SHADER, vert);
-  const fs = compile(
-    gl.FRAGMENT_SHADER,
-    "#extension GL_OES_standard_derivatives : enable\n" + frag
-  );
+    return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+  };
   const prog = gl.createProgram();
+  const vs = compile(gl.VERTEX_SHADER, vert);
+  const fs = compile(gl.FRAGMENT_SHADER, frag);
+  if (!vs || !fs) { canvas.remove(); return; }
   gl.attachShader(prog, vs);
   gl.attachShader(prog, fs);
   gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-    console.error("link:", gl.getProgramInfoLog(prog));
-    return;
-  }
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.remove(); return; }
   gl.useProgram(prog);
 
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-    gl.STATIC_DRAW
-  );
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, "a_pos");
   gl.enableVertexAttribArray(loc);
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
-  const uTime  = gl.getUniformLocation(prog, "u_time");
-  const uRes   = gl.getUniformLocation(prog, "u_res");
-  const uMouse = gl.getUniformLocation(prog, "u_mouse");
+  const u = (name) => gl.getUniformLocation(prog, name);
+  const uTime = u("u_time"), uRes = u("u_res"), uGround = u("u_ground"), uTint = u("u_tint"), uDeep = u("u_deep"), uStrength = u("u_strength");
 
-  let mx = 0, my = 0, tx = 0, ty = 0;
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      const r = canvas.getBoundingClientRect();
-      tx = (e.clientX - r.left);
-      ty = (r.height - (e.clientY - r.top));
-    },
-    { passive: true }
-  );
+  // Colors come from the CSS tokens, so light and dark themes stay in sync.
+  const rgb = (name) => {
+    const probe = document.createElement("i");
+    probe.style.color = `var(${name})`;
+    document.body.appendChild(probe);
+    const [r, g, b] = getComputedStyle(probe).color.match(/\d+(\.\d+)?/g).map(Number);
+    probe.remove();
+    return [r / 255, g / 255, b / 255];
+  };
+  const readColors = () => {
+    const css = getComputedStyle(document.documentElement);
+    gl.uniform3fv(uGround, rgb("--ground"));
+    gl.uniform3fv(uTint, rgb("--mist-1"));
+    gl.uniform3fv(uDeep, rgb("--mist-2"));
+    gl.uniform1f(uStrength, parseFloat(css.getPropertyValue("--mist-strength")) || 1);
+  };
 
-  function size() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = canvas.clientWidth  * dpr;
-    const h = canvas.clientHeight * dpr;
-    if (canvas.width !== w || canvas.height !== h) {
-      canvas.width = w;
-      canvas.height = h;
-    }
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
+  // A quarter of the CSS pixels is plenty for a field this soft.
+  const SCALE = 0.25;
+  const size = () => {
+    const w = Math.max(1, Math.round(canvas.clientWidth * SCALE));
+    const h = Math.max(1, Math.round(canvas.clientHeight * SCALE));
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+    gl.viewport(0, 0, w, h);
+    gl.uniform2f(uRes, w, h);
+  };
 
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
   const t0 = performance.now();
-  function frame(now) {
-    size();
-    mx += (tx - mx) * 0.055;
-    my += (ty - my) * 0.055;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    gl.uniform1f(uTime, (now - t0) / 1000);
-    gl.uniform2f(uRes, canvas.width, canvas.height);
-    gl.uniform2f(uMouse, mx * dpr, my * dpr);
+  let raf = 0, last = 0;
+  const draw = (now) => {
+    gl.uniform1f(uTime, still.matches ? 40 : (now - t0) / 1000 + 40);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+  };
+  // About 20fps is smooth for motion this slow and keeps the GPU mostly idle.
+  const loop = (now) => {
+    raf = requestAnimationFrame(loop);
+    if (now - last < 50) return;
+    last = now;
+    draw(now);
+  };
+  const start = () => { if (!raf && !still.matches && !document.hidden) raf = requestAnimationFrame(loop); };
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+  const refresh = () => { size(); readColors(); draw(performance.now()); };
+
+  refresh();
+  canvas.classList.add("is-ready");
+  start();
+  window.addEventListener("resize", refresh);
+  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", refresh);
+  still.addEventListener("change", () => { stop(); refresh(); start(); });
 })();

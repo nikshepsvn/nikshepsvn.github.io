@@ -25,10 +25,11 @@ const moveInk = (a) => {
   if (!ink.classList.contains("is-ready")) requestAnimationFrame(() => requestAnimationFrame(() => ink.classList.add("is-ready")));
 };
 // Section offsets are measured only when layout changes, so scrolling reads nothing but scrollY.
-let layout = { tops: [], barBottom: 0, maxScroll: 0 };
+let layout = { tops: [], heights: [], barBottom: 0, maxScroll: 0 };
 const measure = () => {
   layout = {
     tops: sections.map((section) => section.offsetTop),
+    heights: sections.map((section) => section.offsetHeight),
     barBottom: bar.offsetHeight,
     maxScroll: document.documentElement.scrollHeight - window.innerHeight,
   };
@@ -42,8 +43,16 @@ const updateNav = () => {
   layout.tops.forEach((top, i) => { if (top <= threshold) index = i; });
   if (y >= layout.maxScroll - 2) index = sections.length - 1;
   const current = sections[index];
+  // The current sidebar rail fills with reading progress through its section.
+  const read = (threshold - layout.tops[index]) / layout.heights[index];
+  current.style.setProperty("--read", Math.min(1, Math.max(0, y >= layout.maxScroll - 2 ? 1 : read)).toFixed(3));
   if (activeChapter === current.id) return;
   activeChapter = current.id;
+  // Sections already read stay full; ones ahead stay empty.
+  sections.forEach((s, i) => {
+    s.classList.toggle("is-current", i === index);
+    if (i !== index) s.style.setProperty("--read", i < index ? 1 : 0);
+  });
   if (!navLinks.some((a) => a.dataset.nav === current.id)) $("nav-ink").style.setProperty("--o", 0);
   navLinks.forEach((a) => {
     if (a.dataset.nav === current.id) {

@@ -213,6 +213,10 @@ const heroStats = m.stats.map((x) => `<li><b>${x.value === "stars" ? totalStars.
 const featuredRoles = SITE.experience.filter((x) => x.featured);
 const otherRoles = SITE.experience.filter((x) => !x.featured);
 const topReads = SITE.analysis.articles.filter((a) => a.featured).slice(0, 3);
+// Sidebar facts are derived from content.js, so they can't drift from the sections they summarize.
+const plural = (n, word) => `${n.toLocaleString("en-US")} ${word}${n === 1 ? "" : "s"}`;
+const years = (list) => { const ys = list.flatMap((x) => x.period.match(/\d{4}/g) || []).map(Number); const [lo, hi] = [Math.min(...ys), Math.max(...ys)]; return lo === hi ? String(lo) : `${lo}–${hi}`; };
+const exits = m.stats.find((x) => x.label === "exits")?.value;
 const subgroup = (label, blurb, list) => `<div class="group"><div class="group-h"><h3>${label}</h3>${blurb ? `<span>${blurb}</span>` : ""}</div>${list}</div>`;
 
 // Each chapter: a nav label, a side label, prose, then the items the prose refers to.
@@ -224,35 +228,35 @@ const chapters = [
       ${prose([`<em>${esc(m.philosophy)}</em> ${esc(m.aside)}`])}
       <div class="hero-links">${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}${esc(l.label)}</a>`).join("")}<a href="${esc(email.href)}">${icon("mail")}Email</a></div>
       <ul class="hero-stats">${heroStats}</ul>` },
-  { id: "ventures", label: "Ventures", side: "Ventures", body: `
+  { id: "ventures", label: "Ventures", side: "Ventures", facts: [plural(SITE.ventures.length, "venture"), exits && `${exits} exits`], body: `
       ${prose([`I built ${vp("HumanPlane")}, a chart room for prediction markets, and ${vp("Moltlaunch")}, a work protocol for agents. I exited ${vp("RealmPlay")}, and ${vp("SoulBazaar")} was acquired before it launched.`])}
       <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },
-  { id: "experience", label: "Experience", side: "Experience", body: `
+  { id: "experience", label: "Experience", side: "Experience", facts: [plural(SITE.experience.filter((x) => !/universit/i.test(x.company)).length, "role"), years(SITE.experience)], body: `
       ${prose([`I was a ${xp("Kalshi")} Builder Fellow, and before going independent spent three years as a senior engineer and tech lead at ${xp("Instacart")}. Earlier, data infrastructure internships at ${xp("Coinbase")}, ${xp("Deliverr")}, ${xp("SeatGeek")}, and ${xp("PagerDuty")}, and computer science at ${xp("University of Waterloo", "Waterloo")}.`])}
       <ul class="list">${featuredRoles.map(expItem).join("")}</ul>
       <ul class="rows">${otherRoles.map(expRow).join("")}</ul>` },
-  { id: "projects", label: "Projects", side: "Projects", body: `
+  { id: "projects", label: "Projects", side: "Projects", facts: [plural(SITE.projects.length, "project"), `${totalStars.toLocaleString("en-US")} stars`], body: `
       ${prose([`Some of it finds a real audience: ${pp("modelgrep")} and ${pp("viberank")} both pull steady search traffic, and ${pp("homunculus")} helped inspire the learning system in everything-claude-code.`, `On the research side, ${pp("thimble")} puts structured tool calling into a 48M-parameter model, ${pp("bankai")} adapts 1-bit LLMs with tiny XOR patches, and I built the orchestrator behind ${pp("MC-Bench")}. Upstream, two of my fixes ship in Nous Research's <a href="https://github.com/NousResearch/hermes-agent/commit/d82a69b" target="_blank" rel="noreferrer">Hermes Agent</a>. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
       ${communityBand()}
       <div class="projects" id="project-list">${projectGroups()}</div>
       <button type="button" class="more" id="more" aria-expanded="false" aria-controls="project-list">Show more projects</button>
       <p class="source">Search figures from Google Search Console, all data through 11 October 2026; viberank usage from viberank.app/api/stats.</p>
       ${archive("earlier-work", "Earlier work", "Student projects · 2017–2020", "A few small builds from university: privacy experiments, hardware, and everyday utilities.", SITE.earlierProjects)}` },
-  { id: "investing", label: "Investing", side: "Investing", body: `
+  { id: "investing", label: "Investing", side: "Investing", facts: [plural(SITE.investments.length, "public call"), years(SITE.investments)], body: `
       ${prose([`I invest in public, and in writing. I bought ${ip("Venice")} around $2, when almost no one was talking about it, and sold near the $34 top. I called ${ip("NEAR")} at $1.30 as the settlement layer for agents, and found ${ip("Nillion")} while looking for private memory for my own agents.`])}
       <ul class="list">${SITE.investments.map(investItem).join("")}</ul>
       <p class="source">Prices and dates are as I posted them at the time; every link goes to the original post. <a href="https://x.com/nikshepsvn/status/2103137147117326662" target="_blank" rel="noreferrer">Full track record</a>. Not financial advice.</p>` },
-  { id: "writing", label: "Writing", side: "Writing", body: `
+  { id: "writing", label: "Writing", side: "Writing", facts: [plural(SITE.analysis.total.articles, "article"), `${SITE.essays.length} essays and reports`], body: `
       ${prose([`I write in public: ${SITE.analysis.total.articles} long-form pieces on X with ${SITE.analysis.total.views} views and ${SITE.analysis.total.bookmarks} bookmarks, from token deep dives to where AI is heading. For the longer arguments, start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
       <div class="projects">
         ${subgroup("Most read", "research and deep dives on X", `<ul class="list list-tight">${topReads.map(analysisItem).join("")}</ul>
           <a class="more more-link" href="${esc(SITE.analysis.archive)}" target="_blank" rel="noreferrer">All ${SITE.analysis.total.articles} articles on X ${icon("external")}</a>`)}
         ${subgroup("Essays", "and reports", `<ul class="list list-tight">${SITE.essays.map(essayItem).join("")}</ul>`)}
       </div>` },
-  { id: "press", label: "Press", side: "Press", body: `
+  { id: "press", label: "Press", side: "Press", facts: [plural(SITE.press.length, "feature")], body: `
       ${prose([`${prp("Bloomberg")} and ${prp("PYMNTS")} wrote about HumanPlane, ${prp("Business Insider")} about tremor, ${prp("The AI Journal")} about Moltlaunch, ${prp("NYU Shanghai RITS", "NYU Shanghai")} about the bankai paper, and ${prp("The Agent Times")} about near-hydra.`])}
       <ul class="list">${SITE.press.map(pressItem).join("")}</ul>` },
-  { id: "contact", label: "Contact", side: "Contact", body: `
+  { id: "contact", label: "Contact", side: "Contact", facts: ["Toronto", "Eastern time"], body: `
       ${prose([`The best way to reach me is a DM on <a href="https://x.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
       <div class="links">
         ${SITE.links.filter((l) => l !== email).map(contactItem).join("")}
@@ -263,9 +267,14 @@ const chapters = [
 
 // Everything build.mjs injects into index.html.
 const renderPage = () => ({
-  main: chapters.map((c) => `
+  main: chapters.map((c, i) => `
   <section class="chap${c.hero ? " hero" : ""}" id="${c.id}" aria-labelledby="${c.id}-h">
-    <h2 class="side${c.hero ? " sr-only" : ""}" id="${c.id}-h">${c.side}</h2>
+    ${c.hero ? `<h2 class="sr-only" id="${c.id}-h">${c.side}</h2>` : `<div class="side">
+      <span class="side-n" aria-hidden="true">${String(i).padStart(2, "0")}</span>
+      <h2 class="side-t" id="${c.id}-h">${c.side}</h2>
+      <p class="side-m">${c.facts.filter(Boolean).map((f) => `<span>${esc(f)}</span>`).join("")}</p>
+      <i class="side-rail" aria-hidden="true"></i>
+    </div>`}
     <div class="body">${c.body}</div>
   </section>`).join(""),
   nav: chapters.filter((c) => !c.hero).map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("") + `<i class="nav-ink" id="nav-ink" aria-hidden="true"></i>`,

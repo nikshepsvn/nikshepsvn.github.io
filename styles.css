@@ -25,6 +25,8 @@ img { max-width: 100%; }
   --flash: #e1ebdf;
   --live: #4a8a58;
   --bar: rgba(247, 246, 242, .86);
+  --scroll-thumb: #cfd1c6;
+  --scroll-thumb-hover: #a7ab9f;
   /* Atmosphere: mist tints for shader.js and a paper grain over everything. */
   --mist-1: #e2eadb;
   --mist-2: #efe6d6;
@@ -44,14 +46,14 @@ img { max-width: 100%; }
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --ground: #111412; --ink: #ecede8; --ink-2: #c2c7bf; --muted: #8b9389; --rule: #252a26;
-    --pill: #1a1e1b; --pill-hover: #242925; --accent: #9cc5a6; --panel: #161a17; --flash: #1d2b21; --live: #6fcf87; --bar: rgba(17, 20, 18, .86); --logo-ring: rgba(255, 255, 255, .07);
+    --pill: #1a1e1b; --pill-hover: #242925; --accent: #9cc5a6; --panel: #161a17; --flash: #1d2b21; --live: #6fcf87; --bar: rgba(17, 20, 18, .86); --logo-ring: rgba(255, 255, 255, .07); --scroll-thumb: #2f3530; --scroll-thumb-hover: #4a524b;
     --mist-1: #18231b; --mist-2: #201d17; --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); --grain-opacity: .045;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
   --ground: #111412; --ink: #ecede8; --ink-2: #c2c7bf; --muted: #8b9389; --rule: #252a26;
-  --pill: #1a1e1b; --pill-hover: #242925; --accent: #9cc5a6; --panel: #161a17; --flash: #1d2b21; --live: #6fcf87; --bar: rgba(17, 20, 18, .86); --logo-ring: rgba(255, 255, 255, .07);
+  --pill: #1a1e1b; --pill-hover: #242925; --accent: #9cc5a6; --panel: #161a17; --flash: #1d2b21; --live: #6fcf87; --bar: rgba(17, 20, 18, .86); --logo-ring: rgba(255, 255, 255, .07); --scroll-thumb: #2f3530; --scroll-thumb-hover: #4a524b;
   --mist-1: #18231b; --mist-2: #201d17; --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); --grain-opacity: .045;
 }
 /* The mist sits behind everything and fades in once the first frame is drawn. */
@@ -64,7 +66,14 @@ a { color: inherit; }
 .social-icon { display: block; flex: none; width: 22px; height: 22px; }
 ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+html { scroll-behavior: smooth; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) transparent; }
+/* A thin, paper-toned thumb on a clear track; engines without scrollbar-color (older Safari) use the WebKit hooks. */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border: 3px solid transparent; border-radius: 99px; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background-color: var(--scroll-thumb-hover); }
+}
 .skip-link { position: fixed; top: 8px; left: var(--gutter); z-index: 20; padding: 10px 16px; border-radius: 8px; background: var(--ink); color: var(--ground); text-decoration: none; transform: translateY(-150%); }
 .skip-link:focus { transform: none; }
 button, a { -webkit-tap-highlight-color: transparent; }

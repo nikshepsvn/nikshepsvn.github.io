@@ -227,7 +227,8 @@ const chapters = [
       ${prose([m.intro], true)}
       ${prose([`<em>${esc(m.philosophy)}</em> ${esc(m.aside)}`])}
       <div class="hero-links">${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}${esc(l.label)}</a>`).join("")}<a href="${esc(email.href)}">${icon("mail")}Email</a></div>
-      <ul class="hero-stats">${heroStats}</ul>` },
+      <ul class="hero-stats">${heroStats}</ul>
+      <p class="featured-in"><span class="featured-label">Featured in</span>${SITE.press.map((p) => `<a href="#pr-${slug(p.source)}" data-jump="pr-${slug(p.source)}">${logoFor(p.source, p.url)}${esc(p.source)}</a>`).join("")}</p>` },
   { id: "ventures", label: "Ventures", side: "Ventures", facts: [plural(SITE.ventures.length, "venture"), exits && `${exits} exits`], body: `
       ${prose([`I built ${vp("HumanPlane")}, a chart room for prediction markets, and ${vp("Moltlaunch")}, a work protocol for agents. I exited ${vp("RealmPlay")}, and ${vp("SoulBazaar")} was acquired before it launched.`])}
       <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },

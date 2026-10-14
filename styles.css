@@ -156,6 +156,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .highlights { display: flex; flex-wrap: wrap; gap: 4px 18px; }
 .highlight { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; min-height: 24px; color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.4; text-decoration: none; overflow-wrap: anywhere; transition: color .15s; }
 .highlight .ui-icon { width: 11px; height: 11px; opacity: .7; transition: transform .25s var(--ease), opacity .2s; }
+/* Hero credibility line: press marks in muted tone that jump to the Press section. */
+.featured-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin: 0; font-size: 13px; color: var(--muted); }
+.featured-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-right: 2px; }
+.featured-in a { display: inline-flex; align-items: center; gap: 7px; min-height: 28px; color: var(--ink-2); font-weight: 500; text-decoration: none; transition: color .2s; }
+.featured-in .logo { --s: 18px; border-radius: 5px; filter: grayscale(1); opacity: .75; transition: filter .2s, opacity .2s; }
+
 .list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
 .item { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 6px 14px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: inherit; scroll-margin-top: calc(var(--bar-height) + 24px); width: 100%; background: none; border-left: 0; border-right: 0; border-top: 0; font: inherit; text-align: left; }
 .entry { border-bottom: 1px solid var(--rule); }
@@ -283,7 +289,7 @@ a.item, button.item { cursor: pointer; }
 .contact-handle { font-size: 12.5px; font-weight: 400; color: var(--muted); overflow-wrap: anywhere; }
 .links a > .ui-icon { color: var(--muted); }
 #copy-state { width: 5.5em; transition: color .2s; text-align: right; font-size: 11.5px; color: var(--muted); }
-.signoff { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; margin: 20px 0 0; font-size: 13px; color: var(--muted); }
+.signoff { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; margin: 28px 0 0; padding-top: 12px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--muted); }
 .signoff a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-decoration: none; }
 .reader-bar { position: sticky; top: 0; z-index: 1; background: var(--bar); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); padding: calc(8px + env(safe-area-inset-top, 0px)) max(var(--gutter), env(safe-area-inset-right), calc((100% - 42rem) / 2 + var(--gutter))) 8px max(var(--gutter), env(safe-area-inset-left), calc((100% - 42rem) / 2 + var(--gutter))); display: flex; gap: 12px; align-items: center; font-size: 13px; }
 .reader-bar a { flex: none; display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; padding: 8px 12px; margin-left: -12px; border-radius: 8px; }
@@ -392,6 +398,8 @@ a.item, button.item { cursor: pointer; }
   .hero-links a:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--rule)); color: var(--accent); }
   .signoff a:hover { color: var(--ink); }
   .reader-bar a:hover { background: var(--pill); }
+  .featured-in a:hover { color: var(--accent); }
+  .featured-in a:hover .logo { filter: none; opacity: 1; }
   .next:hover b { color: var(--accent); }
 }
 @media print {

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>The Missing Networking Layer — Nikshep Saravanan</title>
+    <meta name="description" content="We're at the standalone-computer-before-the-internet moment for AI." />
+    <meta name="author" content="Nikshep Saravanan" />
+    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111412" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://nikshepsvn.com/writing/the-missing-networking-layer/" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"The Missing Networking Layer","description":"We're at the standalone-computer-before-the-internet moment for AI.","datePublished":"2025-07","url":"https://nikshepsvn.com/writing/the-missing-networking-layer/","image":"https://nikshepsvn.com/og.png","author":{"@type":"Person","name":"Nikshep Saravanan","url":"https://nikshepsvn.com/"}}</script>
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://nikshepsvn.com/writing/the-missing-networking-layer/" />
+    <meta property="og:title" content="The Missing Networking Layer" />
+    <meta property="og:description" content="We're at the standalone-computer-before-the-internet moment for AI." />
+    <meta property="og:image" content="https://nikshepsvn.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@nikshepsvn" />
+    <meta name="twitter:title" content="The Missing Networking Layer" />
+    <meta name="twitter:description" content="We're at the standalone-computer-before-the-internet moment for AI." />
+    <meta name="twitter:image" content="https://nikshepsvn.com/og.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="essay-page">
+    <header class="reader-bar"><a href="/#writing">← Nikshep Saravanan</a><span>The Missing Networking Layer · Jul 2025</span><i class="progress" id="progress" aria-hidden="true"></i></header>
+    <main id="main">
+    <article class="essay">
+      <p class="kicker">Essay · Jul 2025 · 4 min read</p>
+      <h1>The Missing Networking Layer</h1>
+      <p class="sub">We're at the standalone-computer-before-the-internet moment for AI.</p>
+      <p class="txt">There's an assumption underneath most AI investment that's rarely stated out loud: that the next phase of AI progress will come from smarter individual models. Bigger, more capable, better at more things.</p>
+      <p class="txt">This is probably wrong. Or more precisely — it's probably only part of the story.</p>
+      <p class="txt">TCP/IP didn't make computers smarter. It made them collectively capable of things no single machine could do. The internet isn't a victory of hardware; it's a victory of coordination. Markets don't win by having smarter traders; they win by aggregating information through prices. Cities don't win by having smarter citizens; they win by compressing coordination costs across millions of people.</p>
+      <p class="txt">The analogous phase for AI hasn't happened yet. We still have standalone models, pretending to be agents but unable to find each other, pay each other, or trust each other. The networking layer doesn't exist.</p>
+      <h2>Four Problems, One Shape</h2>
+      <p class="txt">Try to build a non-trivial agent system today and you hit the same four walls in the same order.</p>
+      <p class="txt">Discovery is broken. Your agent needs a PDF-to-markdown service. How does it find one? The answer is &quot;whatever you manually configured,&quot; or &quot;whatever centralized registry some human maintains.&quot; There's no way for services to announce capabilities, and no way for agents to search by function.</p>
+      <p class="txt">Payment is stuck in human rails. APIs want OAuth tokens and credit card forms because they were designed for humans clicking through sign-up flows. Agents can't click. Per-request micropayments at machine speed barely exist, and where they do, they're not interoperable.</p>
+      <p class="txt">Reputation doesn't propagate. One agent learns that a service is unreliable. Fine. Every other agent in the world still has to learn the same lesson independently, from the same mistakes. There's no shared reputation layer, no trust network, no way for quality signals to travel.</p>
+      <p class="txt">Composition is manual. Complex tasks require multiple agents working together, but there's no protocol for forming temporary teams, splitting payments, coordinating handoffs, or dissolving cleanly when work is done.</p>
+      <p class="txt">These read as four distinct problems until you squint. Then they're all one problem: the coordination layer is missing.</p>
+      <h2>The Stack Exists in Pieces</h2>
+      <p class="txt">The good news is that parts of this stack are being built. The bad news is that nobody is connecting them.</p>
+      <p class="txt">MCP — Anthropic's Model Context Protocol — gives agents a standard way to call tools. It's roughly the USB port of AI. Thousands of servers already exist.</p>
+      <p class="txt">HTTP 402 — the &quot;Payment Required&quot; status code that's been dormant since 1997 — is finally being activated by protocols like x402. Instant stablecoin payments at the HTTP layer. Pay-per-request at machine speed. This is the payment rail agents need, and it's finally appearing.</p>
+      <p class="txt">The discovery layer doesn't exist yet. A permissionless registry where services announce capabilities and agents search by function is the obvious gap. Call it a phone book for the agent economy. Nobody has built one that works.</p>
+      <h2>What's Actually Hard</h2>
+      <p class="txt">Semantic discovery is where I spend the most time thinking. Agents shouldn't search by keywords. They should describe what they need — &quot;convert this PDF to clean markdown&quot; — and receive ranked options that actually match. This is closer to a recommendation problem than a directory problem, and the obvious designs all fail in boring ways.</p>
+      <p class="txt">Reputation is the hardest piece, and the place where most design attention should go. How do quality signals propagate without being captured by incumbents, gamed by coordinated attacks, or collapsed into Goodhart's Law within the first month? On-chain attestations? Usage metrics? Some hybrid? This is genuinely unsolved, and I don't think it's solved by any of the obvious answers.</p>
+      <p class="txt">Flash teams — protocols for forming temporary collaborations among agents, with automated payment splits, clear responsibility allocation, and clean dissolution — are the piece that most resembles existing design patterns. They look a lot like how film crews or construction projects organize: a known pattern, recompiled for machine coordination.</p>
+      <h2>The Real Question</h2>
+      <p class="txt">The standalone-computer-before-the-internet moment for AI is now. Individual models are impressive; network effects haven't kicked in because the infrastructure for them doesn't exist yet.</p>
+      <p class="txt">Will the coordination layer emerge from protocol standardization, market forces, or deliberate design? Probably all three at once. The problems are clear. The solutions aren't. Building in public — in messy, ugly, wrong-first versions — seems like the fastest way to find out which parts of the design are right.</p>
+      <a class="next" href="/writing/liquid-talent/"><span>Next essay</span><b>Liquid Talent</b></a>
+      <p class="essay-foot">By <a href="/">Nikshep Saravanan</a>, based in Toronto. More writing on <a href="/#writing">nikshepsvn.com</a> and <a href="https://x.com/nikshepsvn">X</a>.</p>
+    </article>
+    </main>
+    <script>
+      const bar = document.getElementById("progress");
+      const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty("--p", max > 0 ? scrollY / max : 1); };
+      addEventListener("scroll", update, { passive: true }); update();
+    </script>
+  </body>
+</html>

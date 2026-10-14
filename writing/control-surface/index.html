@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Control Surface — Nikshep Saravanan</title>
+    <meta name="description" content="The bottleneck isn't model intelligence anymore. It's the interface." />
+    <meta name="author" content="Nikshep Saravanan" />
+    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111412" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://nikshepsvn.com/writing/control-surface/" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Control Surface","description":"The bottleneck isn't model intelligence anymore. It's the interface.","datePublished":"2026-01","url":"https://nikshepsvn.com/writing/control-surface/","image":"https://nikshepsvn.com/og.png","author":{"@type":"Person","name":"Nikshep Saravanan","url":"https://nikshepsvn.com/"}}</script>
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://nikshepsvn.com/writing/control-surface/" />
+    <meta property="og:title" content="Control Surface" />
+    <meta property="og:description" content="The bottleneck isn't model intelligence anymore. It's the interface." />
+    <meta property="og:image" content="https://nikshepsvn.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@nikshepsvn" />
+    <meta name="twitter:title" content="Control Surface" />
+    <meta name="twitter:description" content="The bottleneck isn't model intelligence anymore. It's the interface." />
+    <meta name="twitter:image" content="https://nikshepsvn.com/og.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="essay-page">
+    <header class="reader-bar"><a href="/#writing">← Nikshep Saravanan</a><span>Control Surface · Jan 2026</span><i class="progress" id="progress" aria-hidden="true"></i></header>
+    <main id="main">
+    <article class="essay">
+      <p class="kicker">Essay · Jan 2026 · 4 min read</p>
+      <h1>Control Surface</h1>
+      <p class="sub">The bottleneck isn't model intelligence anymore. It's the interface.</p>
+      <p class="txt">Most of the discourse about AI progress focuses on model capability. Bigger models, better benchmarks, newer scaling laws. This is the obvious frontier, and probably the one where the least interesting problem actually lives.</p>
+      <p class="txt">Watch someone use AI in real conditions. They type a prompt, wait, read the response, type another prompt. It's a conversation at the speed of two-way radio. The model behind it can run a thousand threads in parallel at near-zero marginal cost. The human interface collapses all of that capacity down to a single sequential text channel.</p>
+      <p class="txt">The bottleneck isn't intelligence. It's the interface — the control surface between human attention and AI execution. And the control surface is probably the most important unsolved design problem of the next decade.</p>
+      <h2>What Power Users Actually Do</h2>
+      <p class="txt">Look at the people who are unusually effective with AI right now. They aren't writing better prompts. They're running multiple agents in parallel. They know when to intervene and when to let a system run. They switch between observation and control modes instantly. They're conducting, not typing.</p>
+      <p class="txt">This looks suspiciously like a set of skills that already exists — developed, in some cases, by millions of people over thousands of hours — but trained in completely different domains.</p>
+      <p class="txt">Real-time strategy games teach you to manage multiple autonomous units simultaneously, switch rapidly between micro and macro concerns, recognize patterns that require intervention, and allocate resources under time pressure. Trading teaches you to monitor parallel information streams, configure automated systems with constraints, know when to override automation, and operate under uncertainty with incomplete information. Live production — broadcasting, events, air traffic control — teaches you to coordinate multiple systems in real-time, maintain situational awareness across parallel processes, make rapid decisions with cascading consequences, and degrade gracefully when systems fail.</p>
+      <p class="txt">These are all the same skill in different uniforms. The interface changes. The underlying cognitive load — attention allocation across concurrent processes that might need intervention — doesn't.</p>
+      <h2>The Uncomfortable Hypothesis</h2>
+      <p class="txt">The claim is roughly this: the best AI operators might not be engineers or data scientists. They might be people with thousands of hours of StarCraft, or Factorio, or Bloomberg terminals, or broadcast trucks. The industry has a hidden talent pool it doesn't know it has.</p>
+      <p class="txt">The objection is immediate. Games are designed for engagement, not for cognitive load transfer. The patterns might look superficially similar while being completely different under the hood. This is a real concern, and the hypothesis is only worth taking seriously if it's falsifiable.</p>
+      <p class="txt">But if the transfer is real, a lot of hiring and training assumptions are wrong in ways that will take the industry years to notice.</p>
+      <h2>Attention Is the Scarce Resource</h2>
+      <p class="txt">Strip away the novelty. The control surface problem is an attention allocation problem.</p>
+      <p class="txt">AI systems can execute indefinitely. The human who oversees them cannot. Every interface decision is really a question about how to spend a fixed budget of human attention across an unbounded pool of possible things to attend to.</p>
+      <p class="txt">Which of N parallel processes deserves attention right now? How do I maintain context when I switch between them? When is observation useful and when is it pure tax? How does this scale as the number of processes grows?</p>
+      <p class="txt">The answer isn't &quot;more information.&quot; Most current AI interfaces already overwhelm attention. The answer is attention direction — interfaces that decide, on your behalf, what deserves your cognitive bandwidth. Less data, better signal.</p>
+      <h2>What That Actually Looks Like</h2>
+      <p class="txt">If this framing is right, the future of AI interfaces looks nothing like a chat box. It looks more like a trading terminal, or — if we're being honest — like an RTS UI.</p>
+      <p class="txt">Parallel process visibility with clear status and intervention affordances. Graduated autonomy controls, so you can tighten or loosen constraints without tearing down the system. Context preservation across interruption, so switching back in doesn't cost you ten minutes of re-reading. Clear signals for when intervention is needed, and smooth transitions between observation and direction.</p>
+      <p class="txt">None of this is novel in its components. All of it exists in other domains. The work is figuring out which patterns transfer and which ones need to be invented from scratch.</p>
+      <h2>Open Questions</h2>
+      <p class="txt">The whole thing is testable. Do gaming and trading skills actually transfer, when measured? What interface patterns scale past two or three concurrent agents? How do you train someone specifically for this? As models get more capable, does the control surface get more or less important?</p>
+      <p class="txt">I don't know, and I think most of the field doesn't either. But we're very clearly at the beginning of figuring out how humans are supposed to operate at the other end of all this — and the StarCraft-to-AI-operator pipeline might sound absurd right up until the point where it obviously isn't.</p>
+      <a class="next" href="/writing/the-missing-networking-layer/"><span>Next essay</span><b>The Missing Networking Layer</b></a>
+      <p class="essay-foot">By <a href="/">Nikshep Saravanan</a>, based in Toronto. More writing on <a href="/#writing">nikshepsvn.com</a> and <a href="https://x.com/nikshepsvn">X</a>.</p>
+    </article>
+    </main>
+    <script>
+      const bar = document.getElementById("progress");
+      const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty("--p", max > 0 ? scrollY / max : 1); };
+      addEventListener("scroll", update, { passive: true }); update();
+    </script>
+  </body>
+</html>

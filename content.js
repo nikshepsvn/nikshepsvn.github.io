@@ -1,5 +1,6 @@
 // Single source of truth for site content.
-// Edit this file to change what the site displays.
+// Edit this file to change what the site displays, then run `node build.mjs`
+// to regenerate index.html and the essay pages (CI also rebuilds on push).
 //
 // Highlights accept plain text or { label, url, source } for a source link.
 // Research notes and source attribution live in docs/portfolio-sources.md.

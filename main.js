@@ -1,281 +1,18 @@
 "use strict";
 
-const SITE = window.SITE;
-const m = SITE.meta;
+// Behaviour only: the page itself is pre-rendered by build.mjs from content.js + render.js.
 const $ = (id) => document.getElementById(id);
-const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const host = (url) => (url || "").replace(/^https?:\/\/(www\.)?/, "").replace(/\/.*$/, "");
-const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-const UI_ICONS = {
-  external: '<path d="M7 17 17 7M7 7h10v10"/>',
-  mail: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
-  article: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9ZM14 3v6h6M8 13h8M8 17h5"/>',
-  chevron: '<path d="m9 5 7 7-7 7"/>',
-};
-const icon = (name) => `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${UI_ICONS[name]}</svg>`;
-const socialLogo = (name) => `<svg class="social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><use href="logos/social.svg#${name}"/></svg>`;
 
-// Logos are local files keyed by domain; anything without one falls back to a colored monogram.
-const LOGOS = new Set([...SITE.community.orgs.map((o) => o.domain), "humanplane.com", "deliverr.com", "moltlaunch.com", "kalshi.com", "instacart.com", "coinbase.com", "seatgeek.com",
-  "pagerduty.com", "uwaterloo.ca", "viberank.app", "modelgrep.com", "bloomberg.com", "businessinsider.com", "aijourn.com", "shanghai.nyu.edu", "pymnts.com",
-  ...SITE.investments.map((i) => i.domain)]);
-const LOGO_ALIAS = { "rits.shanghai.nyu.edu": "shanghai.nyu.edu" };
-const NAME_LOGOS = { RealmPlay: "realmplay.webp", SoulBazaar: "soulbazaar.webp", "MC-Bench": "mcbench.webp", "The Agent Times": "theagenttimes.com.svg" };
+// Essays used to open in an overlay at #essay/<slug>; send old links to their pages.
+const legacyEssay = location.hash.match(/^#essay\/([a-z0-9-]+)$/);
+if (legacyEssay) location.replace(`/writing/${legacyEssay[1]}/`);
 
-// Project SVGs use isolated image documents, so repeated prose/list icons never
-// share gradient IDs. Company and venture marks keep their original artwork.
-// Generated Swiss two-tone marks (Recraft V4 via Venice, prompts in docs/project-icon-prompts.py); real product brands keep their vector marks.
-const GENERATED_ICONS = new Set(["thimble", "bankai", "cross-market-state-fusion", "veilstream", "homunculus", "terminal", "openvenice",
-  "scrim", "updownarena", "near-hydra", "blindcache", "blindchat", "nemo-ai", "tremor", "sniffchain", "clip-fun", "dreamloom", "spine"]);
-const projectLogo = (name) => {
-  const file = GENERATED_ICONS.has(slug(name)) ? `${slug(name)}.webp` : `${slug(name)}.svg`;
-  return `<span class="logo project-logo" aria-hidden="true"><img src="logos/projects/${file}" alt="" width="48" height="48" loading="lazy" decoding="async"></span>`;
-};
-
-const logoFor = (name, url, { size } = {}) => {
-  let d = host(url);
-  d = LOGO_ALIAS[d] || d;
-  // Repos in the humanplane org wear the HumanPlane mark.
-  if (d === "github.com" && url.includes("/humanplane/")) d = "humanplane.com";
-  const sizeVar = size ? `--s:${size};` : "";
-  const file = NAME_LOGOS[name] || (LOGOS.has(d) ? `${d}.webp` : null);
-  if (file) return `<span class="logo" style="${sizeVar}"><img src="logos/${file}" alt="" width="96" height="96" loading="lazy" decoding="async"></span>`;
-  return `<span class="logo ghost" style="${sizeVar}" aria-hidden="true">${esc(name[0].toUpperCase())}</span>`;
-};
-
-// Pills are links to the matching entry further down the page.
-const pill = (target, name, url) =>
-  `<a class="pill" href="#${target}" data-jump="${target}">${logoFor(name, url)}${esc(name)}</a>`;
-const ventureById = Object.fromEntries(SITE.ventures.map((v) => [v.name, v]));
-const expByCo = Object.fromEntries(SITE.experience.map((x) => [x.company, x]));
-const pressBySource = Object.fromEntries(SITE.press.map((p) => [p.source, p]));
-const vp = (n) => pill("v-" + slug(n), n, ventureById[n].url);
-const xp = (n, label) => pill("x-" + slug(n), label || n, expByCo[n].url);
-const pp = (n) => `<a class="pill" href="#p-${slug(n)}" data-jump="p-${slug(n)}">${projectLogo(n)}${esc(n)}</a>`;
-const prp = (n, label) => pill("pr-" + slug(n), label || n, pressBySource[n].url);
-const investByName = Object.fromEntries(SITE.investments.map((i) => [i.name, i]));
-const ip = (n) => pill("i-" + slug(n), n, "https://" + investByName[n].domain);
-const ep = (title) => {
-  const i = SITE.essays.findIndex((e) => e.title === title);
-  return `<a class="pill" href="#writing" data-essay="${i}" aria-haspopup="dialog">${icon("article")}${esc(title)}</a>`;
-};
-// Keep commas and full stops attached to inline mentions when a line wraps.
-const prose = (paras, lead = false) => `<div class="prose${lead ? " lead" : ""}">${paras.map((p) => {
-  const text = p.replace(/<a class="pill"[\s\S]*?<\/a>[,.!?;:]?/g, (mention) => /[,.!?;:]$/.test(mention) ? `<span class="mention">${mention}</span>` : mention);
-  return lead ? `<h1>${text}</h1>` : `<p>${text}</p>`;
-}).join("")}</div>`;
-
-const totalStars = SITE.projects.reduce((sum, p) => sum + (p.stars || 0), 0);
-const now = m.now.url ? `<a href="${esc(m.now.url)}" target="_blank" rel="noreferrer">${esc(m.now.label)}</a>` : `<b>${esc(m.now.label)}</b>`;
-
-// Source links are siblings of the main entry link, never nested inside it.
-const MAX_HIGHLIGHTS = 3;
-const highlights = (items, kind, max = MAX_HIGHLIGHTS) => items?.length ? `<div class="highlights ${kind}-highlights">${items.slice(0, max).map((item) => {
-  if (typeof item === "string") return `<span class="highlight">${esc(item)}</span>`;
-  return `<a class="highlight" href="${esc(item.url)}" target="_blank" rel="noreferrer" title="Source: ${esc(item.source)}" aria-label="${esc(item.label)} — source: ${esc(item.source)}">${esc(item.label)}${icon("external")}</a>`;
-}).join("")}</div>` : "";
-
-const ventureItem = (v) => `
-  <li class="entry"><${v.url ? "a" : "div"} class="item" id="v-${slug(v.name)}"${v.url ? ` href="${esc(v.url)}" target="_blank" rel="noreferrer"` : ""}>
-    ${logoFor(v.name, v.url)}
-    <span class="item-t">${esc(v.name)} <span>· ${esc(v.status)}</span></span>
-    <span class="item-k">${v.kpi ? `${esc(v.kpi.value)}<small>${esc(v.kpi.label)}</small>` : ""}</span>
-    <span class="item-d">${esc(v.summary)}</span>
-  </${v.url ? "a" : "div"}>
-  ${highlights(v.metrics, "entry")}</li>`;
-
-// Calls are not links themselves: each one carries the dated posts that back it.
-const investItem = (i) => `
-  <li class="entry"><div class="item" id="i-${slug(i.name)}">
-    ${logoFor(i.name, "https://" + i.domain)}
-    <span class="item-t">${esc(i.name)} <span>· $${esc(i.ticker)} · ${esc(i.status)}</span><span class="item-role">${esc(i.period)}</span></span>
-    <span class="item-k">${esc(i.kpi.value)}<small>${esc(i.kpi.label)}</small></span>
-    <span class="item-d">${esc(i.summary)}</span>
-  </div>${highlights(i.links, "entry", Infinity)}</li>`;
-
-const analysisItem = (a) => `
-  <li><a class="item item-essay" href="${esc(a.url)}" target="_blank" rel="noreferrer">
-    <span class="essay-publication">${esc(a.topic)}</span>
-    <span class="item-h">${esc(a.title)} ${icon("external")}</span><span class="item-m"><b>${esc(a.views)}</b> views<span class="item-reading">${esc(a.date)}</span></span>
-    <span class="item-d">${esc(a.dek)}</span>
-  </a></li>`;
-
-const expRow = (x) => `
-  <li><a class="row" id="x-${slug(x.company)}" href="${esc(x.url)}" target="_blank" rel="noreferrer">
-    ${logoFor(x.company, x.url)}
-    <span class="row-t">${esc(x.company)}<span>${esc(x.role)}${x.team ? ` · ${esc(x.team)}` : ""}</span></span>
-    <span class="row-m">${esc(x.period)}</span>
-    <span class="row-d">${esc(x.description)}</span>
-  </a></li>`;
-
-const expItem = (x) => `
-  <li class="entry"><a class="item" id="x-${slug(x.company)}" href="${esc(x.url)}" target="_blank" rel="noreferrer">
-    ${logoFor(x.company, x.url)}
-    <span class="item-t">${esc(x.company)}<span class="item-role">${esc(x.role)}${x.team ? ` · ${esc(x.team)}` : ""}</span></span>
-    <span class="item-m">${esc(x.period)}</span>
-    <span class="item-d">${esc(x.description)}</span>
-  </a>${highlights(x.highlights, "entry")}</li>`;
-
-// Native disclosures keep the archive accessible without adding a second project grid.
-const archive = (id, label, note, intro, items) => `
-  <details class="archive" id="${id}">
-    <summary><span class="archive-heading">${esc(label)}<span>${esc(note)}</span></span>${icon("chevron")}</summary>
-    <div class="archive-body">
-      ${intro ? `<p class="archive-intro">${esc(intro)}</p>` : ""}
-      <ul class="archive-list">${items.map((item) => `
-        <li><a class="archive-item" href="${esc(item.url)}" target="_blank" rel="noreferrer">
-          <span class="archive-name">${esc(item.name)}${icon("external")}</span>
-          <span class="archive-date">${esc(item.period)}</span>
-          ${item.role ? `<span class="archive-role">${esc(item.role)}</span>` : ""}
-          <span class="archive-description">${esc(item.description)}</span>
-        </a></li>`).join("")}</ul>
-    </div>
-  </details>`;
-
-// Recent releases stay visible when the longer project list is folded.
-const monthLabel = (d) => new Date(d + "-15").toLocaleDateString("en-US", { month: "short", year: "numeric" });
-const isNew = (d) => { const age = (Date.now() - new Date(d + "-15")) / 864e5; return age >= 0 && age < 45; };
-
-const GROUPS = [
-  ["products", "Products", "live, with real traffic"],
-  ["research", "Research", "models, papers, and agents"],
-  ["oss", "Open source", "tools people star and fork"],
-  ["experiments", "Earlier products", ""],
-];
-const OSS_SHOWN = 3;
-const compact = (n) => (n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(n));
-
-const projItem = (p, foldIndex) => {
-  const tag = p.url ? "a" : "div";
-  const attrs = p.url ? ` href="${esc(p.url)}" target="_blank" rel="noreferrer"` : "";
-  const fresh = p.date && isNew(p.date);
-  const feature = Boolean(p.stats);
-  // Products link to their site; everything with a repo shows stars and forks.
-  const meta = p.group !== "products" && p.stars != null
-    ? `<b aria-label="${p.stars} GitHub stars"><span aria-hidden="true">★</span> ${compact(p.stars)}</b>${p.forks ? `<span>${p.forks} forks</span>` : ""}`
-    : (p.url ? `<span class="project-domain">${esc(host(p.url))}${icon("external")}</span>` : "");
-  const fold = foldIndex !== null && foldIndex >= OSS_SHOWN && !fresh;
-  return `<li class="project${fresh ? " is-new" : ""}"${fold ? " data-fold hidden" : ""}><${tag} class="proj${feature ? " feature" : ""}" id="p-${slug(p.name)}"${attrs}>
-    ${projectLogo(p.name)}
-    <span class="proj-name"><span>${esc(p.name)}</span>${fresh ? `<span class="new-chip">New · ${monthLabel(p.date)}</span>` : ""}<small>${esc(p.tag)}</small></span>
-    <span class="proj-meta">${meta}</span>
-    <span class="proj-sum">${esc(p.summary)}</span>
-    ${p.stats ? `<span class="stats">${p.stats.map((x) => `<span class="stat"><b>${esc(x.value)}</b><span>${esc(x.label)}</span></span>`).join("")}</span>` : ""}
-  </${tag}>${highlights(p.wins, "project")}</li>`;
-};
-
-// Starred-and-followed-by band: headline numbers, company badges, then where people are.
-const communityBand = () => {
-  const c = SITE.community;
-  const fmt = (n) => n.toLocaleString("en-US");
-  return `<div class="community">
-    <p class="community-h">Starred and followed by <b>${fmt(c.people)}</b> developers in <b>${c.countries}</b> countries, including people at</p>
-    <div class="orgs">${c.orgs.map((o) => `<span class="org">${logoFor(o.name, "https://" + o.domain)}${esc(o.name)}</span>`).join("")}</div>
-    <div class="where">${c.topCountries.map(([name, n]) => `<span><b>${n}</b> ${esc(name)}</span>`).join("")}<span class="more-c">+${c.countries - c.topCountries.length} more countries</span></div>
-    <p class="makers">Also on the list: the creators of ${c.makers.slice(0, -1).map(esc).join(", ")} and ${esc(c.makers.at(-1))}.</p>
-  </div>`;
-};
-
-const projectGroups = () => GROUPS.map(([id, label, blurb]) => {
-  const items = SITE.projects.filter((p) => p.group === id);
-  if (!items.length) return "";
-  // Only the long open-source list folds; everything else is always visible.
-  const folds = id === "oss" || id === "experiments";
-  const body = items.map((p, i) => projItem(p, folds ? (id === "experiments" ? OSS_SHOWN + i : i) : null)).join("");
-  return `<div class="group" data-group="${id}"${id === "experiments" ? " data-fold hidden" : ""}>
-    <div class="group-h"><h3>${label}</h3>${blurb ? `<span>${blurb}</span>` : ""}</div>
-    <ol class="plist">${body}</ol></div>`;
-}).join("");
-
-const readingTime = (e) => `${Math.max(1, Math.ceil((e.body || "").trim().split(/\s+/).length / 230))} min read`;
-const essayItem = (e, i) => e.url ? `
-  <li><a class="item item-essay" href="${esc(e.url)}" target="_blank" rel="noreferrer">
-    ${e.publication ? `<span class="essay-publication">${esc(e.publication)}</span>` : ""}
-    <span class="item-h">${esc(e.title)} ${icon("external")}</span><span class="item-m">${esc(e.date)}<span class="item-reading">${esc(e.kind)}</span></span>
-    <span class="item-d">${esc(e.subtitle)}</span>
-  </a></li>` : `
-  <li><button type="button" class="item item-essay" data-essay="${i}" aria-haspopup="dialog">
-    <span class="item-h">${esc(e.title)}</span><span class="item-m">${esc(e.date)}<span class="item-reading">${readingTime(e)}</span></span>
-    <span class="item-d">${esc(e.subtitle)}</span>
-  </button></li>`;
-
-const pressItem = (p) => `
-  <li><a class="item item-press" id="pr-${slug(p.source)}" href="${esc(p.url)}" target="_blank" rel="noreferrer">
-    <span class="press-source">${logoFor(p.source, p.url)}<span>${esc(p.source)}</span></span>
-    <span class="item-m">${esc(p.date)}${icon("external")}</span>
-    <span class="item-h">${esc(p.title)}</span>
-  </a></li>`;
-
-const email = SITE.links.find((l) => l.href.startsWith("mailto:"));
-const contactItem = (l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}<span class="contact-text"><span class="contact-label">${esc(l.label)}</span><span class="contact-handle">${esc(l.handle)}</span></span>${icon("external")}</a>`;
-
-const heroStats = m.stats.map((x) => `<li><b>${x.value === "stars" ? totalStars.toLocaleString("en-US") : esc(x.value)}</b><span>${esc(x.label)}</span></li>`).join("");
-const featuredRoles = SITE.experience.filter((x) => x.featured);
-const otherRoles = SITE.experience.filter((x) => !x.featured);
-const topReads = SITE.analysis.articles.filter((a) => a.featured);
-const subgroup = (label, blurb, list) => `<div class="group"><div class="group-h"><h3>${label}</h3>${blurb ? `<span>${blurb}</span>` : ""}</div>${list}</div>`;
-
-// Each chapter: a nav label, a side label, prose, then the items the prose refers to.
-// Order: who I am, what I built and where, then projects, calls, and writing.
-const chapters = [
-  { id: "about", label: "About", side: "About", hero: true, body: `
-      <span class="status"><span class="status-now"><span class="dot" aria-hidden="true"></span><span>Building ${m.now.url ? `${now}, ${esc(m.now.note)}` : `a consumer product, <b>in stealth</b>`}</span></span><span class="status-time" id="clock">Toronto</span></span>
-      ${prose([m.intro], true)}
-      ${prose([`<em>${esc(m.philosophy)}</em> ${esc(m.aside)}`])}
-      <div class="hero-links">${SITE.links.filter((l) => l !== email).map((l) => `<a href="${esc(l.href)}" target="_blank" rel="noreferrer">${socialLogo(l.icon)}${esc(l.label)}</a>`).join("")}<a href="${esc(email.href)}">${icon("mail")}Email</a></div>
-      <ul class="hero-stats">${heroStats}</ul>` },
-  { id: "ventures", label: "Ventures", side: "Ventures", body: `
-      ${prose([`I built ${vp("HumanPlane")}, a chart room for prediction markets, and ${vp("Moltlaunch")}, a work protocol for agents that cleared $50M+ in volume. I exited ${vp("RealmPlay")}, and ${vp("SoulBazaar")} was acquired before it launched.`])}
-      <ul class="list">${SITE.ventures.map(ventureItem).join("")}</ul>` },
-  { id: "experience", label: "Experience", side: "Experience", body: `
-      ${prose([`I was a ${xp("Kalshi")} Builder Fellow, and before going independent spent three years as a senior engineer and tech lead at ${xp("Instacart")}. Earlier, data infrastructure internships at ${xp("Coinbase")}, ${xp("Deliverr")}, ${xp("SeatGeek")}, and ${xp("PagerDuty")}, and computer science at ${xp("University of Waterloo", "Waterloo")}.`])}
-      <ul class="list">${featuredRoles.map(expItem).join("")}</ul>
-      <ul class="rows">${otherRoles.map(expRow).join("")}</ul>` },
-  { id: "projects", label: "Projects", side: "Projects", body: `
-      ${prose([`Some of it finds a real audience. ${pp("modelgrep")} has drawn 600K+ Google impressions since launch, and ${pp("viberank")} has ranked 1,292 developers across 26 trillion tokens. ${pp("homunculus")} helped inspire the learning system in everything-claude-code.`, `On the research side, ${pp("thimble")} puts structured tool calling into a 48M-parameter model, ${pp("bankai")} adapts 1-bit LLMs with tiny XOR patches, and I built the orchestrator behind ${pp("MC-Bench")}. Upstream, two of my fixes ship in Nous Research's <a href="https://github.com/NousResearch/hermes-agent/commit/d82a69b" target="_blank" rel="noreferrer">Hermes Agent</a>. In all: ${totalStars.toLocaleString("en-US")} GitHub stars across ${SITE.projects.length} projects.`])}
-      ${communityBand()}
-      <div class="projects" id="project-list">${projectGroups()}</div>
-      <button type="button" class="more" id="more" aria-expanded="false" aria-controls="project-list">Show more projects</button>
-      <p class="source">Search figures from Google Search Console, all data through 11 October 2026; viberank usage from viberank.app/api/stats.</p>
-      ${archive("earlier-work", "Earlier work", "Student projects · 2017–2020", "A few small builds from university: privacy experiments, hardware, and everyday utilities.", SITE.earlierProjects)}` },
-  { id: "investing", label: "Investing", side: "Investing", body: `
-      ${prose([`I invest in public, and in writing. I bought ${ip("Venice")} around $2, when almost no one was talking about it, and sold near the $34 top. I called ${ip("NEAR")} at $1.30 as the settlement layer for agents, and found ${ip("Nillion")} while looking for private memory for my own agents.`])}
-      <ul class="list">${SITE.investments.map(investItem).join("")}</ul>
-      <p class="source">Prices and dates are as I posted them at the time; every link goes to the original post. <a href="https://x.com/nikshepsvn/status/2103137147117326662" target="_blank" rel="noreferrer">Full track record</a>. Not financial advice.</p>` },
-  { id: "writing", label: "Writing", side: "Writing", body: `
-      ${prose([`I write in public: ${SITE.analysis.total.articles} long-form pieces on X with ${SITE.analysis.total.views} views and ${SITE.analysis.total.bookmarks} bookmarks, from token deep dives to where AI is heading. For the longer arguments, start with ${ep("Control Surface")} or ${ep("Liquid Talent")}.`])}
-      <div class="projects">
-        ${subgroup("Most read", "research and deep dives on X", `<ul class="list list-tight">${topReads.map(analysisItem).join("")}</ul>
-          <a class="more more-link" href="${esc(SITE.analysis.archive)}" target="_blank" rel="noreferrer">All ${SITE.analysis.total.articles} articles on X ${icon("external")}</a>`)}
-        ${subgroup("Essays", "and reports", `<ul class="list list-tight">${SITE.essays.map(essayItem).join("")}</ul>`)}
-      </div>` },
-  { id: "press", label: "Press", side: "Press", body: `
-      ${prose([`${prp("Bloomberg")} and ${prp("PYMNTS")} wrote about HumanPlane, ${prp("Business Insider")} about tremor, ${prp("The AI Journal")} about Moltlaunch, ${prp("NYU Shanghai RITS", "NYU Shanghai")} about the bankai paper, and ${prp("The Agent Times")} about near-hydra.`])}
-      <ul class="list">${SITE.press.map(pressItem).join("")}</ul>` },
-  { id: "contact", label: "Contact", side: "Contact", body: `
-      ${prose([`The best way to reach me is a DM on <a href="https://x.com/${esc(m.handle)}" target="_blank" rel="noreferrer">X</a>, or email.`])}
-      <div class="links">
-        ${SITE.links.filter((l) => l !== email).map(contactItem).join("")}
-        ${email ? `<button type="button" id="copy-email" aria-label="Copy email address">${icon("mail")}<span class="contact-text"><span class="contact-label">Email</span><span class="contact-handle" id="email-address">${esc(email.handle)}</span></span><span id="copy-state" role="status">copy</span></button>` : ""}
-      </div>
-      <p class="signoff"><span>© ${new Date().getFullYear()} ${esc(m.name)} · Toronto</span><a href="#about">Back to top ↑</a></p>` },
-];
-
-$("main").innerHTML = chapters.map((c) => `
-  <section class="chap${c.hero ? " hero" : ""}" id="${c.id}" aria-labelledby="${c.id}-h">
-    <h2 class="side${c.hero ? " sr-only" : ""}" id="${c.id}-h">${c.side}</h2>
-    <div class="body">${c.body}</div>
-  </section>`).join("");
-$("nav").innerHTML = chapters.filter((c) => !c.hero).map((c) => `<a href="#${c.id}" data-nav="${c.id}">${c.label}</a>`).join("") + `<i class="nav-ink" id="nav-ink" aria-hidden="true"></i>`;
-$("who").innerHTML = `<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><use href="logos/personal-mark.svg#mark"/></svg><span class="who-name">${esc(m.name)}</span>`;
-$("who").setAttribute("aria-label", `${m.name}, back to top`);
-
+const sections = [...document.querySelectorAll("main > section")];
 const tick = () => ($("clock").textContent = new Date().toLocaleTimeString("en-CA", { hour: "numeric", minute: "2-digit", timeZone: "America/Toronto" }) + " in Toronto");
 tick(); setInterval(tick, 30000);
 
 // Follow the reading position; scrolling the nav must never move the page.
 const navLinks = [...document.querySelectorAll("[data-nav]")];
-const sections = chapters.map((c) => $(c.id));
 let activeChapter = "";
 let navFrame = 0;
 const bar = document.querySelector(".bar");
@@ -366,8 +103,6 @@ document.addEventListener("click", (ev) => {
     el?.classList.remove("flash"); void el?.offsetWidth; el?.classList.add("flash");
     return;
   }
-  const essay = ev.target.closest("[data-essay]");
-  if (essay) { ev.preventDefault(); openEssay(+essay.dataset.essay, essay); }
 });
 $("more").addEventListener("click", reveal);
 
@@ -375,7 +110,7 @@ let copyTimer;
 $("copy-email")?.addEventListener("click", async () => {
   clearTimeout(copyTimer);
   try {
-    await navigator.clipboard.writeText(email.handle);
+    await navigator.clipboard.writeText($("email-address").textContent);
     $("copy-state").textContent = "copied";
   } catch {
     const range = document.createRange();
@@ -387,73 +122,3 @@ $("copy-email")?.addEventListener("click", async () => {
   }
   copyTimer = setTimeout(() => ($("copy-state").textContent = "copy"), 3000);
 });
-
-// Reader overlay for essays, with scroll progress and a pointer to the next one.
-const reader = $("reader");
-let lastFocus = null;
-let readerScroll = 0;
-let pageHash = "";
-const pageTitle = document.title;
-// Hosted essays get a shareable address without adding history entries.
-const essayHash = (e) => `#essay/${slug(e.title)}`;
-const background = [...document.querySelectorAll("body > :is(.skip-link, .bar, main)")];
-const openEssay = (i, opener) => {
-  const e = SITE.essays[i];
-  // Skip externally published pieces when pointing to the next essay.
-  let nextIndex = (i + 1) % SITE.essays.length;
-  while (SITE.essays[nextIndex].url) nextIndex = (nextIndex + 1) % SITE.essays.length;
-  if (reader.hidden) {
-    lastFocus = opener || document.activeElement;
-    readerScroll = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${readerScroll}px`;
-    document.body.style.width = "100%";
-    background.forEach((el) => (el.inert = true));
-    pageHash = location.hash.startsWith("#essay/") ? "" : location.hash;
-  }
-  history.replaceState(null, "", essayHash(e));
-  document.title = `${e.title} — ${m.name}`;
-  $("reader-crumb").textContent = `${e.title} · ${e.date}`;
-  $("reader-body").innerHTML = `<p class="kicker">${esc(e.kind)} · ${esc(e.date)} · ${readingTime(e)}</p><h1 id="reader-h">${esc(e.title)}</h1><p class="sub">${esc(e.subtitle)}</p>` +
-    e.body.split(/\n\n+/).map((para) => /^##\s/.test(para) ? `<h2>${esc(para.replace(/^##\s+/, ""))}</h2>` : `<p class="txt">${esc(para)}</p>`).join("") +
-    `<button type="button" class="next" data-essay="${nextIndex}"><span>Next essay</span><b>${esc(SITE.essays[nextIndex].title)}</b></button>`;
-  reader.hidden = false; reader.scrollTop = 0; document.body.style.overflow = "hidden";
-  $("progress").style.setProperty("--p", 0);
-  $("reader-close").focus();
-};
-const closeEssay = () => {
-  reader.hidden = true;
-  document.body.style.overflow = "";
-  document.body.style.position = "";
-  document.body.style.top = "";
-  document.body.style.width = "";
-  background.forEach((el) => (el.inert = false));
-  history.replaceState(null, "", location.pathname + location.search + pageHash);
-  document.title = pageTitle;
-  window.scrollTo({ top: readerScroll, behavior: "instant" });
-  lastFocus?.focus({ preventScroll: true });
-  queueNav();
-};
-reader.addEventListener("scroll", () => {
-  const max = reader.scrollHeight - reader.clientHeight;
-  $("progress").style.setProperty("--p", max > 0 ? reader.scrollTop / max : 1);
-});
-$("reader-close").addEventListener("click", closeEssay);
-document.addEventListener("keydown", (ev) => {
-  if (reader.hidden) return;
-  if (ev.key === "Escape") { ev.preventDefault(); closeEssay(); }
-  if (ev.key === "Tab") {
-    const first = $("reader-close");
-    const last = reader.querySelector(".next");
-    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
-    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
-  }
-});
-
-const linkedEssay = SITE.essays.findIndex((e) => !e.url && essayHash(e) === location.hash);
-// Closing a linked essay lands on its entry in Writing, as if it had been opened from there.
-if (linkedEssay >= 0) {
-  const entry = document.querySelector(`button.item[data-essay="${linkedEssay}"]`);
-  entry?.scrollIntoView({ block: "center", behavior: "instant" });
-  openEssay(linkedEssay, entry);
-}

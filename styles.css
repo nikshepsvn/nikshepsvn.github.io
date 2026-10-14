@@ -269,25 +269,26 @@ a.item, button.item { cursor: pointer; }
 #copy-state { width: 5.5em; transition: color .2s; text-align: right; font-size: 11.5px; color: var(--muted); }
 .signoff { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; margin: 20px 0 0; font-size: 13px; color: var(--muted); }
 .signoff a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-decoration: none; }
-.reader { position: fixed; inset: 0; background: var(--ground); overflow-y: auto; overscroll-behavior: contain; z-index: 10; }
 .reader-bar { position: sticky; top: 0; z-index: 1; background: var(--bar); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--rule); padding: calc(8px + env(safe-area-inset-top, 0px)) max(var(--gutter), env(safe-area-inset-right), calc((100% - 42rem) / 2 + var(--gutter))) 8px max(var(--gutter), env(safe-area-inset-left), calc((100% - 42rem) / 2 + var(--gutter))); display: flex; gap: 12px; align-items: center; font-size: 13px; }
-.reader-bar button { flex: none; min-height: 44px; font: inherit; background: none; border: 0; color: var(--ink); cursor: pointer; padding: 8px 12px; margin-left: -12px; border-radius: 8px; }
+.reader-bar a { flex: none; display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; padding: 8px 12px; margin-left: -12px; border-radius: 8px; }
 .reader-bar span { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--accent); transform-origin: left; transform: scaleX(var(--p, 0)); }
-.reader article { max-width: 42rem; margin: 0 auto; padding: clamp(32px, 6vw, 64px) max(var(--gutter), env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left)); overflow-wrap: anywhere; }
-.reader .kicker { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0; }
-.reader h1 { font-family: var(--serif); font-weight: 450; font-size: clamp(34px, 6vw, 52px); line-height: 1.08; letter-spacing: -.015em; margin: 8px 0 12px; text-wrap: balance; }
-.reader .sub { font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--ink-2); margin: 0 0 36px; }
-.reader article p.txt { font-family: var(--serif); font-size: 20px; line-height: 1.65; margin: 0 0 1.1em; }
-.reader article h2 { margin: 1.6em 0 .6em; font-family: var(--serif); font-size: clamp(25px, 4vw, 30px); line-height: 1.25; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
-.next { margin-top: 56px; padding: 20px 0 0; border: 0; border-top: 1px solid var(--rule); display: grid; gap: 4px; background: none; width: 100%; text-align: left; color: inherit; font: inherit; cursor: pointer; }
+.essay { max-width: 42rem; margin: 0 auto; padding: clamp(32px, 6vw, 64px) max(var(--gutter), env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left)); overflow-wrap: anywhere; }
+.essay .kicker { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.essay h1 { font-family: var(--serif); font-weight: 450; font-size: clamp(34px, 6vw, 52px); line-height: 1.08; letter-spacing: -.015em; margin: 8px 0 12px; text-wrap: balance; }
+.essay .sub { font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--ink-2); margin: 0 0 36px; }
+.essay p.txt { font-family: var(--serif); font-size: 20px; line-height: 1.65; margin: 0 0 1.1em; }
+.essay h2 { margin: 1.6em 0 .6em; font-family: var(--serif); font-size: clamp(25px, 4vw, 30px); line-height: 1.25; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+.next { margin-top: 56px; padding: 20px 0 0; border-top: 1px solid var(--rule); display: grid; gap: 4px; color: inherit; text-decoration: none; }
+.essay-foot { margin: 40px 0 0; font-size: 14px; color: var(--muted); }
+.essay-foot a { color: inherit; }
 .next span { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .next b { font-family: var(--serif); font-size: 26px; font-weight: 450; transition: color .2s; }
 
 /* Chapters ease in once as they enter the viewport; content is never hidden without JS. */
 .js-reveal .chap.is-pending { opacity: 0; transform: translateY(14px); }
 .js-reveal .chap { transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
-.reader:not([hidden]) article { animation: rise .5s var(--ease-out); }
+.essay { animation: rise .5s var(--ease-out); }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
 @media (max-width: 960px) {
   :root { --bar-height: 56px; }
@@ -345,7 +346,7 @@ a.item, button.item { cursor: pointer; }
   .stat b { font-size: 28px; }
   .links { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .links a, .links button { min-height: 64px; padding: 12px 14px; }
-  .reader .sub { margin-bottom: 28px; }
+  .essay .sub { margin-bottom: 28px; }
 }
 @media (max-width: 360px) {
   .item-press { grid-template-columns: minmax(0, 1fr); }
@@ -371,12 +372,11 @@ a.item, button.item { cursor: pointer; }
   .links a:hover, .links button:hover { background: var(--pill-hover); }
   .hero-links a:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--rule)); color: var(--accent); }
   .signoff a:hover { color: var(--ink); }
-  .reader-bar button:hover { background: var(--pill); }
+  .reader-bar a:hover { background: var(--pill); }
   .next:hover b { color: var(--accent); }
 }
-.noscript { font-family: var(--serif); font-size: 22px; line-height: 1.55; max-width: 38em; }
 @media print {
-  .bar, .skip-link, .reader, .more, .signoff a, .nav-ink, .mist { display: none !important; }
+  .bar, .skip-link, .reader-bar, .more, .signoff a, .nav-ink, .mist { display: none !important; }
   body::after { display: none; }
   body { font-size: 11pt; }
   .chap { break-inside: auto; padding-block: 20px; grid-template-columns: 8rem minmax(0, 1fr); }

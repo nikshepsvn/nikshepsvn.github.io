@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>BLOOM — Nikshep Saravanan</title>
+    <meta name="description" content="A marketplace for fast ZK proofs on Solana." />
+    <meta name="author" content="Nikshep Saravanan" />
+    <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111412" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://nikshepsvn.com/writing/bloom/" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"BLOOM","description":"A marketplace for fast ZK proofs on Solana.","datePublished":"2025-07","url":"https://nikshepsvn.com/writing/bloom/","image":"https://nikshepsvn.com/og.png","author":{"@type":"Person","name":"Nikshep Saravanan","url":"https://nikshepsvn.com/"}}</script>
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://nikshepsvn.com/writing/bloom/" />
+    <meta property="og:title" content="BLOOM" />
+    <meta property="og:description" content="A marketplace for fast ZK proofs on Solana." />
+    <meta property="og:image" content="https://nikshepsvn.com/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@nikshepsvn" />
+    <meta name="twitter:title" content="BLOOM" />
+    <meta name="twitter:description" content="A marketplace for fast ZK proofs on Solana." />
+    <meta name="twitter:image" content="https://nikshepsvn.com/og.png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="essay-page">
+    <header class="reader-bar"><a href="/#writing">← Nikshep Saravanan</a><span>BLOOM · Jul 2025</span><i class="progress" id="progress" aria-hidden="true"></i></header>
+    <main id="main">
+    <article class="essay">
+      <p class="kicker">Technical · Jul 2025 · 4 min read</p>
+      <h1>BLOOM</h1>
+      <p class="sub">A marketplace for fast ZK proofs on Solana.</p>
+      <p class="txt">Zero-knowledge proofs promise privacy and scalability — the two properties blockchains keep failing to deliver together. On paper, they work. In practice, they split into two worlds, and only one of them is useful.</p>
+      <p class="txt">Simple proofs are solved. State compression, basic merkle proofs, signature verification — these prove in five to fifteen milliseconds, cheap to verify on-chain. They work. Nobody's complaining.</p>
+      <p class="txt">Complex proofs are blocked. The applications that would most benefit from ZK — private DeFi, hidden-information games, confidential voting, verifiable ML — require circuits with millions of constraints. Current proving time: ten to thirty-plus seconds on a CPU. That's not interactive. That's not a product. That's a research demo.</p>
+      <p class="txt">The irony is exact. The applications that would most benefit from zero-knowledge are exactly the ones blocked by proving latency. Fix proving speed, and a whole category becomes possible.</p>
+      <h2>The Proposal</h2>
+      <p class="txt">Solana validators already run beefy hardware. Running a validator is a serious infrastructure commitment — high-memory servers, fast networking, significant stake as collateral. Adding a GPU is a marginal expense on top of that. And GPUs can cut ZK proving latency from thirty seconds to under one.</p>
+      <p class="txt">BLOOM is a marketplace where applications buy proof generation from validators with GPUs.</p>
+      <p class="txt">The pitch to validators is simple. You already have the hardware. You already have stake. Add a GPU, register the circuits you can prove, and earn fees for each proof generated. Extra revenue stream. Marginal hardware cost. The existing security model extends naturally.</p>
+      <p class="txt">The pitch to applications is also simple. You send witness data to a validator — a few kilobytes. The validator generates a Groth16 proof on GPU in a few hundred milliseconds, returns the 128-byte proof, you submit to chain, on-chain verification takes around 180k compute units. Total latency: under a second instead of thirty. The difference between &quot;research demo&quot; and &quot;actual product.&quot;</p>
+      <h2>The Trust Model</h2>
+      <p class="txt">This only works if you trust validators not to generate invalid proofs. Fortunately, you don't have to.</p>
+      <p class="txt">Validators stake collateral. Invalid proofs get caught by on-chain verification — they always do, because that's the point of ZK. Slash the stake when verification fails. The system is permissionless because the verification step is itself the trust anchor.</p>
+      <p class="txt">For applications that want more safety, redundantly prove across multiple validators. Compare outputs. Submit only if they agree. More cost, fewer surprises.</p>
+      <p class="txt">The benchmarks are encouraging. ICICLE (NVIDIA's ZK acceleration library) hits 120–250ms for circuits with a million constraints on an RTX 4090. A million constraints is enough for real applications: private transfers, private auctions, some categories of verifiable ML inference. Sub-second latency changes what's possible.</p>
+      <h2>The Economics, Roughly</h2>
+      <p class="txt">Back-of-envelope for a validator running a 4090:</p>
+      <p class="txt">Hardware cost around $1,600. Power draw 450W. Assuming reasonable utilization and current energy prices, net of electricity: roughly $200/day. Capacity at 0.0001 SOL per proof and roughly 40,000 proofs per day at full utilization, at SOL around $190: gross revenue of roughly $760/day. Hardware payback in about eight days at full utilization.</p>
+      <p class="txt">These numbers all assume demand exists. That's the big assumption. Infrastructure without applications is just expensive hardware. The whole thing depends on whether there's enough demand for complex ZK applications to sustain the infrastructure, and that demand is still mostly theoretical.</p>
+      <p class="txt">If the demand materializes, the incentives align cleanly: validators earn, applications get fast proofs, the ecosystem gets capabilities it didn't have. If the demand doesn't materialize, this is a solution in search of a problem — which is the failure mode a lot of crypto infrastructure has.</p>
+      <h2>The Hard Questions</h2>
+      <p class="txt">Why Groth16 and not STARKs or PLONK? STARKs have nicer properties — no trusted setup, post-quantum security — but no native Solana precompiles, larger proofs, more expensive verification. PLONK has some of the same issues. Until Solana adds syscalls for them, Groth16 is the practical choice. This is a pragmatic decision that might age badly, but it's the right one for the current chain.</p>
+      <p class="txt">What about 40GB proving keys for large circuits? They're a one-time cost per circuit, distributed via P2P or prebuilt containers. Setup takes fifteen minutes. Annoying, not prohibitive. Universal setups might help eventually; right now they don't.</p>
+      <p class="txt">Will anyone actually use this? Honest answer: I don't know. The bottleneck clearly exists. The technical solution clearly works. Whether there's enough demand for complex ZK applications to justify the infrastructure is the unresolved question, and no amount of design gets around needing to find out.</p>
+      <h2>Where This Goes</h2>
+      <p class="txt">BLOOM is one design for solving the ZK proving bottleneck. The components all exist — GPUs, validators with real stake, on-chain verification, the tooling for Groth16. The question is whether anyone needs what this unlocks enough to pay for it.</p>
+      <p class="txt">This is a starting point, not a finished design. The economics need more work. The validator-facing tooling needs more work. The specific circuits worth targeting first are unclear. Poke holes. Tell me what's wrong.</p>
+      <a class="next" href="/writing/control-surface/"><span>Next essay</span><b>Control Surface</b></a>
+      <p class="essay-foot">By <a href="/">Nikshep Saravanan</a>, based in Toronto. More writing on <a href="/#writing">nikshepsvn.com</a> and <a href="https://x.com/nikshepsvn">X</a>.</p>
+    </article>
+    </main>
+    <script>
+      const bar = document.getElementById("progress");
+      const update = () => { const max = document.documentElement.scrollHeight - innerHeight; bar.style.setProperty("--p", max > 0 ? scrollY / max : 1); };
+      addEventListener("scroll", update, { passive: true }); update();
+    </script>
+  </body>
+</html>

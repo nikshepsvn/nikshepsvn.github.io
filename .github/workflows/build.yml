@@ -1,0 +1,34 @@
+name: build
+
+# Safety net: if content or templates change without a local `node build.mjs`,
+# regenerate the static HTML so the live site never drifts from content.js.
+on:
+  push:
+    branches: [main]
+    paths: ["content.js", "render.js", "build.mjs", "index.html"]
+  workflow_dispatch: {}
+
+concurrency: build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: node build.mjs
+      - name: commit if changed
+        run: |
+          if [[ -n $(git status --porcelain index.html writing sitemap.xml) ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.html writing sitemap.xml
+            git commit -m "chore: rebuild static pages"
+            git push
+          else
+            echo "static pages already up to date"
+          fi

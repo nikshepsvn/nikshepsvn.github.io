@@ -303,7 +303,7 @@ window.SITE = {
       name: "viberank",
       group: "products",
       tag: "ai coding · usage analytics",
-      stars: 117,
+      stars: 118,
       forks: 22,
       url: "https://viberank.app",
       summary: "The public AI coding leaderboard. Claude Code, Codex, Gemini CLI, and more — ranked by real token usage and API-equivalent spend.",

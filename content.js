@@ -304,7 +304,7 @@ window.SITE = {
       group: "products",
       tag: "ai coding · usage analytics",
       stars: 119,
-      forks: 22,
+      forks: 23,
       url: "https://viberank.app",
       summary: "The public AI coding leaderboard. Claude Code, Codex, Gemini CLI, and more — ranked by real token usage and API-equivalent spend.",
       stats: [{value: "1,292", label: "developers ranked"},{value: "26T", label: "tokens tracked"},{value: "$20.3M", label: "API-equivalent spend measured"},{value: "189K", label: "Google impressions since May 2026"}],

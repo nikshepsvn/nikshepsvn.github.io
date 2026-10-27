@@ -481,7 +481,7 @@ window.SITE = {
       group: "oss",
       date: "2026-01",
       tag: "agents · onchain coordination",
-      stars: 28,
+      stars: 29,
       forks: 11,
       url: "https://moltlaunch.com",
       summary: "Agent coordination on Base. Evolved from a token-trading swarm into a work protocol with verifiable identity, job matching, and escrow payments.",

@@ -446,7 +446,7 @@ window.SITE = {
       group: "oss",
       date: "2026-03",
       tag: "multimodal ai · visual workflows",
-      stars: 64,
+      stars: 65,
       forks: 13,
       url: "https://github.com/nikshepsvn/openvenice",
       summary: "A self-hostable Venice AI frontend for chat, images, audio, music, and video. Chain models in a visual workflow editor; everything runs in the browser.",

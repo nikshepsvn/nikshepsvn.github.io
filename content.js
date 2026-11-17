@@ -304,7 +304,7 @@ window.SITE = {
       group: "products",
       tag: "ai coding · usage analytics",
       stars: 121,
-      forks: 23,
+      forks: 22,
       url: "https://viberank.app",
       summary: "The public AI coding leaderboard. Claude Code, Codex, Gemini CLI, and more — ranked by real token usage and API-equivalent spend.",
       stats: [{value: "1,292", label: "developers ranked"},{value: "26T", label: "tokens tracked"},{value: "$20.3M", label: "API-equivalent spend measured"},{value: "189K", label: "Google impressions since May 2026"}],
@@ -413,7 +413,7 @@ window.SITE = {
       date: "2026-01",
       tag: "claude code · adaptive agents",
       stars: 398,
-      forks: 45,
+      forks: 44,
       url: "https://github.com/humanplane/homunculus",
       summary: "A Claude Code plugin that learns from your prompts and tool use. Turns observed patterns into reusable instincts, skills, and commands.",
       wins: [

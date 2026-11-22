@@ -342,7 +342,7 @@ window.SITE = {
       group: "research",
       date: "2026-04",
       tag: "1-bit llms · model adaptation",
-      stars: 91,
+      stars: 90,
       forks: 11,
       url: "https://github.com/nikshepsvn/bankai",
       summary: "Adapt frozen 1-bit LLMs with reversible XOR patches measured in bytes. Paper, MLX implementation, and a CUDA path for NVIDIA GPUs.",

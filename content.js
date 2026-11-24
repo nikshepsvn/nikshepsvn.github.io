@@ -379,7 +379,7 @@ window.SITE = {
       name: "MC-Bench",
       group: "research",
       tag: "llm evaluation · infrastructure",
-      stars: 168,
+      stars: 169,
       forks: 8,
       url: "https://github.com/mc-bench/orchestrator",
       summary: "Built the core orchestrator for MC-Bench: concurrent, containerized Minecraft builds that people compare to evaluate LLMs.",
